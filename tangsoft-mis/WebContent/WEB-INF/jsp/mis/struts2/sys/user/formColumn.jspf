@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var infoJsonReader = new Ext.data.JsonReader({
+    	root 		 : 'data',
+    	idProperty 	: 'userid',
+    	totalProperty : 'count'
+    	},
+    	['userid', 'accountid', 'active', 'username', 'password', 'email', 'status', 'addressunit', 'addresshome', 'phoneunit',
+     	 'phonehome', 'lastvisittime', 'visitcount', 'creater', 'createtime', 'lastupdater', 'lastupdatertime']
+    );
+    
+	function getFormColumn(){ 
+		return [{
+	        layout:'column',
+	        items:[{
+	            columnWidth: 1,
+	            layout: 'form',
+	            defaults: {anchor:'95%', allowBlank:true},
+	            defaultType: 'textfield',
+	            items: [{
+	                fieldLabel: '账号',
+	    	        name:'userid',
+	    	        readOnly: true
+	    	    }, {
+	                fieldLabel: '姓名',
+	                name: 'username',
+	                allowBlank: false,
+	                maxLength: 100,
+	    	        readOnly: true
+	            }, {
+	                fieldLabel: '职务',
+	                name: 'status',
+	                maxLength: 20
+	            }, {
+	                fieldLabel: '单位地址',
+	                name: 'addressunit',
+	                maxLength: 200
+	            }, {
+	                fieldLabel: '家庭地址',
+	                name: 'addresshome',
+	                maxLength: 200
+	            }, {
+	                fieldLabel: '单位电话',
+	                name: 'phoneunit',
+	                maxLength: 100
+	            }, {
+	                fieldLabel: '家庭电话',
+	                name: 'phonehome',
+	                maxLength: 100
+	            }, {
+	                vtype: 'email',
+	                fieldLabel: '邮件',
+	                name: 'email',
+	                maxLength: 300
+	            }]
+	        }]
+		}];
+	}
+//]]>
+</script>

@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+
+	var databaseInfoForm = new Ext.FormPanel( {
+		frame : true,
+		title : '数据库设置',
+		bodyStyle : 'padding:5px 5px 0',
+		labelAlign : 'right',
+		labelWidth : 125,
+		defaults : {
+			width : 175,
+			maxLength : 10,
+			minLength : 3,
+			allowBlank : false
+		},
+		defaultType : 'textfield',
+		items : [ {
+			fieldLabel : '数据库',
+			name : 'password'
+		}, {
+			fieldLabel : '数据库用户名',
+			name : 'newpass'
+		}, {
+			fieldLabel : '数据库用户密码',
+			name : 'newpasscfrm'
+		}, {
+			fieldLabel : '文本编码',
+			name : 'newpass'
+		}, {
+			fieldLabel : '连接方式',
+			name : 'newpasscfrm'
+		} ],       
+        tbar		:[{
+            xtype:'buttongroup',
+            items: [{
+            	text: '保存',
+            	icon: '${webroot}/resources/shared/images/accept.png',
+            	handler: function(){
+            	}
+            }]
+        }, {
+            xtype:'buttongroup',
+            items: [{
+            	text: '刷新',
+            	icon: '${webroot}/resources/shared/images/refresh.gif',
+            	handler: function(){
+                }
+            }]
+        }]
+	});
+//]]>
+</script>

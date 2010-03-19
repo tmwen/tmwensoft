@@ -1,0 +1,147 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var recordData;
+	var conditionWin;
+	var feesWin;
+	var viewWin;
+	//---------------------------------------------------
+	function showConditionWin(record) {
+		if (!conditionWin) {
+			var condForm = new Ext.form.FormPanel( {
+				baseCls : 'x-plain',
+				labelWidth : 55,
+				defaultType : 'textfield',
+				items : [ {
+					fieldLabel : '姓名',
+					name : 'xm',
+					anchor : '100%'
+				}, {
+					fieldLabel : '身份证号',
+					name : 'sfzhm',
+					anchor : '100%'
+				} ]
+			});
+
+			conditionWin = new Ext.Window( {
+				title : '查询条件',
+				width : 400,
+				height : 200,
+				minWidth : 300,
+				minHeight : 200,
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+				items : condForm,
+				buttons : [ {
+					text : '查询',
+					handler : function() {
+						search();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						condForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						conditionWin.hide();
+					}
+				} ],
+				keys : [ {
+					key : [ 10, 13 ],
+					fn : search
+				} ]
+			});
+
+			function search() {
+				if (condForm.form.isValid()) {
+					conditionWin.hide();
+					dosubmitForm(condForm.form.getValues());
+				}
+			}
+		}
+		conditionWin.show(this);
+	}
+
+	//---------------------fees--------------------------
+	var feesTabPanel;
+	function showFeesWin(record) {
+		if (!isRecordClick()) return;
+		if (!feesWin) {
+			feesTabPanel = new Ext.TabPanel({
+                autoTabs:true,
+                activeTab:0,
+                deferredRender:false,
+                border:false,
+				items : [feesGrid,feesBaseInfoForm]
+            });
+			feesWin = new Ext.Window( {
+				title : '学生缴费信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 300,
+		        width: 600,
+		        items: feesTabPanel
+			});
+		}
+		feeStore.load({
+			params:{stuid: recordData.stuid}
+		});
+		feesTabPanel.setActiveTab(0);
+		feesWin.show();
+	}
+	//-------------------view----------------------------
+	var viewForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	function showViewWin(record) {
+		if (!isRecordClick()) return;
+		if (viewForm) viewForm.form.reset();
+		if (!viewWin) {
+			viewWin = new Ext.Window( {
+				title : '查看学生信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 400,
+		        width: 800,
+	           	maximized: true,
+				items : viewForm,
+				buttons : [ {
+					text : '返回',
+					handler : function() {
+						viewWin.hide();
+					}
+				} ]
+			});
+		}
+		viewForm.form.load( {
+			url : 'getStudentBaseInfo.${extension}',
+			params : 'stuid=' + recordData.stuid,
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+		viewWin.show(this);
+	}
+	//-----------------------------------------------------
+	
+//]]>
+</script>

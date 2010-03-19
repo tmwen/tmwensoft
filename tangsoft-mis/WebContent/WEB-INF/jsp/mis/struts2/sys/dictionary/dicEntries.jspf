@@ -1,0 +1,125 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var dicProxy = new Ext.data.HttpProxy({
+		autoLoad 	: true, 
+		method		: 'post',
+	    api: {
+	        read : 'getEntryList.${extension}',
+	        create : 'insertEntry.${extension}',
+	        update: 'updateEntry.${extension}',
+	        destroy: 'deleteEntry.${extension}'
+	    }
+	});
+
+	var dicReader = new Ext.data.JsonReader({
+		root: 'data',
+		idProperty: 'dictid',
+		totalProperty: 'count',
+	    successProperty: 'success'
+	}, [
+	    'dictid',
+	    {name: 'dictcode', allowBlank: false},
+	    {name: 'codecontent', allowBlank: false},
+	    {name: 'levelseq', allowBlank: false}, 
+	    'parentcode', 'level'
+	]);
+
+	var writer = new Ext.data.JsonWriter({
+	    encode: true,
+	    writeAllFields: true
+	});
+
+	var dicStore = new Ext.data.Store({
+	    proxy: dicProxy,
+	    reader: dicReader,
+	    writer: writer,
+	    autoSave: true,
+	    listeners: {
+	        write : function(store, action, result, res, rs) {},
+	        exception : function(proxy, type, action, options, res, arg) {}
+	    }
+	});
+
+	var dicColumns = new Ext.grid.ColumnModel({
+	    defaults: {
+	    	sortable: true
+		}, columns: [
+		 	{header: '父项',		dataIndex: 'parentcode',	width: 200},
+			{header: '条目编码',	dataIndex: 'dictcode',		width: 100, editor: new Ext.form.TextField({allowBlank:false, maxLength: 200})},
+			{header: '条目名称',	dataIndex: 'codecontent',	width: 200, editor: new Ext.form.TextField({allowBlank:false, maxLength: 300})},
+		 	{header: '层次',		dataIndex: 'level',			width: 60, 	hidden: true},
+			{header: '顺序',		dataIndex: 'levelseq',		width: 60, 	editor: new Ext.form.NumberField({decimalPrecision: 0,maxValue: 9999,allowBlank:false})}
+		]
+	});
+	    var editor = new Ext.ux.grid.RowEditor({
+	        saveText: '确定',
+	        cancelText: '取消'
+	    });
+	    
+	    var dicGrid = new Ext.grid.GridPanel({
+	        id:'dicPanel',
+			title: '数据字典',
+			layout: 'fit',
+	        frame: false,
+	        autoScroll: true,
+	        store: dicStore,
+	        plugins: [editor],
+	        cm : dicColumns,
+	    	region		: 'center',
+	        loadMask	: {msg:'读取中...'},
+	        sm			: new Ext.grid.RowSelectionModel({
+	            singleSelect	: true
+	        }),
+	        viewConfig	: {
+	            forceFit		: false,
+	            enableRowBody	: true,
+	            showPreview		: false
+	        },
+	        tbar: [{
+	            text: '添加',
+	        	icon: '${webroot}/resources/shared/images/add.png',
+	            handler: onAdd
+	        }, '-', {
+	            text: '删除',
+	        	icon: '${webroot}/resources/shared/images/delete.gif',
+	            handler: onDelete
+	        }, '-', {
+	            text: '刷新',
+	        	icon: '${webroot}/resources/shared/images/refresh.gif',
+	            handler: onRefresh
+	        }, '-']
+	    });
+	    dicGrid.relayEvents(dicStore, ['destroy', 'save', 'update']);
+
+	    function onAdd(record, ev) {
+	    	var u = new dicGrid.store.recordType({
+	    		parentcode: curNode.id,
+	    		level: 1
+	        });
+	        editor.stopEditing();
+	        dicGrid.store.insert(0, u);
+	        editor.startEditing(0);
+	    }
+
+	    function onDelete() {
+	        var rec = dicGrid.getSelectionModel().getSelected();
+	        if (!rec) {
+	            return false;
+	        }
+	        dicGrid.store.remove(rec);
+	    }
+	    
+	    function onRefresh() {
+	    	dicStore.reload();
+	    }
+		
+		var contentPanel = new Ext.TabPanel({
+			region: 'center',
+			margins: '5 5 5 0',
+			tabPosition: 'bottom',
+			activeTab: 0,
+			items: [dicGrid]
+	    });
+//]]>
+</script>

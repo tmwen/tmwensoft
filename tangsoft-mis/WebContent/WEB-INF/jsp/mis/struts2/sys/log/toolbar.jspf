@@ -1,0 +1,120 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+	var recordData;
+	var conditionWin;
+	var insertWin;
+	var updateWin;
+	var viewWin;
+	//---------------------------------------------------
+	function showConditionWin(record) {
+		if (!conditionWin) {
+			var condForm = new Ext.form.FormPanel( {
+				baseCls : 'x-plain',
+				labelWidth : 55,
+				defaultType : 'textfield',
+				items : [ {
+		            xtype: 'combo',
+	                fieldLabel: '操作人',
+	                hiddenName:'operater',
+	                store: getEntryArray('<%=DictConstants.USERARRAY%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true,
+	                allowBlank: true
+	            } ]
+			});
+
+			conditionWin = new Ext.Window( {
+				title : '查询条件',
+				width : 400,
+				height : 200,
+				minWidth : 300,
+				minHeight : 200,
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+				items : condForm,
+				buttons : [ {
+					text : '查询',
+					handler : function() {
+						search();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						condForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						conditionWin.hide();
+					}
+				} ],
+				keys : [ {
+					key : [ 10, 13 ],
+					fn : search
+				} ]
+			});
+
+			function search() {
+				if (condForm.form.isValid()) {
+					conditionWin.hide();
+					dosubmitForm(condForm.form.getValues());
+				}
+			}
+		}
+		conditionWin.show(this);
+	}
+
+	//-------------------view----------------------------
+	var viewForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	function showViewWin(record) {
+		if (!isRecordClick()) return;
+		if (!viewWin) {
+			viewWin = new Ext.Window( {
+				title : '查看系统日志信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 400,
+		        width: 800,
+	            maximized: true,
+				items : viewForm,
+				buttons : [ {
+					text : '返回',
+					handler : function() {
+						viewWin.hide();
+					}
+				} ]
+			});
+		}
+		viewForm.form.load( {
+			url : 'getLogInfo.${extension}',
+			params : 'logid=' + recordData.logid,
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+		viewWin.show(this);
+	}
+//]]>
+</script>

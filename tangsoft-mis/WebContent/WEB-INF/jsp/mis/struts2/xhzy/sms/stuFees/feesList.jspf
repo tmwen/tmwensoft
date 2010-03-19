@@ -1,0 +1,163 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+
+var jfrqEditor = new Ext.form.DateField({
+	//format: 'Y年m月d日', 
+	allowBlank:false
+});
+var jeEditor = new Ext.form.NumberField({
+	decimalPrecision: 2,
+	maxValue: 999999.99,
+	allowBlank:false
+});
+
+    var skr = new Ext.form.ComboBox({
+        hiddenName: 'skr',
+        store: getEntryArray('<%=DictConstants.ALIVEUSERARRAY%>'),
+        valueField: 'key',
+        displayField: 'value',
+        typeAhead: true,
+        mode: 'local',
+        forceSelection: false,//true只能填写下拉列表值;false可以填写任意值
+        triggerAction: 'all',
+        selectOnFocus: true,
+        allowBlank: false
+    });
+    
+    var jflx = new Ext.form.ComboBox({
+        hiddenName:'jflx',
+        store: getEntryArray('<%=DictConstants.JFLX%>'),
+        valueField:'key',
+        displayField:'value',
+        typeAhead: true,
+        mode: 'local',
+        forceSelection: true,
+        triggerAction: 'all',
+        selectOnFocus:true,
+        allowBlank:false
+    });
+
+//--------------------------------------------------------------------
+var feesProxy = new Ext.data.HttpProxy({
+	autoLoad 	: true, 
+	method		: 'post',
+    api: {
+        read   : 'getStudentFeesList.${extension}',
+        create : 'insertStudentFees.${extension}',
+        update : 'updateStudentFees.${extension}',
+        destroy: 'deleteStudentFees.${extension}'
+    }
+});
+
+var feesReader = new Ext.data.JsonReader({
+	root: 'data',
+	idProperty: 'feeid',
+	totalProperty: 'count',
+    successProperty: 'success'
+}, [
+    'feeid', 'stuid', 'creater', 'createtime', 'lastupdater', 'lastupdatertime',
+    {name: 'jfrq', type: 'date', dateFormat: 'Y-m-d', allowBlank: false},
+    {name: 'je', allowBlank: false},
+    {name: 'skr', allowBlank: false},
+    {name: 'jflx', allowBlank: false}
+]);
+
+var feesWriter = new Ext.data.JsonWriter({
+    encode: true,
+    writeAllFields: true
+});
+
+var feeStore = new Ext.data.Store({
+    proxy: feesProxy,
+    reader: feesReader,
+    writer: feesWriter,
+    autoSave: true,
+    listeners: {
+        write : function(store, action, result, res, rs) {},
+        exception : function(proxy, type, action, options, res, arg) {}
+    }
+});
+
+var feesColumns = new Ext.grid.ColumnModel({
+    defaults: {
+    	sortable: true
+	}, columns: [
+		{header: '缴费日期',	dataIndex: 'jfrq',	width: 60, 	editor: jfrqEditor, renderer: Ext.util.Format.dateRenderer('Y年m月d日')},
+		{header: '金额(元)',	dataIndex: 'je',	width: 60, 	editor: jeEditor},
+		{header: '收款人',	dataIndex: 'skr',	width: 60, 	editor: skr,		renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+		{header: '缴费类型',	dataIndex: 'jflx',	width: 60, 	editor: jflx,		renderer: function(value){return getDicInfo('<%=DictConstants.JFLX%>', value);}}
+	]
+});
+    var editor = new Ext.ux.grid.RowEditor({
+        saveText: '确定',
+        cancelText: '取消'
+    });
+    
+    var feesGrid = new Ext.grid.GridPanel({
+        title: '学生缴费列表',
+        frame: true,
+        autoScroll: true,
+        store: feeStore,
+        plugins: [editor],
+        cm : feesColumns,
+    	region		: 'center',
+        loadMask	: {msg:'读取中...'},
+        sm			: new Ext.grid.RowSelectionModel({
+            singleSelect	: true
+        }),
+        tbar: [{
+            text: '添加',
+        	icon: '${webroot}/resources/shared/images/add.png',
+            handler: onAdd
+        }, '-', {
+            text: '删除',
+        	icon: '${webroot}/resources/shared/images/delete.gif',
+            handler: onDelete
+        }, '-', {
+            text: '刷新',
+        	icon: '${webroot}/resources/shared/images/refresh.gif',
+            handler: function(){feeStore.reload();}
+        }, '-', {
+            text: '返回',
+        	icon: '${webroot}/resources/shared/images/return.png',
+            handler: onBack
+        }, '-'],
+        viewConfig: {
+            forceFit: true
+        }
+    });
+    feesGrid.relayEvents(feeStore, ['destroy', 'save', 'update']);
+
+    function onAdd(record, ev) {
+        var u = new feesGrid.store.recordType({
+        	feeid : '',
+        	stuid : recordData.stuid,
+        	jfrq : new Date(),
+        	je: '300',
+        	skr : '',
+        	jflx : '1'
+        });
+        editor.stopEditing();
+        feesGrid.store.insert(0, u);
+        editor.startEditing(0);
+    }
+
+    function onDelete() {
+        var rec = feesGrid.getSelectionModel().getSelected();
+        if (!rec) {
+            return false;
+        }
+        Ext.Msg.confirm('提示', '确认删除记录', function(btn, text){
+            if (btn == 'yes'){
+                feesGrid.store.remove(rec);
+            }
+        });
+    }
+    function onBack() {
+        indexStore.reload();
+    	feesWin.hide();
+    }
+//]]>
+</script>

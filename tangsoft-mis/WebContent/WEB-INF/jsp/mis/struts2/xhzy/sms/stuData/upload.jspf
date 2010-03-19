@@ -1,0 +1,150 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<%@ page import="com.tangmaowen.mis.common.Constants" %>
+<style type=text/css>
+.x-form-file-wrap {
+    position: relative;
+    height: 22px;
+}
+.x-form-file-wrap .x-form-file {
+	position: absolute;
+	right: 0;
+	-moz-opacity: 0;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+    height: 22px;
+}
+.x-form-file-wrap .x-form-file-btn {
+	position: absolute;
+	right: 0;
+	z-index: 1;
+}
+.x-form-file-wrap .x-form-file-text {
+    position: absolute;
+    left: 0;
+    z-index: 3;
+    color: #777;
+}
+.upload-icon {
+	background: url('${webroot}/resources/shared/images/add.png') no-repeat 0 0 !important;
+}
+#fi-button-msg {
+	border: 2px solid #ccc;
+	padding: 5px 10px;
+	background: #eee;
+	margin: 5px;
+	float: left;
+}
+</style>
+<script type="text/javascript">
+//<![CDATA[
+	var uploadExcelWin;
+    var uploadExcelForm = new Ext.FormPanel({
+        fileUpload: true,
+        frame: true,
+        autoHeight: true,
+        bodyStyle: 'padding: 5px 5px 0 5px;',
+        labelWidth: 50,
+		labelAlign: 'right',
+        defaults: {
+            anchor: '95%',
+            allowBlank: false,
+            msgTarget: 'side'
+        },
+        items: [{
+	        layout:'column',
+	        items:[{
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%'},
+	            defaultType: 'textfield',
+	            items: [
+	    	    new Ext.ux.form.SpinnerField({
+	                fieldLabel: '届',
+	                name: 'jie',
+	            	allowDecimals: false,
+	            	minValue: 2009,
+	            	maxValue: 2020,
+	                allowBlank: true
+	            })]
+	        }, {
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%'},
+	            defaultType: 'textfield',
+	            items: [
+				new Ext.form.ComboBox({
+				    fieldLabel: '季',
+				    hiddenName:'jj',
+				    store: getEntryArray('<%=DictConstants.JJ%>'),
+				    valueField:'key',
+				    displayField:'value',
+				    typeAhead: true,
+				    mode: 'local',
+				    forceSelection: true,
+				    triggerAction: 'all',
+				    selectOnFocus:true,
+				    editable: false,
+		            allowBlank: true
+				})]
+	        }]
+	    },{
+            xtype: 'fileuploadfield',
+            id: 'form-file',
+            emptyText: '选择一个Excel文件',
+            fieldLabel: '文件',
+            name: 'upload',
+            buttonText: '',
+            buttonCfg: {
+                iconCls: 'upload-icon'
+            }
+        }]
+    });
+
+	function showUploadExcelWin(record) {
+		if (!uploadExcelWin) {
+			uploadExcelWin = new Ext.Window( {
+				title : '导入Excel',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        width: 500,
+				items : uploadExcelForm,
+				html: '导入数据请使用：<a href="${webroot}<%=Constants.STUINFOEXCELTEMP%>" target="_blank">学生入学信息Excel模板</a>&nbsp;&nbsp;&nbsp;&nbsp;并阅读：' +
+				'<a href="${webroot}/upload/dataStandard.txt" target="_blank">数据规范</a>',
+				buttons : [ {
+		            text: '导入',
+		            handler: function(){
+		                if(uploadExcelForm.getForm().isValid()){
+			                uploadExcelForm.getForm().submit({
+			                    url: 'stuBaseInfoImport.${extension}',
+			                    waitTitle: '请等待',
+			                    waitMsg: '正在导入Excel文件...',
+			                    success: function(form, o){
+			    	        		uploadExcelWin.hide();
+					        		indexStore.reload();
+					        		misMessageBox(o.result);
+			                    },
+			                    failure: function(form, o){
+			                    	misMessageBox(o.result);
+			                    }
+			                });
+		                }
+		            }
+		        }, {
+		            text: '关闭',
+		            handler: function(){
+	        			indexStore.reload();
+	        			uploadExcelWin.hide();
+		            }
+		        } ]
+			});
+		}
+		uploadExcelWin.show();
+	}
+//]]>
+</script>

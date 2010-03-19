@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.tangmaowen.mis.sys.dao.hibernate.maps.UserPO" table="users">
+        <id name="userid" type="java.lang.Integer">
+            <column name="userid" />
+            <generator class="native" />
+        </id>
+        <property name="accountid" type="java.lang.String">
+            <column name="accountid" length="5" />
+        </property>
+        <property name="active" type="java.lang.String">
+            <column name="active" length="1" />
+        </property>
+        <property name="username" type="java.lang.String">
+            <column name="username" length="100" not-null="true" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password" length="32" not-null="true" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="email" length="300" />
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="status" length="20" />
+        </property>
+        <property name="addressunit" type="java.lang.String">
+            <column name="addressunit" length="200" />
+        </property>
+        <property name="addresshome" type="java.lang.String">
+            <column name="addresshome" length="200" />
+        </property>
+        <property name="phoneunit" type="java.lang.String">
+            <column name="phoneunit" length="100" />
+        </property>
+        <property name="phonehome" type="java.lang.String">
+            <column name="phonehome" length="100" />
+        </property>
+        <property name="lastvisittime" type="java.lang.String">
+            <column name="lastvisittime" length="19" />
+        </property>
+        <property name="visitcount" type="java.lang.Integer">
+            <column name="visitcount" />
+        </property>
+        <property name="creater" type="java.lang.Integer">
+            <column name="creater" not-null="true" />
+        </property>
+        <property name="createtime" type="java.lang.String">
+            <column name="createtime" length="19" not-null="true" />
+        </property>
+        <property name="lastupdater" type="java.lang.Integer">
+            <column name="lastupdater" not-null="true" />
+        </property>
+        <property name="lastupdatertime" type="java.lang.String">
+            <column name="lastupdatertime" length="19" not-null="true" />
+        </property>
+        <set name="userRoles" inverse="true">
+            <key>
+                <column name="userid" not-null="true" />
+            </key>
+            <one-to-many class="com.tangmaowen.mis.sys.dao.hibernate.maps.UserRolePO" />
+        </set>
+    </class>
+</hibernate-mapping>

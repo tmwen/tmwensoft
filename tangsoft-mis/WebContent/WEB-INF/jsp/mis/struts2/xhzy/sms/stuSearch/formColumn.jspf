@@ -1,0 +1,207 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+    
+	function getSearchFormColumn(){ 
+		return [{
+	        layout:'column',
+	        items:[{
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%'},
+	            defaultType: 'textfield',
+	            items: [
+	    	    new Ext.form.ComboBox({
+	                fieldLabel: '报读学历',
+	                hiddenName:'bkxl',
+	                store: getEntryArray('<%=DictConstants.BKXL%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true,
+	                listeners:{
+	                    select: function(){
+        	        		if(this.value == '1'){
+        	        			bdzyArrayStore.loadData(getEntryArray('<%=DictConstants.BDZYDZ%>'));
+        	        		}
+        	        		if(this.value == '2'){
+        	        			bdzyArrayStore.loadData(getEntryArray('<%=DictConstants.BDZYZZ%>'));
+        	        		}
+	                   	}
+	            	}
+	            }), new Ext.ux.form.SpinnerField({
+	                fieldLabel: '届',
+	                name: 'jie',
+	            	allowDecimals: false,
+	            	minValue: 2009,
+	            	maxValue: 2020
+	            }), new Ext.form.ComboBox({
+	                fieldLabel: '季',
+	                hiddenName:'jj',
+	                store: getEntryArray('<%=DictConstants.JJ%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }), {
+		            xtype: 'datefield',
+	                fieldLabel: '面试日期',
+	                name: 'msrq'
+	            }, {
+                	fieldLabel: '面试表编号',
+                	name: 'msbbh'
+            	}, {
+	                fieldLabel: '姓名',
+	                name: 'xm',
+	                maxLength: 100
+	            }, {
+		            vtype: 'sfzid',
+	                fieldLabel: '身份证号码',
+	                name: 'sfzhm'
+	            }, {
+		            xtype: 'combo',
+	                fieldLabel: '报读专业',
+	                hiddenName:'bdzy',
+	                store: bdzyArrayStore,
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                emptyText:'请先选择报读学历...',
+	                selectOnFocus:true
+	            }, {
+		            xtype: 'combo',
+	                fieldLabel: '预缴费',
+	                hiddenName:'yjfje',
+	                store: [['0', '未缴'], ['1', '已缴']],
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }, {
+		            xtype: 'numberfield',
+	                fieldLabel: '已缴费用(>=)',
+	                name: 'jfze',
+	            	decimalPrecision: 2,
+	            	maxValue: 999999.99
+	            }]
+	        }, {
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%'},
+	            defaultType: 'textfield',
+	            items: [new Ext.form.ComboBox({
+	                fieldLabel: '性别',
+	                hiddenName:'xb',
+	                store: getEntryArray('<%=DictConstants.XB%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }), new Ext.form.ComboBox({
+	                fieldLabel: '民族',
+	                hiddenName:'mz',
+	                store: getEntryArray('<%=DictConstants.MZ%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }), new Ext.form.ComboBox({
+	                fieldLabel: '政治面貌',
+	                hiddenName:'zzmm',
+	                store: getEntryArray('<%=DictConstants.ZZMM%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }), new Ext.form.ComboBox({
+	                fieldLabel: '总负责人',
+	                hiddenName:'zfzr',
+	                store: getEntryArray('<%=DictConstants.USERARRAY%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }), {
+	                fieldLabel: '招生老师',
+	                name: 'zsls',
+	                maxLength: 100
+	            }, {
+	                fieldLabel: '毕业学校',
+	                name: 'byxx',
+	                maxLength: 200
+	            }, {
+	                fieldLabel: '生源地',
+	                name: 'syd',
+	                maxLength: 200
+	            }, {
+		            xtype: 'combo',
+	                fieldLabel: '录取',
+	                hiddenName:'lq',
+	                store: getEntryArray('<%=DictConstants.LQ%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }, {
+		            xtype: 'combo',
+	                fieldLabel: '缴费',
+	                hiddenName:'jfje',
+	                store: [['0', '未缴'], ['300', '已缴']],
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }, {
+		            xtype: 'combo',
+	                fieldLabel: '预交费收款人',
+	                hiddenName:'yjfskr',
+	                store: getEntryArray('<%=DictConstants.ALIVEUSERARRAY%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: false,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }]
+	        }]
+	    }, {
+	        xtype:'hidden',
+	        name:'stuid'
+	    }];
+	}
+
+	
+//]]>
+</script>

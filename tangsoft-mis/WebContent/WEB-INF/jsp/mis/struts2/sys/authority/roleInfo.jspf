@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var detailsPanel = {
+		id : 'roleDetails',
+		title : '详情',
+		region : 'south',
+		autoScroll : true,
+		margins: '5 0 5 0',
+        height: 100,
+		html : ''
+	};
+//]]>
+</script>

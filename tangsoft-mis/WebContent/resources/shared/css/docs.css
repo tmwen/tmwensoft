@@ -1,0 +1,39 @@
+#loading {
+	position: absolute;
+	left: 45%;
+	top: 40%;
+	padding: 2px;
+	z-index: 20001;
+	height: auto;
+}
+
+#api-tree  .x-tree-selected {
+	border: 1px dotted #a3bae9;
+	background: #DFE8F6;
+}
+
+#api-tree  .x-tree-node .x-tree-selected a span {
+	background: transparent;
+	color: #1E4176;
+	font-weight: bold;
+}
+
+.icon-cmp {
+	background-image: url(../images/cmp.gif) !important;
+}
+
+.icon-pkg {
+	background-image: url(../images/pkg.gif) !important;
+}
+
+.icon-docs {
+	background-image: url(../images/docs.gif) !important;
+}
+
+.icon-expand-all {
+	background-image: url(../images/expand-all.gif) !important;
+}
+
+.icon-collapse-all {
+	background-image: url(../images/collapse-all.gif) !important;
+}

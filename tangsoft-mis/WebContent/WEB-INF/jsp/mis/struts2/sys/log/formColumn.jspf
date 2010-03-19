@@ -1,0 +1,72 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+	var infoJsonReader = new Ext.data.JsonReader({
+    	root 		 : 'data',
+    	idProperty 	: 'logid',
+    	totalProperty : 'count'
+    	},
+    	['logid', 'operater', 'opertime', 'operip', 'operaction', 'operinfo', 'operresult']
+    );
+
+	var columns = [
+	       		{header	: '流水号',	dataIndex : 'logid',		width  : 60},
+	    		{header	: '操作人',	dataIndex : 'operater',		width  : 80,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+	    		{header	: '操作时间',	dataIndex : 'opertime',		width  : 120},
+	    		{header	: 'IP地址',	dataIndex : 'operip',		width  : 100},
+	    		{header	: '动作',	dataIndex : 'operaction',	width  : 220},
+	    		{header	: '动作详情',	dataIndex : 'operinfo',		width  : 200},
+	    		{header	: '操作结果',	dataIndex : 'operresult',	width  : 600}
+	    	];
+    
+	function getFormColumn(){ 
+		return [{
+	        layout:'column',
+	        items:[{
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%', allowBlank:false},
+	            defaultType: 'textfield',
+	            items: [{
+	                fieldLabel: '流水号',
+	    	        name:'logid'
+	    	    }, {
+		            xtype: 'combo',
+	                fieldLabel: '操作人',
+	                hiddenName:'operater',
+	                store: getEntryArray('<%=DictConstants.USERARRAY%>'),
+	    	        readOnly: true
+	            }, {
+	                fieldLabel: '操作时间',
+	    	        name:'opertime'
+	    	    }]
+	        }, {
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%', allowBlank:false},
+	            defaultType: 'textfield',
+	            items: [{
+	                fieldLabel: 'IP地址',
+	    	        name:'operip'
+	    	    }, {
+	                fieldLabel: '动作',
+	    	        name:'operaction'
+	    	    }]
+	        }]
+	    }, {
+	    	xtype: 'textarea',
+            fieldLabel: '动作详情',
+            name: 'operinfo',
+	        height:100,
+	        anchor:'94%'
+        }, {
+	    	xtype: 'textarea',
+            fieldLabel: '操作结果',
+            name: 'operresult',
+	        height:200,
+	        anchor:'94%'
+        }];
+	}
+//]]>
+</script>

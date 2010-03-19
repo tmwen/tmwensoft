@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+loginFrom = new Ext.form.FormPanel( {
+	baseCls : 'x-plain',
+	labelWidth : 40,
+	labelAlign : 'right',
+	defaults : {
+		allowBlank : false
+	},
+	defaultType : 'textfield',
+	items : [ {
+		fieldLabel : '账号',
+		name : 'id',
+		xtype : 'numberfield',
+    	decimalPrecision: 0,
+		maxLength : 10,
+		minLength : 3,
+		anchor : '90%'
+	}, {
+		fieldLabel : '密码',
+		name : 'password',
+		inputType : "password",
+		maxLength : 10,
+		minLength : 3,
+		anchor : '90%'
+	} ]
+});
+
+loginWindow = new Ext.Window( {
+	title : '用户登录',
+	width : 300,
+	height : 140,
+	resizable : false,
+	closable : false,
+	layout : 'fit',
+	plain : true,
+	bodyStyle : 'padding:5px;',
+	buttonAlign : 'center',
+	modal : true,
+	items : loginFrom,
+	buttons : [ {
+		text : '登录',
+		type : 'submit',
+		handler : function() {
+			checkLogin();
+		}
+	}, {
+		text : '重置',
+		handler : function() {
+			loginFrom.form.reset();
+		}
+	} ],
+	keys : [ {
+		key : [ 10, 13 ],
+		fn : checkLogin
+	} ]
+});
+
+function checkLogin() {
+	if (loginFrom.form.isValid()) {
+		loginFrom.form.doAction('submit', {
+			url : 'login.${extension}',
+			waitTitle : '请等待',
+			waitMsg : '正在验证用户...',
+			method : 'post',
+			params : '',
+			success : function(form, action) {
+				loginWindow.hide();
+				loginFrom.form.reset();
+				if (!top.ajax) top.document.location = '${webroot}';
+			}
+		});
+	}
+}
+//]]>
+</script>

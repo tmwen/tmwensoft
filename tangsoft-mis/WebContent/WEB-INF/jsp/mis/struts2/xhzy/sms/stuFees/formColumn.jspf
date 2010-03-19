@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+	var columns = [
+		       		{header: '姓名',				dataIndex: 'xm',		width: 80},
+		    		{header: '性别',				dataIndex: 'xb',		width: 40,	renderer: function(value){return getDicInfo('<%=DictConstants.XB%>', value);}},
+		    		{header: '报读学历',			dataIndex: 'bkxl',		width: 60,	renderer: function(value){return getDicInfo('<%=DictConstants.BKXL%>', value);}},
+		    		{header: '报读专业',			dataIndex: 'bdzy',		width: 100, renderer: function(value, position, record){return bdzyDicInfo(value, record);}},
+		    		{header: '家庭详细地址',		dataIndex: 'jtxsdz',	width: 200},
+		        	{header: '预交费日期',			dataIndex: 'yjfrq',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
+		        	{header: '预交费金额(元)',		dataIndex: 'yjfje',		width: 90},
+		        	{header: '预交费收款人',		dataIndex: 'yjfskr',	width: 80,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+		        	{header: '缴费日期',			dataIndex: 'jfrq',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
+		        	{header: '缴费金额(元)',		dataIndex: 'jfje',		width: 80},
+		        	{header: '缴费收款人',			dataIndex: 'jfskr',		width: 70,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+		        	{header: '已缴费用(元)',		dataIndex: 'jfze',		width: 75},
+		        	{header: '应缴费用(元)',		dataIndex: 'yjje',		width: 75},
+		    		{header: '财务备注',			dataIndex: 'cwbz',		width: 200}
+	];
+//]]>
+</script>

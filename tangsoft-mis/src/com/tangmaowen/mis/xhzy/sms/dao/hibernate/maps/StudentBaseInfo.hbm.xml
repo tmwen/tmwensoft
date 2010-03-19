@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.tangmaowen.mis.xhzy.sms.dao.hibernate.maps.StudentBaseInfoPO" table="student_baseinfo">
+        <id name="stuid" type="java.lang.Integer">
+            <column name="stuid" />
+            <generator class="native" />
+        </id>
+        <property name="active" type="java.lang.String">
+            <column name="active" length="1" />
+        </property>
+        <property name="msbbh" type="java.lang.String">
+            <column name="msbbh" length="10" not-null="true" />
+        </property>
+        <property name="msrq" type="java.lang.String">
+            <column name="msrq" length="10" not-null="true" />
+        </property>
+        <property name="bkxl" type="java.lang.String">
+            <column name="bkxl" length="1" not-null="true" />
+        </property>
+        <property name="jie" type="java.lang.String">
+            <column name="jie" length="4" not-null="true" />
+        </property>
+        <property name="jj" type="java.lang.String">
+            <column name="jj" length="1" not-null="true" />
+        </property>
+        <property name="xm" type="java.lang.String">
+            <column name="xm" length="100" not-null="true" />
+        </property>
+        <property name="xb" type="java.lang.String">
+            <column name="xb" length="1" not-null="true" />
+        </property>
+        <property name="mz" type="java.lang.String">
+            <column name="mz" length="2" not-null="true" />
+        </property>
+        <property name="sg" type="java.lang.Double">
+            <column name="sg" />
+        </property>
+        <property name="bdzy" type="java.lang.String">
+            <column name="bdzy" length="4" />
+        </property>
+        <property name="zzmm" type="java.lang.String">
+            <column name="zzmm" length="1" not-null="true" />
+        </property>
+        <property name="csrq" type="java.lang.String">
+            <column name="csrq" length="10" not-null="true" />
+        </property>
+        <property name="sfzhm" type="java.lang.String">
+            <column name="sfzhm" length="18" />
+        </property>
+        <property name="hj" type="java.lang.String">
+            <column name="hj" length="1"/>
+        </property>
+        <property name="kslb" type="java.lang.String">
+            <column name="kslb" length="1" />
+        </property>
+        <property name="yklx" type="java.lang.String">
+            <column name="yklx" length="1" />
+        </property>
+        <property name="byz" type="java.lang.String">
+            <column name="byz" length="1" />
+        </property>
+        <property name="jtxsdz" type="java.lang.String">
+            <column name="jtxsdz" length="500" not-null="true" />
+        </property>
+        <property name="xslxdh" type="java.lang.String">
+            <column name="xslxdh" length="100" />
+        </property>
+        <property name="jzlxdh" type="java.lang.String">
+            <column name="jzlxdh" length="100" not-null="true" />
+        </property>
+        <property name="byxx" type="java.lang.String">
+            <column name="byxx" length="200" not-null="true" />
+        </property>
+        <property name="syd" type="java.lang.String">
+            <column name="syd" length="200" not-null="true" />
+        </property>
+        <property name="zsls" type="java.lang.String">
+            <column name="zsls" length="100" not-null="true" />
+        </property>
+        <property name="zfzr" type="java.lang.Integer">
+            <column name="zfzr" not-null="true" />
+        </property>
+        <property name="zs" type="java.lang.String">
+            <column name="zs" length="1" />
+        </property>
+        <property name="tj" type="java.lang.String">
+            <column name="tj" length="1" />
+        </property>
+        <property name="lq" type="java.lang.String">
+            <column name="lq" length="1" />
+        </property>
+        <property name="yjfrq" type="java.lang.String">
+            <column name="yjfrq" length="19" />
+        </property>
+        <property name="yjfje" type="java.lang.Double">
+            <column name="yjfje" length="8" />
+        </property>
+        <property name="yjfskr" type="java.lang.String">
+            <column name="yjfskr" length="100"/>
+        </property>
+        <property name="jfrq" type="java.lang.String">
+            <column name="jfrq" length="19" />
+        </property>
+        <property name="jfje" type="java.lang.Double">
+            <column name="jfje" length="8" />
+        </property>
+        <property name="jfskr" type="java.lang.String">
+            <column name="jfskr" length="100" />
+        </property>
+        <property name="jfze" type="java.lang.Double">
+            <column name="jfze" length="8" />
+        </property>
+        <property name="yjje" type="java.lang.Double">
+            <column name="yjje" length="8" />
+        </property>
+        <property name="bz" type="java.lang.String">
+            <column name="bz" length="2000" />
+        </property>
+        <property name="cwbz" type="java.lang.String">
+            <column name="cwbz" length="2000" />
+        </property>
+        <property name="creater" type="java.lang.Integer">
+            <column name="creater" not-null="true" />
+        </property>
+        <property name="createtime" type="java.lang.String">
+            <column name="createtime" length="19" not-null="true" />
+        </property>
+        <property name="lastupdater" type="java.lang.Integer">
+            <column name="lastupdater" not-null="true" />
+        </property>
+        <property name="lastupdatertime" type="java.lang.String">
+            <column name="lastupdatertime" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

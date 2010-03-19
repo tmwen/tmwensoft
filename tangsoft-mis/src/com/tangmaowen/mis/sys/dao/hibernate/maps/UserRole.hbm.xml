@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.tangmaowen.mis.sys.dao.hibernate.maps.UserRolePO" table="user_role">
+        <composite-id name="id" class="com.tangmaowen.mis.sys.dao.hibernate.maps.UserRoleId">
+            <key-many-to-one name="users" class="com.tangmaowen.mis.sys.dao.hibernate.maps.UserPO">
+                <column name="userid" />
+            </key-many-to-one>
+            <key-many-to-one name="role" class="com.tangmaowen.mis.sys.dao.hibernate.maps.RolePO">
+                <column name="roleid" />
+            </key-many-to-one>
+        </composite-id>
+    </class>
+</hibernate-mapping>

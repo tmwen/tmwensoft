@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.tangmaowen.mis.sys.dao.hibernate.maps.AuthorityPO" table="authority">
+        <id name="authid" type="java.lang.String">
+            <column name="authid" length="100" />
+            <generator class="assigned" />
+        </id>
+        <property name="authname" type="java.lang.String">
+            <column name="authname" length="100" not-null="true" />
+        </property>
+        <property name="authdesc" type="java.lang.String">
+            <column name="authdesc" length="500" />
+        </property>
+        <property name="authtype" type="java.lang.String">
+            <column name="authtype" length="1" />
+        </property>
+        <set name="roleAuthorities" inverse="true">
+            <key>
+                <column name="authid" length="100" not-null="true" />
+            </key>
+            <one-to-many class="com.tangmaowen.mis.sys.dao.hibernate.maps.RoleAuthorityPO" />
+        </set>
+    </class>
+</hibernate-mapping>

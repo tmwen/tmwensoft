@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+
+	var userInfoForm = new Ext.FormPanel( {
+		frame : true,
+		title : '个人信息设置',
+		bodyStyle : 'padding:5px 5px 0',
+		labelAlign : 'right',
+		labelWidth : 125,
+		defaults : {
+			width : 500
+		},
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn(),
+        listeners: {activate: loadUserInfo},
+        tbar		:[{
+            xtype:'buttongroup',
+            items: [{
+            	text: '保存',
+            	icon: '${webroot}/resources/shared/images/accept.png',
+            	handler: userInfoAlterSubmit
+            }]
+        }, {
+            xtype:'buttongroup',
+            items: [{
+            	text: '刷新',
+            	icon: '${webroot}/resources/shared/images/refresh.gif',
+            	handler: function(){
+                	tag = false;
+                	loadUserInfo();
+                }
+            }]
+        }]
+	});
+
+	function loadUserInfo(){
+		userInfoForm.form.load( {
+			url : 'getUserInfoByUser.${extension}',
+			params : '',
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+	}
+
+	function userInfoAlterSubmit() {
+		if (userInfoForm.form.isValid()) {
+			userInfoForm.form.doAction('submit', {
+				url : 'updateUserInfoByUser.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在提交...',
+				method : 'post',
+				params : ''
+			});
+		}
+	}
+//]]>
+</script>

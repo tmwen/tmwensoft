@@ -1,0 +1,331 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var treePanel = new Ext.tree.TreePanel({
+    	id: 'tree-panel',
+        region:'center',
+        split: true,
+        minSize: 200,
+        autoScroll: true,
+        rootVisible: true,
+        lines: false,
+        singleExpand: true,
+        useArrows: true,
+        loader: new Ext.tree.TreeLoader({
+			preloadChildren: true,
+			clearOnLoad: false
+		}),
+        root: new Ext.tree.AsyncTreeNode({
+    		id: 'roleTree',
+    		text: '角色',
+    		icon: '${webroot}/resources/shared/images/plugin.gif',
+            expanded: true,
+    		singleClickExpand : true,
+            children: Ext.decode("${tree}")
+        }),
+        collapseFirst:false,
+        items: [new Ext.Toolbar({
+            cls:'top-toolbar',
+            items:[ ' ',
+			new Ext.form.TextField({
+				width: 180,
+				emptyText:'查找角色',
+				listeners:{
+					render: function(f){
+						f.el.on('keydown', filterTree, f, {buffer: 350});
+					}
+				}
+			}), ' ', ' ',
+			{
+                iconCls: 'icon-expand-all',
+				tooltip: '展开所有',
+                handler: function(){ treePanel.root.expand(true); }
+            }, '-', {
+                iconCls: 'icon-collapse-all',
+                tooltip: '折叠所有',
+                handler: function(){ treePanel.root.collapse(true); }
+            }]
+        })]
+    });
+	var bookTplMarkup = ['角色ID：{id}<br/>','角色名称：{text}<br/>','角色描述：{text}'];
+	var bookTpl = new Ext.Template(bookTplMarkup);
+    treePanel.on('click', function(node, e){
+		if(node.isLeaf()){
+			e.stopEvent();
+			onSelectAction(node);
+        }
+	});
+	function onSelectAction(record){
+		curNode = record;
+		this.roleid = record.id;
+		Ext.getCmp('rolePanel').setTitle(record.text);
+		var roleDetails = Ext.getCmp('roleDetails');
+		bookTpl.overwrite(roleDetails.body, record);
+		loadAuth();
+	}
+    treePanel.on('contextmenu', onContextMenu, this);
+    function onContextMenu(node, e){
+        if(!this.menu){
+            this.menu = new Ext.menu.Menu({
+                items: [{
+                    id:'update',
+                    icon: '${webroot}/resources/shared/images/edit.gif',
+                    text:'修改',
+                    scope: this,
+                    handler: function(){showUpdateRoleWin(this.ctxNode);}
+                },{
+                    id:'delete',
+                    icon: '${webroot}/resources/shared/images/delete.gif',
+                    text:'删除',
+                    scope: this,
+                    handler:function(){
+                        var requestConfig = {
+            				url: 'deleteRole.${extension}',
+            				params: {roleid: this.ctxNode.id}
+                        };
+                        var result = Ext.Ajax.request(requestConfig);
+                        this.ctxNode.ui.removeClass('x-node-ctx');
+                        this.removeCtxNode(this.ctxNode);
+                        this.ctxNode = null;
+                    }
+                },'-',{
+                    icon: '${webroot}/resources/shared/images/add.png',
+                    text:'新建角色',
+                    handler: this.showAddRoleWin,
+                    scope: this
+                }]
+            });
+            this.menu.on('hide', onContextHide, this);
+        }
+        if(this.ctxNode){
+            this.ctxNode.ui.removeClass('x-node-ctx');
+            this.ctxNode = null;
+        }
+        this.menu.items.get('update').setDisabled(!node.isLeaf());
+        this.menu.items.get('delete').setDisabled(!node.isLeaf());
+        this.ctxNode = node;
+        this.ctxNode.ui.addClass('x-node-ctx');
+        this.menu.showAt(e.getXY());
+    }
+    
+    function removeCtxNode(node){
+        if(node){
+            node.unselect();
+            node.remove();
+        }
+    }
+
+    function addCtxNode(node){
+		var node = new Ext.tree.AsyncTreeNode({text:node.rolename,id:node.roleid,isClass:true,iconCls:'icon-pkg',leaf:true});
+		treePanel.root.appendChild(node);
+		node.select();
+    }
+
+    function onContextHide(){
+        if(this.ctxNode){
+            this.ctxNode.ui.removeClass('x-node-ctx');
+            this.ctxNode = null;
+        }
+    }
+
+	//---------------------------------------------------------
+			var updateRoleForm = new Ext.form.FormPanel({
+				baseCls : 'x-plain',
+				labelWidth : 55,
+				reader : new Ext.data.JsonReader( {
+					root : 'data',
+					idProperty : 'roleid'
+				}, [ 'roleid', 'rolename', 'roledesc' ]),
+				items : [ {
+			        xtype:'textfield',
+					fieldLabel : '角色名称',
+					name : 'rolename',
+					anchor : '100%',
+		            maxLength: 100,
+	            	allowBlank: false,
+	    	        readOnly: true
+				}, {
+			        xtype:'textarea',
+			        fieldLabel:'角色描述',
+			        name:'roledesc',
+			        height:100,
+			        anchor:'100%',
+		            maxLength: 500
+				}, {
+			        xtype:'hidden',
+			        name:'roleid'
+			    } ]
+			});
+	
+	function showUpdateRoleWin(record) {
+		record.select();
+		if (!this.updateRoleWin) {
+
+			this.updateRoleWin = new Ext.Window({
+				title : '修改角色',
+				width : 400,
+				height : 210,
+				minWidth : 300,
+				minHeight : 200,
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+				items : updateRoleForm,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						update();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						updateRoleWin.hide();
+					}
+				} ],
+				keys : [ {
+					key : [ 10, 13 ],
+					fn : update
+				} ]
+			});
+
+			function update() {
+				if (updateRoleForm.form.isValid()) {
+					updateRoleForm.form.doAction('submit', {
+						url : 'updateRole.${extension}',
+						waitTitle : '请等待',
+						waitMsg : '正在提交...',
+						method : 'post',
+						params : '',
+						success : function(form, action) {
+							updateRoleWin.hide();
+							updateRoleForm.form.reset();
+						}
+					});
+				}
+			}
+		}
+		
+		updateRoleForm.form.load( {
+			url : 'getRoleInfo.${extension}',
+			params : 'roleid=' + record.id,
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+		this.updateRoleWin.show(this);
+	}
+
+	//---------------------------------------------------------
+	
+	function showAddRoleWin(record) {
+		if (!this.addRoleWin) {
+			var roleForm = new Ext.form.FormPanel({
+				baseCls : 'x-plain',
+				labelWidth : 55,
+				items : [ {
+			        xtype:'textfield',
+					fieldLabel : '角色名称',
+					name : 'rolename',
+					anchor : '100%',
+		            maxLength: 100,
+	            	allowBlank: false
+				}, {
+			        xtype:'textarea',
+			        fieldLabel:'角色描述',
+			        name:'roledesc',
+			        height:100,
+			        anchor:'100%',
+		            maxLength: 500
+				} ]
+			});
+
+			this.addRoleWin = new Ext.Window({
+				title : '新增角色',
+				width : 400,
+				height : 210,
+				minWidth : 300,
+				minHeight : 200,
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+				items : roleForm,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						add();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						roleForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						addRoleWin.hide();
+					}
+				} ],
+				keys : [ {
+					key : [ 10, 13 ],
+					fn : add
+				} ]
+			});
+
+			function add() {
+				if (roleForm.form.isValid()) {
+					roleForm.form.doAction('submit', {
+						url : 'insertRole.${extension}',
+						waitTitle : '请等待',
+						waitMsg : '正在提交...',
+						method : 'post',
+						params : '',
+						success : function(form, action) {
+							addRoleWin.hide();
+							roleForm.form.reset();
+							addCtxNode(action.result.data[0]);
+						}
+					});
+				}
+			}
+		}
+		this.addRoleWin.show(this);
+	}
+
+	//---------------------------------------------------------
+
+	var filter = new Ext.tree.TreeFilter(treePanel, {
+		clearBlank: true,
+		autoClear: true
+	});
+	var hiddenPkgs = [];
+	function filterTree(e){
+		var text = e.target.value;
+		Ext.each(hiddenPkgs, function(n){
+			n.ui.show();
+		});
+		if(!text){
+			filter.clear();
+			return;
+		}
+		treePanel.expandAll();
+		
+		var re = new RegExp('^' + Ext.escapeRe(text), 'i');
+		filter.filterBy(function(n){
+			return !n.attributes.isClass || re.test(n.text);
+		});
+
+		hiddenPkgs = [];
+		treePanel.root.cascade(function(n){
+			if(!n.attributes.isClass && n.ui.ctNode.offsetHeight < 3){
+				n.ui.hide();
+				hiddenPkgs.push(n);
+			}
+		});
+	}
+//]]>
+</script>

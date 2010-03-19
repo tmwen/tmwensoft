@@ -1,0 +1,98 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+    var curNode;
+	var rootDicData = {
+		id: 'dics',
+		iconCls: 'icon-docs',
+		text: '数据字典',
+        expanded: true,
+		singleClickExpand : true,
+		children : Ext.decode("${tree}")
+	};
+	var dicPanel = new Ext.tree.TreePanel({
+    	id: 'tree-panel',
+        region:'center',
+        split: true,
+        minSize: 200,
+        autoScroll: true,
+        rootVisible: false,
+        lines: false,
+        singleExpand: true,
+        useArrows: true,
+        loader: new Ext.tree.TreeLoader({
+			preloadChildren: true,
+			clearOnLoad: false
+		}),
+        root: new Ext.tree.AsyncTreeNode({
+            text: '数据字典',
+            id: 'root',
+            expanded: true,
+            children: [rootDicData]
+         }),
+        collapseFirst:false,
+        items: [new Ext.Toolbar({
+            cls:'top-toolbar',
+            items:[ ' ',
+			new Ext.form.TextField({
+				width: 180,
+				emptyText:'查找字典',
+				listeners:{
+					render: function(f){
+						f.el.on('keydown', filterTree, f, {buffer: 350});
+					}
+				}
+			}), ' ', ' ',
+			{
+                iconCls: 'icon-expand-all',
+				tooltip: '展开所有',
+                handler: function(){ dicPanel.root.expand(true); }
+            }, '-', {
+                iconCls: 'icon-collapse-all',
+                tooltip: '折叠所有',
+                handler: function(){ dicPanel.root.collapse(true); }
+            }]
+        })]
+    });
+	dicPanel.on('click', function(node, e){
+		if(node.isLeaf()){
+			e.stopEvent();
+			curNode = node;
+			Ext.getCmp('dicPanel').setTitle(node.text);
+			dicStore.load({
+				params:{parentcode: node.id}
+			});
+        }
+	});
+
+	var filter = new Ext.tree.TreeFilter(dicPanel, {
+		clearBlank: true,
+		autoClear: true
+	});
+	var hiddenPkgs = [];
+	function filterTree(e){
+		var text = e.target.value;
+		Ext.each(hiddenPkgs, function(n){
+			n.ui.show();
+		});
+		if(!text){
+			filter.clear();
+			return;
+		}
+		dicPanel.expandAll();
+		
+		var re = new RegExp('^' + Ext.escapeRe(text), 'i');
+		filter.filterBy(function(n){
+			return !n.attributes.isClass || re.test(n.text);
+		});
+
+		hiddenPkgs = [];
+		dicPanel.root.cascade(function(n){
+			if(!n.attributes.isClass && n.ui.ctNode.offsetHeight < 3){
+				n.ui.hide();
+				hiddenPkgs.push(n);
+			}
+		});
+	}
+//]]>
+</script>

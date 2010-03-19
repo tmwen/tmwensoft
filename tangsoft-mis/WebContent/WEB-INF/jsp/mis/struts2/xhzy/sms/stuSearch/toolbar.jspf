@@ -1,0 +1,155 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var recordData;
+	var condition;
+
+	var condForm = new Ext.form.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		items : getSearchFormColumn()
+	});
+
+	var conditionWin;
+	//---------------------------------------------------
+	function showConditionWin(record) {
+		if (!conditionWin) {
+			conditionWin = new Ext.Window( {
+				title : '查询条件',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 360,
+		        width: 700,
+				items : condForm,
+				buttons : [ {
+					text : '查询',
+					handler : function() {
+						search();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						condForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						conditionWin.hide();
+					}
+				} ],
+				keys : [ {
+					key : [ 10, 13 ],
+					fn : search
+				} ]
+			});
+
+			function search() {
+				if (condForm.form.isValid()) {
+					conditionWin.hide();
+					condition = condForm.form.getValues();
+					dosubmitForm(condition);
+				}
+			}
+		}
+		conditionWin.show(this);
+	}
+
+	//-------------------view----------------------------
+	var viewForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	var viewWin;
+	function showViewWin(record) {
+		if (!isRecordClick()) return;
+		if (viewForm) viewForm.form.reset();
+		if (!viewWin) {
+			viewWin = new Ext.Window( {
+				title : '查看学生信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 400,
+		        width: 800,
+	           	maximized: true,
+				items : viewForm,
+				buttons : [ {
+					text : '返回',
+					handler : function() {
+						viewWin.hide();
+					}
+				} ]
+			});
+		}
+		viewWin.show(this, function(){
+			viewForm.form.load( {
+				url : 'getStudentBaseInfo.${extension}',
+				params : 'stuid=' + recordData.stuid,
+				waitTitle : '请等待',
+				waitMsg : '读取中...',
+                failure: function(form, o){
+            		//wiewWin.hide();
+            	}
+			});
+		});
+	}
+	//-----------------------------------------------------
+	/**
+	function importStuData() {
+		window.showModalDialog('${webroot}/mis/xhzy/sms/stuDataIndex.${extension}', window, 'dialogWidth=6200px;dialogHeight=620px');
+		indexStore.reload();
+	}
+	*/
+	
+	function showExportExcelWin() {
+        //var vExportContent = indexGrid.getExcelXml();
+        /*
+        if (Ext.isIE6 || Ext.isIE7 ||  Ext.isIE8 || Ext.isSafari || Ext.isSafari2 || Ext.isSafari3) {  
+            var fd=Ext.get('frmDummy');  
+            if (!fd) {  
+                fd=Ext.DomHelper.append(Ext.getBody(),{tag:'form',method:'post',id:'frmDummy',action:'stuBaseInfoExport.${extension}', target:'_blank',name:'frmDummy',cls:'x-hidden',cn:[  
+                    {tag:'input',name:'fileName',id:'fileName',type:'hidden'},  
+                    {tag:'input',name:'exportContent',id:'exportContent',type:'hidden'}  
+                ]},true);  
+            }  
+            fd.child('#fileName').set({value:'学生基本信息'});  
+            fd.child('#exportContent').set({value:vExportContent});  
+            fd.dom.submit();  
+        } else {  
+            document.location = 'data:application/vnd.ms-excel;base64,'+Base64.encode(vExportContent);  
+		}
+		*/
+        if (! Ext.fly('frmDummy')) {
+            var frm = document.createElement('form');
+            frm.id = 'frmDummy';
+            frm.name = id;
+            frm.className = 'x-hidden';
+            document.body.appendChild(frm);
+        }
+        Ext.Ajax.request({
+            url: 'stuBaseInfoExport.${extension}',
+            method: 'post',
+            form: Ext.fly('frmDummy'),
+            isUpload: true,
+            params: condition,
+            failure: function(form, o){
+        		misMessageBox(o.result);
+        	}
+        });
+	}
+//]]>
+</script>

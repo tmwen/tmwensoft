@@ -1,0 +1,277 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+	var recordData;
+	//---------------------------------------------------
+	var conditionWin;
+	function showConditionWin(record) {
+		if (!conditionWin) {
+			var condForm = new Ext.form.FormPanel( {
+				baseCls : 'x-plain',
+				labelWidth : 55,
+				defaultType : 'textfield',
+				items : [ {
+					fieldLabel : '姓名',
+					name : 'xm',
+					anchor : '100%'
+				}, {
+					fieldLabel : '身份证号',
+					name : 'sfzhm',
+					anchor : '100%'
+				} ]
+			});
+
+			conditionWin = new Ext.Window( {
+				title : '查询条件',
+				width : 400,
+				height : 200,
+				minWidth : 300,
+				minHeight : 200,
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+				items : condForm,
+				buttons : [ {
+					text : '查询',
+					handler : function() {
+						search();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						condForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						conditionWin.hide();
+					}
+				} ],
+				keys : [ {
+					key : [ 10, 13 ],
+					fn : search
+				} ]
+			});
+
+			function search() {
+				if (condForm.form.isValid()) {
+					conditionWin.hide();
+					dosubmitForm(condForm.form.getValues());
+				}
+			}
+		}
+		conditionWin.show(this);
+	}
+
+	//---------------------update--------------------------
+	var updateWin;
+	var updateForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	function showUpdateWin(record) {
+		if (!isRecordClick()) return;
+		if (updateForm) updateForm.form.reset();
+		if (!updateWin) {
+			updateWin = new Ext.Window( {
+				title : '修改学生信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 400,
+		        width: 800,
+	           	maximized: true,
+				items : updateForm,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						updateInfoSubmit();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						updateWin.hide();
+					}
+				} ]
+			});
+		}
+		updateWin.show(this, function(){
+			updateForm.getForm().load( {
+				url : 'getStudentBaseInfo.${extension}',
+				params : 'stuid=' + recordData.stuid,
+				waitTitle : '请等待',
+				waitMsg : '读取中...'
+			});
+		});
+	}
+
+	function updateInfoSubmit() {
+		if (updateForm.form.isValid()) {
+			updateForm.form.doAction('submit', {
+				url : 'updateStudentBaseInfo.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在保存...',
+				method : 'post',
+				params : '',
+				success : function(form, action) {
+					updateWin.hide();
+					indexStore.reload();
+				}
+			});
+		} else {
+			misPromptMessageBox('数据有误请检查');
+		}
+	}
+
+	//-------------------insert----------------------------
+	var insertWin;
+	var insertForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	function showInsertWin(record) {
+		if (insertForm) insertForm.form.reset();
+		if (!insertWin) {
+			insertWin = new Ext.Window( {
+				title : '新增学生信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 400,
+		        width: 800,
+	           	maximized: true,
+				items : insertForm,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						insertInfoSubmit();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						insertForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						insertWin.hide();
+					}
+				} ]
+			});
+		}
+		//var TopicRecord = Ext.data.Record.create([{name: 'csrq'}]);
+		//var myNewRecord = new TopicRecord({csrq: '2009-12-03'});
+		//insertForm.form.loadRecord(myNewRecord);
+		
+		insertWin.show(this, function() {
+			insertForm.form.load( {
+				url : 'insertStudentBaseInfoInit.${extension}',
+				params : '',
+				waitTitle : '请等待',
+				waitMsg : '初始化中...'
+			});
+		});
+	}
+
+	function insertInfoSubmit() {
+		if (insertForm.form.isValid()) {
+			insertForm.form.doAction('submit', {
+				url : 'insertStudentBaseInfo.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在保存...',
+				method : 'post',
+				params : '',
+				success : function(form, action) {
+					insertWin.hide();
+					indexStore.reload();
+				}
+			});
+		} else {
+			misPromptMessageBox('数据有误请检查');
+		}
+	}
+
+	//-------------------view----------------------------
+	var viewWin;
+	var viewForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	function showViewWin(record) {
+		if (!isRecordClick()) return;
+		if (viewForm) viewForm.form.reset();
+		if (!viewWin) {
+			viewWin = new Ext.Window( {
+				title : '查看学生信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 400,
+		        width: 800,
+	           	maximized: true,
+				items : viewForm,
+				buttons : [ {
+					text : '返回',
+                    scope: this,
+					handler : function() {
+						viewWin.hide();
+					}
+				} ]
+			});
+		}
+		viewWin.show(this, function() {
+			viewForm.form.load( {
+				url : 'getStudentBaseInfo.${extension}',
+				params : 'stuid=' + recordData.stuid,
+				waitTitle : '请等待',
+				waitMsg : '读取中...'
+			});
+		});
+	}
+
+	function onDeleteInfo(record) {
+    	if (!isRecordClick()) return;
+        Ext.Msg.confirm('提示', '确认删除“' + recordData.xm + '”的基本信息', function(btn, text){
+            if (btn == 'yes'){
+            	var requestConfig = {
+            		url: 'deleteStudentBaseInfo.${extension}',
+            		params: {stuid: recordData.stuid},
+            		success: function(response, opts) {
+            			indexStore.reload();
+            			recordData = '';
+            		}
+				};
+                var result = Ext.Ajax.request(requestConfig);
+            }
+        });
+	}
+//]]>
+</script>

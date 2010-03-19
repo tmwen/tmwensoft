@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+	<package name="mis-xhzy-sms" namespace="/mis/xhzy/sms" extends="mis">
+		<!-- stuBaseInfo -->
+		<action name="studentsBaseInfoIndex" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/xhzy/sms/stuBaseInfo/studentIndex.jsp</result>
+		</action>
+		<action name="getStudentsBaseInfoList" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetListAction"></action>
+		<action name="insertStudentBaseInfo" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.InsertInfoAction"></action>
+		<action name="updateStudentBaseInfo" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.UpdateInfoAction"></action>
+		<action name="deleteStudentBaseInfo" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.DeleteInfoAction"></action>
+		<action name="getStudentBaseInfo" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetInfoAction"></action>
+		<action name="insertStudentBaseInfoInit" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetInitInfoAction"></action>
+		
+		<!-- stuFeesInfo -->
+		<action name="studentsFeesIndex" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/xhzy/sms/stuFees/studentIndex.jsp</result>
+		</action>
+		<action name="getStudentsFeesList" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.GetStuListAction"></action>
+		<action name="getStudentFeesList" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.GetStuFeeListAction"></action>
+		<action name="insertStudentFees" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.InsertInfoAction"></action>
+		<action name="updateStudentFees" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.UpdateInfoAction"></action>
+		<action name="deleteStudentFees" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.DeleteInfoAction"></action>
+		<action name="updateStuInfoByFee" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.UpdateStuInfoByFee"></action>
+		
+		<!-- search -->
+		<action name="stuSearchIndex" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/xhzy/sms/stuSearch/searchIndex.jsp</result>
+		</action>
+		<action name="getStuBaseInfoListBySearch" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stusearch.GetListAction"></action>
+		
+		<!-- stuData -->
+		<action name="stuDataIndex" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/xhzy/sms/stuData/stuDataIndex.jsp</result>
+		</action>
+		<action name="stuBaseInfoImport" class="com.tangmaowen.mis.xhzy.sms.web.struts2.studata.StuBaseInfoImportAction"></action>
+		<action name="stuBaseInfoExport" class="com.tangmaowen.mis.xhzy.sms.web.struts2.studata.StuBaseInfoExportAction">
+			<param name="fileName">excel.xls</param>
+            <result name="success" type="stream">
+                <param name="contentType">text/plain</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+		</action>
+	</package>
+
+</struts>

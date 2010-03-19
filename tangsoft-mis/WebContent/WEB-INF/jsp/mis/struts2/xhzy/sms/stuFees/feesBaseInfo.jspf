@@ -1,0 +1,138 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+
+    function getFeesBaseInfoFormColumn(){ 
+		return [{
+	        layout:'column',
+	        items:[{
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%', allowBlank: true},
+	            defaultType: 'textfield',
+	            items: [
+	    	    new Ext.form.DateField({
+	                fieldLabel: '预交费日期',
+	                name: 'yjfrq'
+	            }), {
+		            xtype: 'numberfield',
+	                fieldLabel: '预交费金额(元)',
+	                name: 'yjfje',
+	            	decimalPrecision: 2,
+	            	maxValue: 999999.99
+	            }, new Ext.form.ComboBox({
+	                fieldLabel: '预交费收款人',
+	                hiddenName: 'yjfskr',
+	                store: getEntryArray('<%=DictConstants.ALIVEUSERARRAY%>'),
+	                valueField: 'key',
+	                displayField: 'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: false,
+	                triggerAction: 'all',
+	                selectOnFocus: true
+	            }), {
+		            xtype: 'numberfield',
+	                fieldLabel: '应缴金额(元)',
+	                name: 'yjje',
+	            	decimalPrecision: 2,
+	            	maxValue: 999999.99
+	            }]
+	        }, {
+	            columnWidth:.5,
+	            layout: 'form',
+	            defaults: {anchor:'92%', allowBlank: true},
+	            defaultType: 'textfield',
+	            items: [
+	    	    new Ext.form.DateField({
+	                fieldLabel: '缴费日期',
+	                name: 'jfrq'
+	            }), {
+		            xtype: 'numberfield',
+	                fieldLabel: '缴费金额(元)',
+	                name: 'jfje',
+	            	decimalPrecision: 2,
+	            	maxValue: 999999.99
+	            }, new Ext.form.ComboBox({
+	                fieldLabel: '缴费收款人',
+	                hiddenName: 'jfskr',
+	                store: getEntryArray('<%=DictConstants.ALIVEUSERARRAY%>'),
+	                valueField: 'key',
+	                displayField: 'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: false,
+	                triggerAction: 'all',
+	                selectOnFocus: true
+	            }), {
+		            xtype: 'numberfield',
+	                fieldLabel: '已缴费用(元)',
+	                name: 'jfze',
+	            	decimalPrecision: 2,
+	            	maxValue: 999999.99
+	            }]
+	        }]
+	    }, {
+	        xtype:'textarea',
+	        fieldLabel:'财务备注',
+	        name:'cwbz',
+	        height:60,
+	        anchor:'96%',
+            maxLength: 2000
+	    }, {
+	        xtype:'hidden',
+	        name:'stuid'
+	    }];
+	}
+	
+	var feesBaseInfoForm = new Ext.FormPanel( {
+		title: '学生缴费基本信息',
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFeesBaseInfoFormColumn(),
+        listeners: {activate: loadStuBaseInfoByFee},
+        tbar: [{
+        	text: '保存',
+        	icon: '${webroot}/resources/shared/images/accept.png',
+        	handler: stuBaseInfoAlterSubmitByFee
+        }, '-', {
+        	text: '刷新',
+        	icon: '${webroot}/resources/shared/images/refresh.gif',
+        	handler: function(){
+        		loadStuBaseInfoByFee();
+            }
+        }, '-', {
+            text: '返回',
+        	icon: '${webroot}/resources/shared/images/return.png',
+            handler: onBack
+        }]
+	});
+
+	function loadStuBaseInfoByFee(){
+		feesBaseInfoForm.form.load( {
+			url : 'getStudentBaseInfo.${extension}',
+			params : 'stuid=' + recordData.stuid,
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+	}
+
+	function stuBaseInfoAlterSubmitByFee() {
+		if (feesBaseInfoForm.form.isValid()) {
+			feesBaseInfoForm.form.doAction('submit', {
+				url : 'updateStuInfoByFee.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在提交...',
+				method : 'post',
+				params : ''
+			});
+		} else {
+			misPromptMessageBox('数据有误请检查');
+		}
+	}
+//]]>
+</script>

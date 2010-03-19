@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+
+	var authProxy = new Ext.data.HttpProxy( {
+		autoLoad : true,
+		method : 'post',
+		params : '',
+		url : 'getRoleAuthList.${extension}'
+	});
+
+	var authReader = new Ext.data.JsonReader( {
+		root : 'data',
+		idProperty : 'authid',
+		totalProperty : 'count'
+	}, [ 'authid', 'authname', 'authdesc', 'authtype', 'check' ]);
+
+	var authStore = new Ext.data.GroupingStore( {
+		proxy : authProxy,
+		reader : authReader,
+		sortInfo : {
+			field : 'authname',
+			direction : "ASC"
+		},
+		remoteSort : false,
+		groupField : 'authtype'
+	});
+
+	var authCheckbox = new Ext.grid.CheckboxSelectionModel( {
+		listeners : {
+			selectionchange : function(sm) {
+			}
+		}
+	});
+
+	var authColumns = new Ext.grid.ColumnModel( {
+		defaults : {sortable : true},
+		columns : [ 
+		   	authCheckbox, 
+		   	{id : 'authid', header : "权限编码", width : 40, dataIndex : 'authid'}, 
+			{header : "权限名称",	width : 60, 	dataIndex : 'authname'}, 
+			{header : "权限描述",	width : 120,	dataIndex : 'authdesc'}, 
+			{header : "权限类型",	width : 20, 	dataIndex : 'authtype',	renderer: function(value){return getDicInfo('<%=DictConstants.AUTHTYPE%>', value);}, hidden : true},
+			{header : "选中",	width : 20, 	dataIndex : 'check',	renderer: checkRoleAuth, hidden : true} 
+		]
+	});
+	function checkRoleAuth(value, cellmeta, record, rowIndex, columnIndex, store){
+		if(value) {
+			authCheckbox.selectRow(rowIndex, true);
+		}
+	}
+	var authView = new Ext.grid.GroupingView({
+		forceFit : true,
+		groupTextTpl : '{text} ({[values.rs.length]} 项)'
+	});
+
+	var roleAuthPanel = new Ext.TabPanel( {
+		region : 'center',
+		margins : '5 5 5 0',
+		tabPosition : 'bottom',
+		activeTab : 0,
+		items : [ {
+			id : 'rolePanel',
+			title : '角色',
+			xtype : 'grid',
+			layout : 'fit',
+			store : authStore,
+			cm : authColumns,
+			sm : authCheckbox,
+			stripeRows : true,
+			autoExpandColumn : 'authname',
+			view : authView,
+			tbar : [ {
+				text : '保存',
+				icon : '${webroot}/resources/shared/images/accept.png',
+				handler : function() {
+					var records=authCheckbox.getSelections();
+					updateRoleAuth(records);
+				}
+			}, '-', {
+				text : '刷新',
+				icon : '${webroot}/resources/shared/images/refresh.gif',
+				handler : function() {
+					loadAuth();
+				}
+			}, '-' ]
+		} ]
+	});
+
+	function loadAuth(){
+		authCheckbox.clearSelections();
+		authStore.reload({
+			params:{roleid: this.roleid}
+		});
+	}
+
+	function updateRoleAuth(records){
+		var checkAuth = '';
+		for(i = 0; i < records.length; i++){
+			checkAuth += records[i].id + ',';
+		}
+        var requestConfig = {
+			url: 'updateRoleAuth.${extension}',
+			params: {roleid: this.roleid, authids: checkAuth}
+        };
+        var result = Ext.Ajax.request(requestConfig);
+	}
+//]]>
+</script>

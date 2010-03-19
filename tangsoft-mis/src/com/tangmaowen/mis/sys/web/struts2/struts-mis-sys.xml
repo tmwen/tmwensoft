@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+	<package name="mis-sys" namespace="/mis/sys" extends="mis">
+		<!-- sys.user -->
+		<action name="userIndex" class="com.tangmaowen.mis.sys.web.struts2.user.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/sys/user/userIndex.jsp</result>
+		</action>
+		<action name="alterUserPasswordByUser" class="com.tangmaowen.mis.sys.web.struts2.user.PasswordAlterSubmitAction"></action>
+		<action name="updateUserInfoByUser" class="com.tangmaowen.mis.sys.web.struts2.users.UpdateInfoAction"></action>
+		<action name="getUserInfoByUser" class="com.tangmaowen.mis.sys.web.struts2.user.GetInfoAction"></action>
+		
+		<!-- sys.users -->
+		<action name="usersIndex" class="com.tangmaowen.mis.sys.web.struts2.users.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/sys/users/usersIndex.jsp</result>
+		</action>
+		<action name="getUsersList" class="com.tangmaowen.mis.sys.web.struts2.users.GetListAction"></action>
+		<action name="insertUserInfoByUsers" class="com.tangmaowen.mis.sys.web.struts2.users.InsertInfoAction"></action>
+		<action name="updateUserInfoByUsers" class="com.tangmaowen.mis.sys.web.struts2.users.UpdateInfoAction"></action>
+		<action name="getUserInfoByUsers" class="com.tangmaowen.mis.sys.web.struts2.users.GetInfoAction"></action>
+		<action name="changeUserActive" class="com.tangmaowen.mis.sys.web.struts2.users.ChangeUserActiveAction"></action>
+		<action name="getUserRole" class="com.tangmaowen.mis.sys.web.struts2.users.GetUserRoleAction"></action>
+		<action name="updateUserRole" class="com.tangmaowen.mis.sys.web.struts2.users.UpdateUserRoleAction"></action>
+		<action name="resetPasswordByUsers" class="com.tangmaowen.mis.sys.web.struts2.users.ResetPasswordByUsersAction"></action>
+		
+		<!-- sys.dictionary -->
+		<action name="dictionaryIndex" class="com.tangmaowen.mis.sys.web.struts2.dictionary.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/sys/dictionary/dictionaryIndex.jsp</result>
+		</action>
+		<action name="getEntryList" class="com.tangmaowen.mis.sys.web.struts2.dictionary.GetEntryListAction"></action>
+		<action name="insertEntry" class="com.tangmaowen.mis.sys.web.struts2.dictionary.InsertEntryAction"></action>
+		<action name="updateEntry" class="com.tangmaowen.mis.sys.web.struts2.dictionary.UpdateEntryAction"></action>
+		<action name="deleteEntry" class="com.tangmaowen.mis.sys.web.struts2.dictionary.DeleteEntryAction"></action>
+		
+		<!-- sys.authority -->
+		<action name="authorityIndex" class="com.tangmaowen.mis.sys.web.struts2.authority.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/sys/authority/authorityIndex.jsp</result>
+		</action>
+		<action name="getRoleAuthList" class="com.tangmaowen.mis.sys.web.struts2.authority.GetRoleAuthListAction"></action>
+		<action name="updateRoleAuth" class="com.tangmaowen.mis.sys.web.struts2.authority.UpdateRoleAuthAction"></action>
+		<action name="getRoleInfo" class="com.tangmaowen.mis.sys.web.struts2.authority.GetRoleInfoAction"></action>
+		<action name="insertRole" class="com.tangmaowen.mis.sys.web.struts2.authority.InsertRoleAction"></action>
+		<action name="updateRole" class="com.tangmaowen.mis.sys.web.struts2.authority.UpdateRoleAction"></action>
+		<action name="deleteRole" class="com.tangmaowen.mis.sys.web.struts2.authority.DeleteRoleAction"></action>
+		
+		<!-- sys.log -->
+		<action name="logIndex" class="com.tangmaowen.mis.sys.web.struts2.log.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/sys/log/logIndex.jsp</result>
+		</action>
+		<action name="getLogList" class="com.tangmaowen.mis.sys.web.struts2.log.GetListAction"></action>
+		<action name="getLogInfo" class="com.tangmaowen.mis.sys.web.struts2.log.GetInfoAction"></action>
+		
+		<!-- sys.setup -->
+		<action name="setupIndex" class="com.tangmaowen.mis.sys.web.struts2.setup.IndexAction">
+			<result name="success">/WEB-INF/jsp/mis/struts2/sys/setup/setupIndex.jsp</result>
+		</action>
+	</package>
+
+</struts>

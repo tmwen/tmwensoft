@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- ========================= GENERAL DEFINITIONS ========================= -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>WEB-INF/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- ========================= BUSINESS OBJECT DEFINITIONS ======================== -->
+	
+	<bean id="misComm" class="com.tangmaowen.mis.common.domain.logic.MisCommImpl">
+		<property name="usersDao" ref="usersDao" />
+		<property name="authorityDao" ref="authorityDao" />
+		<property name="logDao" ref="logDao" />
+		<property name="dictionaryDao" ref="dictionaryDao" />
+	</bean>
+	
+	<bean id="misSys" class="com.tangmaowen.mis.sys.domain.logic.MisSysImpl">
+		<property name="usersDao" ref="usersDao" />
+		<property name="dictionaryDao" ref="dictionaryDao" />
+		<property name="logDao" ref="logDao" />
+		<property name="roleDao" ref="roleDao" />
+		<property name="authorityDao" ref="authorityDao" />
+		<property name="roleAuthorityDao" ref="roleAuthorityDao" />
+		<property name="userRoleDao" ref="userRoleDao" />
+	</bean>
+
+	<bean id="misXhzySms" class="com.tangmaowen.mis.xhzy.sms.domain.logic.MisXhzySmsImpl">
+		<property name="studentBaseInfoDao" ref="studentBaseInfoDao" />
+		<property name="studentFeesDao" ref="studentFeesDao" />
+	</bean>
+	
+	<!-- ========================= ASPECT CONFIGURATION ======================== -->
+
+	<aop:config>
+		<aop:advisor pointcut="execution(* *..Mis*Facade.*(..))" advice-ref="txAdvice" />
+	</aop:config>
+
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="insert*" />
+			<tx:method name="update*" />
+			<tx:method name="delete*" />
+			<tx:method name="*" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+
+</beans>

@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<%@ page import="com.tangmaowen.utils.Dictionary" %>
+
+<script type="text/javascript">
+//<![CDATA[
+    
+var dicsMap = new Map();
+var dicsArray = new Map();
+<%=Dictionary.getInstance().getJSDics()%>
+
+// 系统启用用户列表，详情页面使用
+initDics('<%=DictConstants.ALIVEUSERARRAY%>', Ext.decode('<c:out value="${aliveUserList}" default="[]" escapeXml="false"/>'));
+// 系统所有用户列表，列表页面使用
+initDics('<%=DictConstants.USERARRAY%>', Ext.decode('<c:out value="${userList}" default="[]" escapeXml="false"/>'));
+
+function initDics(code, entries) {
+	dicsMap.put(code, toDicMap(entries));
+	dicsArray.put(code, entries);	
+}
+// 将数组转换为map
+function toDicMap(dicArray){
+	var dicMap = new Map();
+	for(var i = 0; i < dicArray.length; i++){
+		dicMap.put(dicArray[i][0], dicArray[i][1]);
+	}
+	return dicMap;
+}
+//--------------------公共接口---------------------------
+// 得到字典某编码的项数组形如：[['1', '大专'], ['2', '中专']]
+function getEntryArray(dicCode){
+	return dicsArray.get(dicCode);
+}
+// 得到字典项值
+function getDicInfo(dicCode, key){
+	if(key == null || (key = ('' + key).replace(/(^\s*)|(\s*$)/g, ''))  == '') return '';
+	var dicMap = dicsMap.get(dicCode);
+	if(dicMap == null) return key;
+	var value = dicMap.get(key);
+	if(value == null) return key;
+	return value;
+}
+//----------------map类------------------------
+function Map(){
+	this.elements = new Array();
+	this.put = function(_key, _value) {
+		this.elements.push({key:_key, value:_value});
+	};
+	this.get = function(_key) {
+		try{   
+			for (i = 0; i < this.elements.length; i++) {
+				if (this.elements[i].key === _key) {
+					return this.elements[i].value;
+				}
+			}
+			return null;
+		}catch(e) {
+			return '';   
+		}
+	};
+};
+//]]>
+</script>

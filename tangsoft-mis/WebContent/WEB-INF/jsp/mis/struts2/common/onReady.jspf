@@ -1,0 +1,108 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var start = 0;
+	var limit = 25;
+    
+	var indexStore = new Ext.data.Store({
+		proxy: indexProxy,  
+		reader: infoJsonReader,
+		remoteSort: false
+	});
+	
+    var colModel = new Ext.grid.ColumnModel({
+        defaults: {
+        	sortable: true
+		}, columns: columns
+    });
+	
+	var pagingBar;
+	if(typeof(showPageSize) != 'undefined'){
+    	pagingBar = new Ext.PagingToolbar({
+    		plugins: new Ext.ux.Andrie.pPageSize(),
+            pageSize: limit,
+            store: indexStore,
+            displayInfo: true
+        });
+    } else {
+    	pagingBar = new Ext.PagingToolbar({
+            pageSize: limit,
+            store: indexStore,
+            displayInfo: true
+        });
+    }
+	var indexGrid = new Ext.grid.GridPanel({
+        store: indexStore,
+        cm: colModel,
+    	region: 'center',
+        loadMask: {msg:'读取中...'},
+        sm: new Ext.grid.RowSelectionModel({
+            singleSelect: true
+        }),
+        viewConfig: {
+            forceFit: false,// true动态调整列宽度，false固定列宽度
+            enableRowBody: true,
+            showPreview: false
+        },        
+        tbar: indexTbar,
+		bbar: pagingBar
+    });
+    //indexGrid.on('rowcontextmenu', onContextClick, this);
+	
+	var ctxRow;
+	var ctxRecord;	
+	function onContextClick(grid, index, e){
+        if(!grid.menu){
+            grid.menu = indexMenu;
+            grid.menu.on('hide', onContextHide, this);
+        }
+        e.stopEvent();
+        if(ctxRow){
+            Ext.fly(ctxRow).removeClass('x-node-ctx');
+            ctxRow = null;
+        }
+        ctxRow = grid.view.getRow(index);
+        ctxRecord = indexStore.getAt(index);
+        Ext.fly(ctxRow).addClass('x-node-ctx');
+        grid.menu.showAt(e.getXY());
+    }
+    
+    function onContextHide(){
+        if(ctxRow){
+            Ext.fly(ctxRow).removeClass('x-node-ctx');
+            ctxRow = null;
+        }
+    }
+	
+	function isRecordClick() {
+		if (!recordData) {
+			misPromptMessageBox('请先选择一条记录');
+			return false;
+		}
+		return true;
+	}
+    
+    var gsm = indexGrid.getSelectionModel();    
+    //indexGrid.indexStore.on('load', gsm.selectFirstRow, gsm);
+    indexGrid.on('rowclick', clickRecord, this);
+
+	function dosubmitForm(conditionParams) {
+		if(conditionParams) indexStore.baseParams = conditionParams;
+		indexStore.reload({
+			params:{start:start, limit:pagingBar.pageSize}
+		});
+	}
+
+	Ext.onReady(function(){
+		Ext.QuickTips.init();
+	    Ext.form.Field.prototype.msgTarget = 'side';
+		indexStore.load({
+			params:{start:start, limit:limit}
+		});
+		var viewport = new Ext.Viewport({
+			layout	: 'border',
+			items	: indexGrid
+		});
+	});
+//]]>
+</script>

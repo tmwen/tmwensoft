@@ -1,0 +1,138 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var roleWin;
+
+    var notHaveRoleStore = new Ext.data.ArrayStore({
+        data: [],
+        fields: ['roleid','rolename'],
+        sortInfo: {
+            field: 'roleid',
+            direction: 'ASC'
+        }
+    });
+    var haveRoleStore = new Ext.data.ArrayStore({
+        data: [],
+        fields: ['roleid','rolename'],
+        sortInfo: {
+            field: 'roleid',
+            direction: 'ASC'
+        }
+    });
+    
+	var roleForm = new Ext.form.FormPanel({
+        bodyStyle: 'padding:5px;',
+        items:[{
+            xtype: 'itemselector',
+            name: 'itemselector',
+            fieldLabel: '选择角色',
+	        imagePath: '${webroot}/resources/ext/examples/ux/images/',
+            multiselects: [{
+                width: 266,
+                height: 300,
+                store: notHaveRoleStore,
+                displayField: 'rolename',
+                valueField: 'roleid'
+            },{
+                width: 266,
+                height: 300,
+                store: haveRoleStore,
+                displayField: 'rolename',
+                valueField: 'roleid',
+                tbar:[{
+                    text: '清空',
+                    handler:function(){
+	                    roleForm.getForm().findField('itemselector').reset();
+	                }
+                }]
+            }]
+        }]
+    });
+	function showRoleWin(record) {
+		if (!isRecordClick()) return;
+		if (!roleWin) {
+			roleWin = new Ext.Window( {
+				title : '用户角色',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 400,
+		        width: 700,
+	            //maximized: true,
+				items : roleForm,
+				buttons : [ {
+		            text: '保存',
+		            handler: function(){
+		                if(roleForm.getForm().isValid()){
+		                	var result = updateUserRole(roleForm.getForm().getValues(false).itemselector);
+		                	if(result) roleWin.hide();
+		                }
+		            }
+		        }, {
+					text : '重置',
+					handler : function() {
+		        		loadRoles();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						roleWin.hide();
+					}
+				} ]
+			});
+		}
+		loadRoles();
+		roleWin.show(this);
+
+	}
+
+	var userRoleProxy = new Ext.data.HttpProxy({ 
+		autoLoad 	: true, 
+		method		: 'post',
+       	params		: '',
+		url		 	: 'getUserRole.${extension}'
+	});
+
+	var authReader = new Ext.data.JsonReader( {
+		root : 'data',
+		idProperty : 'roleid',
+		totalProperty : 'count'
+	}, [ 'roleid', 'rolename', 'roledesc', 'check' ]);
+	
+    var userRoleStore = new Ext.data.Store({
+    	proxy: userRoleProxy,
+		reader : authReader,
+		remoteSort : false
+    });
+    
+	function loadRoles(){
+		userRoleStore.load({
+			params:{userid: recordData.userid},
+			callback: function(records, options, success){
+				if(success){
+					haveRoleStore.removeAll();
+					notHaveRoleStore.removeAll();
+					for(i = 0; i < records.length; i++){
+						if(records[i].data.check){
+							haveRoleStore.loadData([[records[i].data.roleid, records[i].data.rolename]], true);
+						} else {
+							notHaveRoleStore.loadData([[records[i].data.roleid, records[i].data.rolename]], true);
+						}
+					}
+				}
+			}
+		});
+	}
+
+	function updateUserRole(records){
+		var requestConfig = {
+			url: 'updateUserRole.${extension}',
+			params: {userid: recordData.userid, roleids: records}
+        };
+		return result = Ext.Ajax.request(requestConfig);
+	}
+//]]>
+</script>

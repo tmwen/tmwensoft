@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+	<package name="mis" namespace="/mis" extends="common">
+
+		<global-results>
+			<result name="login">/WEB-INF/jsp/mis/struts2/login.jsp</result>
+			<result name="mainFrame">/WEB-INF/jsp/mis/struts2/mainFrame.jsp</result>
+			<result name="error">/WEB-INF/jsp/mis/struts2/error.jsp</result>
+			<result name="forwardJsonInfo">/WEB-INF/jsp/mis/struts2/forward.jsp</result>
+		</global-results>
+		
+		<action name="index" class="com.tangmaowen.mis.common.web.struts2.IndexAction"></action>
+		<action name="login" class="com.tangmaowen.mis.common.web.struts2.LoginAction"></action>
+		<action name="logout" class="com.tangmaowen.mis.common.web.struts2.LogoutAction"></action>
+	</package>
+	
+	<include file="com/tangmaowen/mis/sys/web/struts2/struts-mis-sys.xml"></include>
+	<include file="com/tangmaowen/mis/xhzy/sms/web/struts2/struts-mis-xhzy-sms.xml"></include>
+
+</struts>

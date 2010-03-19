@@ -1,0 +1,243 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	var recordData;
+	//---------------------------------------------------
+	var conditionWin;
+	function showConditionWin(record) {
+		if (!conditionWin) {
+			var condForm = new Ext.form.FormPanel( {
+				baseCls : 'x-plain',
+				labelAlign : 'right',
+				labelWidth : 40,
+				defaultType : 'textfield',
+				items : [ {
+					fieldLabel : '账号',
+					name : 'userid',
+					xtype : 'numberfield',
+	            	decimalPrecision: 0,
+					maxLength : 10,
+					minLength : 3,
+					anchor : '90%'
+				}, {
+					fieldLabel : '姓名',
+					name : 'username',
+					anchor : '90%'
+				} ]
+			});
+
+			conditionWin = new Ext.Window( {
+				title : '查询条件',
+				width : 400,
+				height : 200,
+				minWidth : 300,
+				minHeight : 200,
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+				items : condForm,
+				buttons : [ {
+					text : '查询',
+					handler : function() {
+						search();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						condForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						conditionWin.hide();
+					}
+				} ],
+				keys : [ {
+					key : [ 10, 13 ],
+					fn : search
+				} ]
+			});
+
+			function search() {
+				if (condForm.form.isValid()) {
+					conditionWin.hide();
+					dosubmitForm(condForm.form.getValues());
+				}
+			}
+		}
+		conditionWin.show(this);
+	}
+
+	//---------------------update--------------------------
+	var updateWin;
+	var updateForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	function showUpdateWin(record) {
+		if (!isRecordClick()) return;
+		if (!updateWin) {
+			updateWin = new Ext.Window( {
+				title : '修改用户信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 320,
+		        width: 600,
+	            //maximized: true,
+				items : updateForm,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						updateInfoSubmit();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						updateWin.hide();
+					}
+				} ]
+			});
+		}
+		updateForm.form.load( {
+			url : 'getUserInfoByUsers.${extension}',
+			params : 'userid=' + recordData.userid,
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+		updateWin.show();
+	}
+
+	function updateInfoSubmit() {
+		if (updateForm.form.isValid()) {
+			updateForm.form.doAction('submit', {
+				url : 'updateUserInfoByUsers.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在保存...',
+				method : 'post',
+				params : '',
+				success : function(form, action) {
+					updateWin.hide();
+					dosubmitForm();
+				}
+			});
+		}
+	}
+
+	//-------------------insert----------------------------
+	var insertWin;
+	var insertForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		items : getFormColumn()
+	});
+
+	function showInsertWin(record) {
+		if (!insertWin) {
+			insertWin = new Ext.Window( {
+				title : '新增用户',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 320,
+		        width: 600,
+	            //maximized: true,
+				items : insertForm,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+					insertInfoSubmit();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+					insertForm.form.reset();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+					insertWin.hide();
+					}
+				} ]
+			});
+		}
+		if(insertForm) insertForm.form.reset();
+		insertWin.show(this);
+	}
+
+	function insertInfoSubmit() {
+		if (insertForm.form.isValid()) {
+			insertForm.form.doAction('submit', {
+				url : 'insertUserInfoByUsers.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在保存...',
+				method : 'post',
+				params : '',
+				success : function(form, action) {
+					insertWin.hide();
+					dosubmitForm();
+				}
+			});
+		}
+	}
+
+	//-------------------view----------------------------
+	var viewWin;
+	var viewForm = new Ext.FormPanel( {
+		labelAlign : 'right',
+		frame : true,
+		bodyStyle : 'padding:5px 5px 0',
+		autoScroll : true,
+		reader : infoJsonReader,
+		items : getFormColumn()
+	});
+
+	function showViewWin(record) {
+		if (!isRecordClick()) return;
+		if (!viewWin) {
+			viewWin = new Ext.Window( {
+				title : '查看用户信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 320,
+		        width: 600,
+	            //maximized: true,
+				items : viewForm,
+				buttons : [ {
+					text : '返回',
+					handler : function() {
+						viewWin.hide();
+					}
+				} ]
+			});
+		}
+		viewForm.form.load( {
+			url : 'getUserInfoByUsers.${extension}',
+			params : 'userid=' + recordData.userid,
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+		viewWin.show(this);
+	}
+//]]>
+</script>

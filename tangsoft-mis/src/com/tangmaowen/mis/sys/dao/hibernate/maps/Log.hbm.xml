@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.tangmaowen.mis.sys.dao.hibernate.maps.LogPO" table="log">
+        <id name="logid" type="java.lang.Integer">
+            <column name="logid" />
+            <generator class="native" />
+        </id>
+        <property name="operater" type="java.lang.Integer">
+            <column name="operater" not-null="true" />
+        </property>
+        <property name="opertime" type="java.lang.String">
+            <column name="opertime" length="19" not-null="true" />
+        </property>
+        <property name="operip" type="java.lang.String">
+            <column name="operip" length="100" not-null="true" />
+        </property>
+        <property name="operaction" type="java.lang.String">
+            <column name="operaction" length="100" not-null="true" />
+        </property>
+        <property name="operinfo" type="java.lang.String">
+            <column name="operinfo" length="5000" not-null="true" />
+        </property>
+        <property name="operresult" type="java.lang.String">
+            <column name="operresult" length="5000" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

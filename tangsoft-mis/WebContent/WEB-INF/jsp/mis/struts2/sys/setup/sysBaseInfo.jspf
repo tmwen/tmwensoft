@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+
+	var sysBaseInfoForm = new Ext.FormPanel( {
+		frame : true,
+		title : '基本设置',
+		bodyStyle : 'padding:5px 5px 0',
+		labelAlign : 'right',
+		labelWidth : 125,
+		defaults : {
+			width : 175,
+			maxLength : 10,
+			minLength : 3,
+			allowBlank : false
+		},
+		defaultType : 'textfield',
+		items : [ {
+			fieldLabel : '单一登录',
+			name : 'password'
+		}, {
+			fieldLabel : 'session有效时间',
+			name : 'newpass'
+		}, {
+			fieldLabel : '系统根目录',
+			name : 'newpasscfrm'
+		} ],       
+        tbar		:[{
+            xtype:'buttongroup',
+            items: [{
+            	text: '保存',
+            	icon: '${webroot}/resources/shared/images/accept.png',
+            	handler: function(){
+            	}
+            }]
+        }, {
+            xtype:'buttongroup',
+            items: [{
+            	text: '刷新',
+            	icon: '${webroot}/resources/shared/images/refresh.gif',
+            	handler: function(){
+                }
+            }]
+        }]
+	});
+//]]>
+</script>
