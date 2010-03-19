@@ -1,0 +1,74 @@
+2009-12-15 下班到晚上8点半
+帮助加图标，头上加刷新系统图标
+费用列表加刷新功能
+基本信息删除、费用删除、角色删除、字典条目删除在日志中增加详细信息记录
+查看动作不记录日志
+2009-12-16下班到晚上2点
+修改注销逻辑，注销日志细化
+汉化ItemSelector.js的63和69列，改为可选项和已选项
+修改hibernate分页工具类，增强查询条件功能
+修正列表后台报错时页面脚本错误
+2009-12-17 一天到晚上9点
+修改hibernate分页工具类及列表调用客户端(用来支持数据权限功能)
+修正登录页面和用户管理查询页面的账户验证数字脚本错误
+修改部份等待提示信息
+修改ie6右键菜单出来的window关闭后遮罩没有关闭错误（进行中）
+版本升为1.1
+2009-12-18 一天到
+修改费用功能，新增action好进行数据权限控制
+修改导入导出错误
+修改ie6右键菜单出来的window关闭后遮罩没有关闭错误（进行中）
+2009-12-21
+增加表字段 ALTER TABLE student_baseinfo ADD COLUMN cwbz varchar(2000) COMMENT '财务备注' AFTER bz;
+2009-12-23 下班到8点
+在mysql_db_struct.sql中增加字段cwbz
+在StudentBaseInfo.hbm.xml中增加字段cwbz
+在StudentBaseInfoPO.java,StudentBaseInfoBO.java,StudentBaseInfoVO.java中增加变量cwbz
+在stuBaseInfo/formColumn.jspf中的infoJsonReader对像中增加变量cwbz
+在stuFees/formColumn.jspf中的columns对像中增加数组cwbz
+增加财务人员修改总费用与财务备注页面（进行中）
+2009-12-29 20点到21点
+增加财务人员修改总费用与财务备注业务逻辑(完成)
+在com.tangmaowen.mis.common.AuthorityConstants中增加public static final String A_STU_BASEINFO_UPDATE_FEE = "/mis/xhzy/sms/updateStuInfoByFee";
+在mysql_data_dump.sql中增加INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStuInfoByFee', '学生缴费基本信息修改', '学生缴费信息', '2');
+2009－12－30 22点到24点
+在费用列表中增加应缴信息字段
+修改财务备注bug
+增加重置密码业务逻辑(完成)
+在mysql_data_dump.sql中增加INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/resetPasswordByUsers', '重置用户密码', '用户管理', '2');
+2010-01-04 17点到21点
+将列表页面和详情页面的用户列表分离，详情页面的用户列表不能选择停用用户和系统管理员
+修改角色删除有权限时报错的bug,增加删除前验证
+根据查询结果导出数据(进行中，只有中文问题没有解决了)
+2010-01-05 半个上午
+版本升到1.2
+2010-01-06 一天到晚上七点二十
+测试综合查询
+根据查询结果导出数据(完成，中文问题解决)
+将系统编码从GBK改为UTF-8（用UTF-8是因为统一，因为国际上的开源包都是用的UTF-8,减少不必要的麻烦）
+2010-01-08
+修改导入action的验证逻辑
+在费用基本信息表单页面增加验证提示
+2010-03-05
+增加导入结果提示
+修改费用相关页面
+2010-03-07
+ALTER TABLE `xhzysms`.`student_baseinfo` MODIFY COLUMN `yjfskr` VARCHAR(100) DEFAULT NULL COMMENT '预交费收款人';
+ALTER TABLE `xhzysms`.`student_baseinfo` MODIFY COLUMN `jfskr` VARCHAR(100) DEFAULT NULL COMMENT '缴费收款人';
+ALTER TABLE `xhzysms`.`student_fees` MODIFY COLUMN `skr` VARCHAR(100) NOT NULL DEFAULT NULL;
+修改相关类
+2010-03-10
+修改费用列表将身份证号码换为家庭详细地址
+2010-03-15 晚上九点到十二点二十
+修改综合查询条件，增加费用查询功能
+2010-03-16 五点半到
+部署系统
+修改导出数据不准
+修改用户列表将当前用户靠前
+修改基本信息修改后在列表中学生缴费信息丢失
+在基本信息列表中加入财务备注项
+2010-03-17
+修改备注为招生备注
+
+
+
