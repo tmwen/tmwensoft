@@ -68,7 +68,7 @@ ALTER TABLE `xhzysms`.`student_fees` MODIFY COLUMN `skr` VARCHAR(100) NOT NULL D
 修改基本信息修改后在列表中学生缴费信息丢失
 在基本信息列表中加入财务备注项
 2010-03-17
-修改备注为招生备注 
+修改备注为招生备注
 
 
 
