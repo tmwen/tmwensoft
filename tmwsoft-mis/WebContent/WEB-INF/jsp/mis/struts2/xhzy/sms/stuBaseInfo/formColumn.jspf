@@ -17,7 +17,8 @@
 	var columns = [
 	   			{header: '面试表编号',		dataIndex: 'msbbh',		width: 70,	hidden: false},
 	    		{header: '面试日期',		dataIndex: 'msrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
-	    		{header: '界',			dataIndex: 'jie',		width: 40,	hidden: false},
+	    		{header: '报到卡',		dataIndex: 'bdk',		width: 45, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.BDK%>', value);}},
+	    		{header: '届',			dataIndex: 'jie',		width: 40,	hidden: false},
 	    		{header: '季',			dataIndex: 'jj',		width: 40,	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.JJ%>', value);}},
 	    		{header: '姓名',			dataIndex: 'xm',		width: 80},
 	    		{header: '性别',			dataIndex: 'xb',		width: 40, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.XB%>', value);}},

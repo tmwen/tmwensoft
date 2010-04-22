@@ -28,6 +28,7 @@ public class DictConstants {
 	public static final String TJ = "tj";
 	public static final String LQ = "lq";
 	public static final String JFLX = "jflx";
+	public static final String BDK = "bdk";
 	public static final String USERACTIVE = "userActive";
 	public static final String ACTIVE = "active";
 	public static final String AUTHTYPE = "authType";

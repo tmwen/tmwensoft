@@ -35,8 +35,8 @@
 		<action name="stuDataIndex" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.IndexAction">
 			<result name="success">/WEB-INF/jsp/mis/struts2/xhzy/sms/stuData/stuDataIndex.jsp</result>
 		</action>
-		<action name="stuBaseInfoImport" class="com.tangmaowen.mis.xhzy.sms.web.struts2.studata.StuBaseInfoImportAction"></action>
-		<action name="stuBaseInfoExport" class="com.tangmaowen.mis.xhzy.sms.web.struts2.studata.StuBaseInfoExportAction">
+		<action name="stuBaseInfoImport" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stusearch.StuBaseInfoImportAction"></action>
+		<action name="stuBaseInfoExport" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stusearch.StuBaseInfoExportAction">
 			<param name="fileName">excel.xls</param>
             <result name="success" type="stream">
                 <param name="contentType">text/plain</param>

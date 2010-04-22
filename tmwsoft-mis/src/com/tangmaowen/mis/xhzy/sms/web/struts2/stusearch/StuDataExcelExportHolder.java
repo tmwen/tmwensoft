@@ -1,4 +1,4 @@
-package com.tangmaowen.mis.xhzy.sms.web.struts2.studata;
+package com.tangmaowen.mis.xhzy.sms.web.struts2.stusearch;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;

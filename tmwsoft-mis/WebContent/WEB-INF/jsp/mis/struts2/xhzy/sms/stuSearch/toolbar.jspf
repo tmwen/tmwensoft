@@ -107,13 +107,6 @@
 			});
 		});
 	}
-	//-----------------------------------------------------
-	/**
-	function importStuData() {
-		window.showModalDialog('${webroot}/mis/xhzy/sms/stuDataIndex.${extension}', window, 'dialogWidth=6200px;dialogHeight=620px');
-		indexStore.reload();
-	}
-	*/
 	
 	function showExportExcelWin() {
         //var vExportContent = indexGrid.getExcelXml();

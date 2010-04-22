@@ -70,5 +70,11 @@ ALTER TABLE `xhzysms`.`student_fees` MODIFY COLUMN `skr` VARCHAR(100) NOT NULL D
 2010-03-17
 修改备注为招生备注
 
+.....中间这么久做了那么多尝试我都不想说了
+
+2010-04-21
+将基本信息列表的‘界’改为‘届’
+在学生基本信息中增加‘报到卡’项，包括‘已领’，‘未领’
+重构excel导入导出功能
 
 

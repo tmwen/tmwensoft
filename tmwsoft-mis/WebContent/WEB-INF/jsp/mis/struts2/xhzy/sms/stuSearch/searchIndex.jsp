@@ -4,7 +4,7 @@
 <%@ include file="../stuBaseInfo/formColumn.jspf" %>
 <%@ include file="formColumn.jspf" %>
 <%@ include file="toolbar.jspf" %>
-<%@ include file="../stuData/upload.jspf" %>
+<%@ include file="upload.jspf" %>
 <!--
 <script type="text/javascript" src="${webroot}/js/plugins/GridToExcel.js"></script>
 -->
