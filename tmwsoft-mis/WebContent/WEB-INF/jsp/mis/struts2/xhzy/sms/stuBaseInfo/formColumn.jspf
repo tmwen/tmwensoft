@@ -11,13 +11,12 @@
      	 'mz', 'sg', 'bdzy', 'zzmm', {name: 'csrq', type: 'date', dateFormat: 'Y-m-d'}, 'sfzhm', 'hj', 'kslb', 'yklx', 'byz',
      	  'jtxsdz', 'xslxdh', 'jzlxdh', 'byxx', 'syd', 'zsls', 'zfzr', 'zs', 'tj', 'lq', {name: 'yjfrq', type: 'date', dateFormat: 'Y-m-d'},
      	   'yjfje', 'yjfskr', {name: 'jfrq', type: 'date', dateFormat: 'Y-m-d'}, 'jfje', 'jfskr', 'jfze', 'yjje', 'bz', 'cwbz', 'creater',
-     	   'createtime', 'lastupdater', 'lastupdatertime']
+     	   'createtime', 'lastupdater', 'lastupdatertime', 'bdk']
     );
 
 	var columns = [
 	   			{header: '面试表编号',		dataIndex: 'msbbh',		width: 70,	hidden: false},
 	    		{header: '面试日期',		dataIndex: 'msrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
-	    		{header: '报到卡',		dataIndex: 'bdk',		width: 45, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.BDK%>', value);}},
 	    		{header: '届',			dataIndex: 'jie',		width: 40,	hidden: false},
 	    		{header: '季',			dataIndex: 'jj',		width: 40,	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.JJ%>', value);}},
 	    		{header: '姓名',			dataIndex: 'xm',		width: 80},
@@ -52,7 +51,8 @@
 	        	{header: '已缴费用(元)',	dataIndex: 'jfze',		width: 75,	hidden: false},
 	        	{header: '应缴费用(元)',	dataIndex: 'yjje',		width: 75,	hidden: false},
 	    		{header: '招生备注',		dataIndex: 'bz',		width: 200, hidden: false},
-	    		{header: '财务备注',		dataIndex: 'cwbz',		width: 200}
+	    		{header: '财务备注',		dataIndex: 'cwbz',		width: 200},
+	    		{header: '报到卡',		dataIndex: 'bdk',		width: 45, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.BDK%>', value);}}
 	];
 
     function bdzyDicInfo(value, record){
@@ -187,6 +187,19 @@
 	            defaults: {anchor:'92%', allowBlank:false},
 	            defaultType: 'textfield',
 	            items: [{
+		    	    xtype: 'combo',
+	                fieldLabel: '报到卡',
+	                hiddenName:'bdk',
+	                store: getEntryArray('<%=DictConstants.BDK%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true,
+	                allowBlank: true
+	            }, {
 		    	    xtype: 'combo',
 	                fieldLabel: '户籍',
 	                hiddenName:'hj',

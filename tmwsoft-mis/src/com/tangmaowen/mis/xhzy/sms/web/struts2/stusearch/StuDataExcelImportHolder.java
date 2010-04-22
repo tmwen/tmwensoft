@@ -80,7 +80,7 @@ public class StuDataExcelImportHolder {
 		bkxl = "";
 		sourceRow = sheet.getRow(rowCount);
 		int count = sourceRow.getPhysicalNumberOfCells();
-		if(count != 34) throw new MisException("数据列数不匹配,实际为"+ count +"列,应该为34列");
+		if(count != 36) throw new MisException("数据列数不匹配,实际为"+ count +"列,应该为36列");
 		StudentBaseInfoBO bo = new StudentBaseInfoBO();
 		bo.setMsbbh(getCellValue(0));
 		bo.setMsrq(formatDateToyyyyMMdd(1));
@@ -117,6 +117,8 @@ public class StuDataExcelImportHolder {
 		bo.setJfje(getDouble(31));
 		bo.setJfskr(getSkrID(32));
 		bo.setBz(getCellValue(33));
+		bo.setCwbz(getCellValue(34));
+		bo.setBdk(getDictKey(DictConstants.BDK, 35));
 		
 		String time = Tools.getCurrDefaultDateTime();
 		bo.setActive("2");

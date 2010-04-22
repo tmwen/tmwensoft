@@ -76,5 +76,14 @@ ALTER TABLE `xhzysms`.`student_fees` MODIFY COLUMN `skr` VARCHAR(100) NOT NULL D
 将基本信息列表的‘界’改为‘届’
 在学生基本信息中增加‘报到卡’项，包括‘已领’，‘未领’
 重构excel导入导出功能
+2010－04－22 22:00
+ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `bdk` VARCHAR(1) COMMENT '报到卡' AFTER `lastupdatertime`;
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('bdk', '报到卡', 'root', 0, 19);
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('1', '已领', 'bdk', 1, 1);
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '未领', 'bdk', 1, 2);
+完成‘报到卡’项增删改查，包括excel导入导出
+
+
+
 
 

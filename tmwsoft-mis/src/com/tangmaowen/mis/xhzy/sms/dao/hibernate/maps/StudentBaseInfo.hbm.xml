@@ -121,6 +121,9 @@
         <property name="cwbz" type="java.lang.String">
             <column name="cwbz" length="2000" />
         </property>
+        <property name="bdk" type="java.lang.String">
+            <column name="bdk" length="1" />
+        </property>
         <property name="creater" type="java.lang.Integer">
             <column name="creater" not-null="true" />
         </property>

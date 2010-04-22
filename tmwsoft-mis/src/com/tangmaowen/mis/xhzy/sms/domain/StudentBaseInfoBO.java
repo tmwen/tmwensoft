@@ -51,6 +51,7 @@ public class StudentBaseInfoBO implements Serializable {
 	private String createtime;
 	private Integer lastupdater;
 	private String lastupdatertime;
+	private String bdk;
 	
 	public Integer getStuid() {
 		return stuid;
@@ -309,6 +310,12 @@ public class StudentBaseInfoBO implements Serializable {
 	}
 	public Double getSg() {
 		return sg;
+	}
+	public void setBdk(String bdk) {
+		this.bdk = bdk;
+	}
+	public String getBdk() {
+		return bdk;
 	}
 	
 }

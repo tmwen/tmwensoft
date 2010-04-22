@@ -39,6 +39,7 @@ public class StudentBaseInfoVO implements Serializable {
 	private Double yjje;
 	private String bz;
 	private String cwbz;
+	private String bdk;
 	
 	public Integer getStuid() {
 		return stuid;
@@ -225,6 +226,12 @@ public class StudentBaseInfoVO implements Serializable {
 	}
 	public void setSg(Double sg) {
 		this.sg = sg;
+	}
+	public void setBdk(String bdk) {
+		this.bdk = bdk;
+	}
+	public String getBdk() {
+		return bdk;
 	}
 	
 }

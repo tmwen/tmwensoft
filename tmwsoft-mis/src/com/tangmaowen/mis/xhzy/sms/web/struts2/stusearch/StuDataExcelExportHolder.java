@@ -76,6 +76,8 @@ public class StuDataExcelExportHolder {
         	setCellValue(31, getStringByDouble(bo.getJfje()));
         	setCellValue(32, getSkrName(bo.getJfskr()));
         	setCellValue(33, bo.getBz());
+        	setCellValue(34, bo.getCwbz());
+        	setCellValue(35, getDictValue(DictConstants.BDK, bo.getBdk()));
         }
 	}
 	
