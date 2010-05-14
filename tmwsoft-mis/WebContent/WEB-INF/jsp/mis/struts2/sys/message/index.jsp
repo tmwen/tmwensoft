@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../common/IncludeTop.jspf" %>
-<%@ include file="sysBaseInfo.jspf" %>
-<%@ include file="sysDatabaseInfo.jspf" %>
+<%@ include file="message.jspf" %>
 <script type="text/javascript">
 //<![CDATA[
 	Ext.onReady(function() {
@@ -16,8 +15,7 @@
 				autoScroll : true
 			}
 		});
-		tabs.add(sysBaseInfoForm);
-		tabs.add(databaseInfoForm);
+		tabs.add(messageForm);
 		tabs.doLayout();
 
 		var viewport = new Ext.Viewport( {

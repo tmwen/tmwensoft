@@ -17,7 +17,7 @@ public class LoginAction extends BaseAction implements ModelDriven<LoginVO> {
 
 	@Override
 	public String execute() {
-		setVerifyRequest(false);
+		setVerifyRequest("no");
 		return super.execute();
 	}
 	

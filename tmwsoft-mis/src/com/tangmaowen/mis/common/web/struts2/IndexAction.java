@@ -17,6 +17,7 @@ public class IndexAction extends BaseAction {
 	public String execute() {
 		setAjax(false);
 		setLog(false);
+		setVerifyRequest("login");
 		return super.execute();
 	}
 
@@ -59,13 +60,14 @@ public class IndexAction extends BaseAction {
 			if(stu.length() != 0 || sys.length() != 0) {
 				menu = "[" + stu.toString() + sys.toString() + "]";
 			}
-		} else {
+		} 
+		if(Tools.isNull(menu)) {
 			menu = "[{mainItem: 0,items:[{xtype: 'portal',title: '无权限'}]}]";
 		}
 	}
 	
 	private String getTree(AuthorityBO bo) {
-		return ",{title:'" + bo.getAuthname() + "',layout:'fit',iconCls:'" + bo.getAuthid().replace('/','a') + "'," +
+		return ",{title:'" + bo.getAuthname() + "',layout:'fit',iconCls:'aaa'," +
 				"html:'<iframe id=" + bo.getAuthid() + " scrolling=auto frameborder=0 width=100% height=100% src=" + Constants.WEBROOT + bo.getAuthid() + "." + Constants.EXTENSION + "></iframe>'}";
 	}
 

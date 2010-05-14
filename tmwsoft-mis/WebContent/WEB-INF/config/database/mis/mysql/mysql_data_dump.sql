@@ -91,7 +91,6 @@ INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VA
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('1', '已领', 'bdk', 1, 1);
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '未领', 'bdk', 1, 2);
 
-INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/index', '首页', '系统', '4');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/studentsBaseInfoIndex', '学生基本信息', '学生管理', '1');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/studentsFeesIndex', '学生缴费信息', '学生管理', '1');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/stuSearchIndex', '综合查询', '学生管理', '1');
@@ -101,6 +100,7 @@ INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/logIndex', '业务日志', '系统管理', '1');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/setupIndex', '系统设置', '系统管理', '1');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/userIndex', '个人设置', '系统管理', '1');
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/messageIndex', '消息设置', '系统管理', '1');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/alterUserPasswordByUser', '个人密码修改', '个人设置', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/updateUserInfoByUser', '个人信息修改', '个人设置', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/getUserInfoByUser', '个人信息查看', '个人设置', '2');
@@ -124,17 +124,23 @@ INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/deleteRole', '角色删除', '角色权限', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/getLogList', '业务日志列表', '业务日志', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/getLogInfo', '业务日志信息查看', '业务日志', '2');
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/updateMessageInfo', '消息修改', '消息设置', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentsBaseInfoList', '学生基本信息列表', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/insertStudentBaseInfo', '学生基本信息新增', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentBaseInfo', '学生基本信息修改', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/deleteStudentBaseInfo', '学生基本信息删除', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentBaseInfo', '学生基本信息查看', '学生基本信息', '2');
+
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentsFeesList', '学生缴费信息列表', '学生缴费信息', '2');
-INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentFeesList', '学生缴费详情列表', '学生缴费信息', '2');
-INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/insertStudentFees', '学生缴费信息新增', '学生缴费信息', '2');
-INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentFees', '学生缴费信息修改', '学生缴费信息', '2');
-INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/deleteStudentFees', '学生缴费信息删除', '学生缴费信息', '2');
-INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStuInfoByFee', '学生缴费基本信息修改', '学生缴费信息', '2');
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentFeesInfo', '学生缴费详情查看', '学生缴费信息', '2');
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentFeesInfo', '学生缴费详情修改', '学生缴费信息', '2');
+
+--INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentFeesList', '学生缴费详情列表', '学生缴费信息', '2');
+--INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/insertStudentFees', '学生缴费信息新增', '学生缴费信息', '2');
+--INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentFees', '学生缴费信息修改', '学生缴费信息', '2');
+--INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/deleteStudentFees', '学生缴费信息删除', '学生缴费信息', '2');
+--INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStuInfoByFee', '学生缴费基本信息修改', '学生缴费信息', '2');
+
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStuBaseInfoListBySearch', '综合查询信息列表', '综合查询', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/stuBaseInfoImport', '综合查询学生基本信息导入', '综合查询', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/stuBaseInfoExport', '综合查询学生基本信息导出', '综合查询', '2');
@@ -146,7 +152,6 @@ INSERT INTO role ( roleid, rolename, roledesc ) VALUES (2, '招生办领导', '�
 INSERT INTO role ( roleid, rolename, roledesc ) VALUES (3, '招生人员', '所招学生基本信息查询');
 INSERT INTO role ( roleid, rolename, roledesc ) VALUES (4, '财务人员', '学生缴费信息管理');
 
-INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/index');
 INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/sys/usersIndex');
 INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/sys/authorityIndex');
 INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/sys/dictionaryIndex');
@@ -175,45 +180,6 @@ INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/sys/updateRole');
 INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/sys/deleteRole');
 INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/sys/getLogList');
 INSERT INTO role_authority ( roleid, authid ) VALUES (1, '/mis/sys/getLogInfo');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/index');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/studentsBaseInfoIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/studentsFeesIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/stuSearchIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/getStudentsBaseInfoList');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/insertStudentBaseInfo');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/updateStudentBaseInfo');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/getStudentBaseInfo');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/getStudentsFeesList');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/getStudentFeesList');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/insertStudentFees');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/updateStudentFees');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/deleteStudentFees');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/getStuBaseInfoListBySearch');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/xhzy/sms/stuBaseInfoImport');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/sys/userIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/sys/alterUserPasswordByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/sys/updateUserInfoByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, '/mis/sys/getUserInfoByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (2, 'allData');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/index');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/xhzy/sms/studentsBaseInfoIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/xhzy/sms/getStudentsBaseInfoList');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/xhzy/sms/getStudentBaseInfo');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/sys/userIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/sys/alterUserPasswordByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/sys/updateUserInfoByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (3, '/mis/sys/getUserInfoByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/index');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/xhzy/sms/studentsFeesIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/xhzy/sms/getStudentsFeesList');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/xhzy/sms/getStudentFeesList');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/xhzy/sms/insertStudentFees');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/xhzy/sms/updateStudentFees');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/xhzy/sms/deleteStudentFees');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/sys/userIndex');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/sys/alterUserPasswordByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/sys/updateUserInfoByUser');
-INSERT INTO role_authority ( roleid, authid ) VALUES (4, '/mis/sys/getUserInfoByUser');
 
 INSERT INTO user_role ( userid, roleid ) VALUES (1000, 1);
 

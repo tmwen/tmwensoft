@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+	Ext.Ajax.request({
+		url: '${webroot}/upload/message.txt',
+		success: function(response, opts) {
+			var obj = Ext.decode(response.responseText).data[0];
+			if(obj.active == 1) {
+				var noticeWin = new Ext.Window( {
+					title : '消息',
+					plain : true,
+					modal : true,
+					closeAction : 'hide',
+			        height: 400,
+			        width: 800,
+			        closable: true,
+			        maximizable: true,
+			        autoScroll: true,
+			        html: obj.info
+				}).show();
+			}
+		}
+	});
+//]]>
+</script>

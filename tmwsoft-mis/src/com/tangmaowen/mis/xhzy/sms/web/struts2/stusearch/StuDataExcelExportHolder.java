@@ -71,7 +71,7 @@ public class StuDataExcelExportHolder {
         	setCellValue(26, getDictValue(DictConstants.LQ, bo.getLq()));
         	setCellValue(27, formatDateToyyMMdd(bo.getYjfrq()));
         	setCellValue(28, getStringByDouble(bo.getYjfje()));
-        	setCellValue(29, getSkrName(bo.getYjfskr()));
+        	setCellValue(29, bo.getYjfskr());
         	setCellValue(30, formatDateToyyMMdd(bo.getJfrq()));
         	setCellValue(31, getStringByDouble(bo.getJfje()));
         	setCellValue(32, getSkrName(bo.getJfskr()));

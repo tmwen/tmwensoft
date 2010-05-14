@@ -14,7 +14,7 @@ public class LogoutAction extends BaseAction {
 	
 	@Override
 	public String execute() {
-		setVerifyRequest(false);
+		setVerifyRequest("no");
 		return super.execute();
 	}
 	

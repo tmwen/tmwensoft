@@ -44,7 +44,7 @@
 	        	{header: '录取',			dataIndex: 'lq',		width: 40, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.LQ%>', value);}},
 	        	{header: '预交费日期',		dataIndex: 'yjfrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
 	        	{header: '预交费金额(元)',	dataIndex: 'yjfje',		width: 85,	hidden: false},
-	        	{header: '预交费收款人',	dataIndex: 'yjfskr',	width: 80,	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+	        	{header: '预交费收款人',	dataIndex: 'yjfskr',	width: 80,	hidden: false},
 	        	{header: '缴费日期',		dataIndex: 'jfrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
 	        	{header: '缴费金额(元)',	dataIndex: 'jfje',		width: 75,	hidden: false},
 	        	{header: '缴费收款人',		dataIndex: 'jfskr',		width: 70,	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
@@ -346,7 +346,7 @@
             maxLength: 500
 	    }, {
 	        xtype:'textarea',
-	        fieldLabel:'备注',
+	        fieldLabel:'招生备注',
 	        name:'bz',
 	        height:60,
 	        anchor:'94%',

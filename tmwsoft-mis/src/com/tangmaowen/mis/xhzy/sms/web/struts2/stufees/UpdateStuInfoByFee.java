@@ -18,8 +18,9 @@ public class UpdateStuInfoByFee extends MisXhzySmsBaseAction implements ModelDri
 
 	@Override
 	protected String misExecute() {
-		StudentBaseInfoBO bo = getMisXhzySms().getStudentBaseInfo(studentBaseInfoByFee.getStuid());
-		BeanUtils.copyProperties(studentBaseInfoByFee, bo);
+		StudentBaseInfoBO bo = getMisXhzySms().getStudentBaseInfo(stuFeeInfo.getStuid());
+		setJfze();
+		BeanUtils.copyProperties(stuFeeInfo, bo);
 		bo.setLastupdater(userSession.getUserid());
 		bo.setLastupdatertime(Tools.getCurrDefaultDateTime());
 		String result = getMisXhzySms().updateStudentBaseInfo(bo);
@@ -33,13 +34,25 @@ public class UpdateStuInfoByFee extends MisXhzySmsBaseAction implements ModelDri
 
 	@Override
 	protected String actionInfo() {
-		return "更新学生：" + studentBaseInfoByFee.getStuid() + "的费用信息 " + Tools.getJsonStringFromObject(studentBaseInfoByFee);
+		return "更新学生：" + stuFeeInfo.getStuid() + "的费用信息，更新人：" + userSession.getUserid()
+		+ "更新内容：" + Tools.getJsonStringFromObject(stuFeeInfo);
 	}
 	
-	private StudentBaseInfoByFeeVO studentBaseInfoByFee = new StudentBaseInfoByFeeVO();
+	private StudentBaseInfoByFeeVO stuFeeInfo = new StudentBaseInfoByFeeVO();
 
 	@Override
 	public StudentBaseInfoByFeeVO getModel() {
-		return studentBaseInfoByFee;
+		return stuFeeInfo;
+	}
+	
+	private void setJfze() {
+		double je = 0.00;
+		if(stuFeeInfo.getYjfje() != null) je += stuFeeInfo.getYjfje();
+		if(stuFeeInfo.getJfje() != null) je += stuFeeInfo.getJfje();
+		if(je == 0.00) {
+			stuFeeInfo.setJfze(null);
+		} else {
+			stuFeeInfo.setJfze(je);
+		}
 	}
 }

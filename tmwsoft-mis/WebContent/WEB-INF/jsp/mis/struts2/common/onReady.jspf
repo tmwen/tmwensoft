@@ -47,7 +47,7 @@
         tbar: indexTbar,
 		bbar: pagingBar
     });
-    //indexGrid.on('rowcontextmenu', onContextClick, this);
+    //indexGrid.on('rowcontextmenu', onContextClick, this);// 列表鼠标右键事件
 	
 	var ctxRow;
 	var ctxRecord;	

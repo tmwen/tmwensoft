@@ -10,7 +10,7 @@
 		    		{header: '家庭详细地址',		dataIndex: 'jtxsdz',	width: 200},
 		        	{header: '预交费日期',			dataIndex: 'yjfrq',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
 		        	{header: '预交费金额(元)',		dataIndex: 'yjfje',		width: 90},
-		        	{header: '预交费收款人',		dataIndex: 'yjfskr',	width: 80,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+		        	{header: '预交费收款人',		dataIndex: 'yjfskr',	width: 80},
 		        	{header: '缴费日期',			dataIndex: 'jfrq',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
 		        	{header: '缴费金额(元)',		dataIndex: 'jfje',		width: 80},
 		        	{header: '缴费收款人',			dataIndex: 'jfskr',		width: 70,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
@@ -18,5 +18,127 @@
 		        	{header: '应缴费用(元)',		dataIndex: 'yjje',		width: 75},
 		    		{header: '财务备注',			dataIndex: 'cwbz',		width: 200}
 	];
+
+	var jfForm = [{
+		columnWidth:.33,
+		layout: 'form',
+		items: [
+		new Ext.form.DateField({
+                fieldLabel: '缴费日期',
+                name: 'jfrq',
+            	width: 90
+		})
+		]
+	},{
+		columnWidth:.33,
+		layout: 'form',
+		items: [{
+	            xtype: 'numberfield',
+                fieldLabel: '金额(元)',
+                name: 'jfje',
+            	decimalPrecision: 2,
+            	maxValue: 999999.99,
+            	width: 80
+		}]
+	},{
+        columnWidth:.33,
+        layout: 'form',
+        items: [
+		new Ext.form.ComboBox({
+                fieldLabel: '收款人',
+                hiddenName: 'jfskr',
+                store: getEntryArray('<%=DictConstants.ALIVEUSERARRAY%>'),
+                valueField: 'key',
+                displayField: 'value',
+                typeAhead: true,
+                mode: 'local',
+                forceSelection: true,//true只能填写下拉列表值;false可以填写任意值
+                triggerAction: 'all',
+                selectOnFocus: true,
+            	width: 80
+        })
+		]
+	}];
+
+	var stuFeesInfoForm = new Ext.FormPanel({
+        labelWidth: 78,
+		labelAlign : 'right',
+        frame:true,
+        bodyStyle:'padding:5px 5px 0',
+
+		reader : infoJsonReader,
+        items: [{
+            xtype:'fieldset',
+            title: '预交费',
+            collapsible: true,
+            autoHeight:true,
+            items :[{
+                layout:'column',
+                items:[{
+                    columnWidth:.33,
+                    layout: 'form',
+                    items: [
+                    new Ext.form.DateField({
+                        fieldLabel: '预交日期',
+                        name: 'yjfrq',
+                    	width: 90
+                    })
+                    ]
+                },{
+                    columnWidth:.33,
+                    layout: 'form',
+                    items: [{
+        	            xtype: 'numberfield',
+                        fieldLabel: '金额(元)',
+                        name: 'yjfje',
+                    	decimalPrecision: 2,
+                    	maxValue: 999999.99,
+                    	width: 80
+                    }]
+                },{
+                    columnWidth:.33,
+                    layout: 'form',
+                    items: [{
+        	            xtype: 'textfield',
+                        fieldLabel: '收款人',
+                        name: 'yjfskr',
+                        maxLength: 10,
+                    	width: 80
+                    }]
+                }]
+            }]
+        },{
+            xtype:'fieldset',
+            title: '缴费',
+            collapsible: true,
+            autoHeight:true,
+            items :[{
+                layout:'column',
+                items:[jfForm]
+            }]
+        },{
+            xtype:'fieldset',
+            title: '扩展信息',
+            collapsible: true,
+            autoHeight:true,
+            items :[{
+	            xtype: 'numberfield',
+                fieldLabel: '应缴金额(元)',
+                name: 'yjje',
+            	decimalPrecision: 2,
+            	maxValue: 999999.99
+            },{
+    	        xtype:'textarea',
+    	        fieldLabel:'财务备注',
+    	        name:'cwbz',
+    	        height:80,
+    	        anchor:'96%',
+                maxLength: 2000
+        	}]
+        }, {
+	        xtype:'hidden',
+	        name:'stuid'
+	    }]
+    });
 //]]>
 </script>

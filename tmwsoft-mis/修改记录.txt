@@ -83,6 +83,39 @@ INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VA
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '未领', 'bdk', 1, 2);
 完成‘报到卡’项增删改查，包括excel导入导出
 
+2010-05-06 8:00 - 22:00
+完善综合查询条件
+重新设计开发费用页面
+
+2010-05-07 8:00 - 22:00
+设计开发消息模块
+重新设计开发费用页面
+修改权限验证模块
+考虑到程序的简单性和用户的操作方便性删除 /mis/index 权限
+新增权限
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/messageIndex', '消息设置', '系统管理', '1');
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys/updateMessageInfo', '消息修改', '消息设置', '2');
+
+2010-05-08 8:00 - 22:00
+开发消息模块
+新增权限
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentFeesInfo', '学生缴费详情查看', '学生缴费信息', '2');
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentFeesInfo', '学生缴费详情修改', '学生缴费信息', '2');
+
+2010-05-12 9:00
+删除权限
+/mis/xhzy/sms/getStudentFeesInfo', '学生缴费详情查看', '学生缴费信息'
+/mis/xhzy/sms/updateStudentFeesInfo', '学生缴费详情修改', '学生缴费信息'
+学生基本信息页面 ‘备注’改为‘招生备注’
+
+
+
+
+
+
+
+
+
 
 
 

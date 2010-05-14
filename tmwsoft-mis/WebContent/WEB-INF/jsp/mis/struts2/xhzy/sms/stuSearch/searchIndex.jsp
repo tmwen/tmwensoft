@@ -6,7 +6,7 @@
 <%@ include file="toolbar.jspf" %>
 <%@ include file="upload.jspf" %>
 <!--
-<script type="text/javascript" src="${webroot}/js/plugins/GridToExcel.js"></script>
+<script type="text/javascript" src="${webroot}/resources/ext-extends/GridToExcel.js"></script>
 -->
 <script type="text/javascript">
 //<![CDATA[

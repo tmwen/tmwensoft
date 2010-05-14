@@ -27,31 +27,17 @@ public class GetStuListAction extends MisXhzySmsBaseAction implements ModelDrive
 	@SuppressWarnings("unchecked")
 	@Override
 	protected String misExecute() {
-		// 查询条件组装
 		PageingBO bo = new PageingBO();
 		bo.setStart(start);
 		bo.setLimit(limit);
 		
 		bo.setConditionExceptNull("xm", studentBaseInfo.getXm());
 		bo.setConditionExceptNull("sfzhm", studentBaseInfo.getSfzhm());
-		/*
-		if(userSession.getAuthoritys().indexOf(AuthorityConstants.D_ALL) != -1) {
-			
-		} else if(userSession.getAuthoritys().indexOf(AuthorityConstants.D_ONESELF) != -1) {
-			bo.setConditionExceptNull("and", "(", "", "yjfskr", "=", userSession.getUserid());
-			bo.setConditionExceptNull("or", "", "", "jfskr", "=", userSession.getUserid());
-			bo.setConditionExceptNull("or", ")", "", "lastupdater", "=", userSession.getUserid());
-		} else if(userSession.getAuthoritys().indexOf(AuthorityConstants.D_ALL) == -1) {
-			setResultInfo("{success: true, count: 0, data: []}");
-			return Constants.FORWARDJSONINFO;
-		}
-		*/
 		bo.setOrder("stuid", "desc");
 
 		Map<String, ?> map = getMisXhzySms().getStudentBaseInfoList(bo);
 		List<StudentBaseInfoBO> boList = (List<StudentBaseInfoBO>)map.get("boList");
 		setResultInfo("{success: true, count: " + map.get("count") + ", data:" + Tools.getJsonStringFromObject(boList) + "}");
-		//"{data: [{stuid:1,sfzhm:'5101001111',xm:'xm',xb:'',hj:'',zzmm:'',bdzy:'',kslb:'',zsls:''}]}";
 		return Constants.FORWARDJSONINFO;
 	}
 

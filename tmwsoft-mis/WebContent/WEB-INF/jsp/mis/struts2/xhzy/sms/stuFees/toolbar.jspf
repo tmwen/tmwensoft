@@ -69,6 +69,7 @@
 	}
 
 	//---------------------fees--------------------------
+	/**
 	var feesTabPanel;
 	function showFeesWin(record) {
 		if (!isRecordClick()) return;
@@ -78,7 +79,7 @@
                 activeTab:0,
                 deferredRender:false,
                 border:false,
-				items : [feesGrid,feesBaseInfoForm]
+				items : [feesBaseInfoForm, feesGrid]
             });
 			feesWin = new Ext.Window( {
 				title : '学生缴费信息',
@@ -88,8 +89,9 @@
 				buttonAlign : 'center',
 				modal : true,
 				closeAction : 'hide',
-		        height: 300,
+		        height: 380,
 		        width: 600,
+		        closable: false,
 		        items: feesTabPanel
 			});
 		}
@@ -98,6 +100,63 @@
 		});
 		feesTabPanel.setActiveTab(0);
 		feesWin.show();
+	}
+	*/
+
+	function showFeesWin(record) {
+		if (!isRecordClick()) return;
+		if (!feesWin) {
+			feesWin = new Ext.Window( {
+				title : '学生缴费信息',
+				layout : 'fit',
+				plain : true,
+				bodyStyle : 'padding:5px;',
+				buttonAlign : 'center',
+				modal : true,
+				closeAction : 'hide',
+		        height: 380,
+		        width: 600,
+		        closable: true,
+		        items: stuFeesInfoForm,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						updateInfoSubmit();
+					}
+				}, {
+					text : '返回',
+					handler : function() {
+						feesWin.hide();
+					}
+				} ]
+			});
+		}
+		feesWin.show(this, function(){
+			stuFeesInfoForm.getForm().load( {
+				url : 'getStudentBaseInfo.${extension}',
+				params : 'stuid=' + recordData.stuid,
+				waitTitle : '请等待',
+				waitMsg : '读取中...'
+			});
+		});
+	}
+
+	function updateInfoSubmit() {
+		if (stuFeesInfoForm.form.isValid()) {
+			stuFeesInfoForm.form.doAction('submit', {
+				url : 'updateStuInfoByFee.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在保存...',
+				method : 'post',
+				params : '',
+				success : function(form, action) {
+					feesWin.hide();
+					indexStore.reload();
+				}
+			});
+		} else {
+			misPromptMessageBox('数据有误请检查');
+		}
 	}
 	//-------------------view----------------------------
 	var viewForm = new Ext.FormPanel( {

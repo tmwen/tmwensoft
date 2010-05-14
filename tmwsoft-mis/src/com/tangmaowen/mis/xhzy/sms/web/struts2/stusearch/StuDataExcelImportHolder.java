@@ -112,7 +112,7 @@ public class StuDataExcelImportHolder {
 		// 费用
 		bo.setYjfrq(formatDateToyyyyMMdd(27));
 		bo.setYjfje(getDouble(28));
-		bo.setYjfskr(getSkrID(29));
+		bo.setYjfskr(getCellValue(29));
 		bo.setJfrq(formatDateToyyyyMMdd(30));
 		bo.setJfje(getDouble(31));
 		bo.setJfskr(getSkrID(32));

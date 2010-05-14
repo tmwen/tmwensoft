@@ -4,8 +4,8 @@
 <%@ include file="../../../common/dictionary.jspf" %>
 <%@ include file="../stuBaseInfo/formColumn.jspf" %>
 <%@ include file="formColumn.jspf" %>
-<%@ include file="feesList.jspf" %>
-<%@ include file="feesBaseInfo.jspf" %>
+<!-- %@ include file="feesList.jspf" %-->
+<!-- %@ include file="feesBaseInfo.jspf" %-->
 <%@ include file="toolbar.jspf" %>
 <script type="text/javascript">
 //<![CDATA[

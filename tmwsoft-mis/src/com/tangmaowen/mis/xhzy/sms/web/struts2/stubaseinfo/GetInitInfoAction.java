@@ -14,7 +14,7 @@ public class GetInitInfoAction extends MisXhzySmsBaseAction {
 	@Override
 	public String execute() {
 		setLog(false);
-		setVerifyRequest(false);
+		setVerifyRequest("no");
 		return super.execute();
 	}
 	

@@ -62,7 +62,6 @@ public class StuBaseInfoImportAction extends MisXhzySmsBaseAction implements Mod
 		String info = "";
 		if(!Tools.isEmpty(list)) {
 			info = Tools.getJsonStringFromObject(list);
-			if(info.length() > 4900) info = info.substring(0, 4900) + "...";
 			info = list.size() + "条:" + info;
 		}
 		return "导入学生基本信息:" + info;

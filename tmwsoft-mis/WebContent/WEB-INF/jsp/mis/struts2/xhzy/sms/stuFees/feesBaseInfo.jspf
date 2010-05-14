@@ -9,7 +9,7 @@
 	        items:[{
 	            columnWidth:.5,
 	            layout: 'form',
-	            defaults: {anchor:'92%', allowBlank: true},
+	            defaults: {anchor:'92%', allowBlank: true, readOnly: true},
 	            defaultType: 'textfield',
 	            items: [
 	    	    new Ext.form.DateField({
@@ -42,7 +42,7 @@
 	        }, {
 	            columnWidth:.5,
 	            layout: 'form',
-	            defaults: {anchor:'92%', allowBlank: true},
+	            defaults: {anchor:'92%', allowBlank: true, readOnly: true},
 	            defaultType: 'textfield',
 	            items: [
 	    	    new Ext.form.DateField({
@@ -87,7 +87,7 @@
 	}
 	
 	var feesBaseInfoForm = new Ext.FormPanel( {
-		title: '学生缴费基本信息',
+		title: '扩展信息',
 		labelAlign : 'right',
 		frame : true,
 		bodyStyle : 'padding:5px 5px 0',

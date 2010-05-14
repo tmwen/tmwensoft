@@ -27,7 +27,7 @@ public abstract class BaseAction extends ActionSupport {
 	private String resultInfo = "";
 	private boolean ajax = true;
 	private boolean log = true;
-	private boolean verifyRequest = true;
+	private String verifyRequest = "login_auth";
 	private String authority = "";
 	
 	protected ActionContext context;
@@ -76,22 +76,24 @@ public abstract class BaseAction extends ActionSupport {
 
 	//-----------------private fun-----------------------	
 	private String verifyRequest() {
-		if(!verifyRequest) return "";
-		String result = "";
-		if(userSession == null) {
-			if(ajax) {
-				setResultInfo("{success: false, message: '会话失效，请重新登录', verifyresult: 'login'}");
-				result = Constants.FORWARDJSONINFO;
-			} else {
-				result = Constants.LOGIN;
-			}
-		} else {
-			if(!verifyAuthority(authority, userSession.getAuthoritys())) {
-				setResultInfo("{success: false, message: '无权限，请与管理员联系', verifyresult: 'notauth'}");
-				result = Constants.FORWARDJSONINFO;
+		if(verifyRequest.equals("no")) return "";
+		if(!verifyRequest.equals("no")) {
+			if(userSession == null) {
+				if(ajax) {
+					setResultInfo("{success: false, message: '会话失效，请重新登录', verifyresult: 'login'}");
+					return Constants.FORWARDJSONINFO;
+				} else {
+					return Constants.LOGIN;
+				}
 			}
 		}
-		return result;
+		if(verifyRequest.equals("login_auth")) {
+			if(!verifyAuthority(authority, userSession.getAuthoritys())) {
+				setResultInfo("{success: false, message: '无权限，请与管理员联系', verifyresult: 'notauth'}");
+				return Constants.FORWARDJSONINFO;
+			}
+		}
+		return "";
 	}
 	
 	private void log() {
@@ -99,7 +101,8 @@ public abstract class BaseAction extends ActionSupport {
 		LogBO log = new LogBO();
 		log.setOperaction(authority);
 		log.setOperater(userSession == null ? Constants.GUESTID : userSession.getUserid());
-		log.setOperinfo(actionInfo());
+		String info = actionInfo();
+		log.setOperinfo((info.length() > 4900) ? (info.substring(0, 4900) + "...") : info);
 		log.setOperip(ServletActionContext.getRequest().getRemoteAddr());
 		log.setOperresult(resultInfo);
 		log.setOpertime(Tools.getCurrDefaultDateTime());
@@ -172,9 +175,9 @@ public abstract class BaseAction extends ActionSupport {
 	}
 
 	/**
-	 * @param verifyRequest true:验证请求；false:不验证请求
+	 * @param verifyRequest login_auth:验证登录和权限; login:验证登录; no:不进行验证; 验证权限的前提条件是验证登录
 	 */
-	protected void setVerifyRequest(boolean verifyRequest) {
+	protected void setVerifyRequest(String verifyRequest) {
 		this.verifyRequest = verifyRequest;
 	}
 	

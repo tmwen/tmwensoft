@@ -7,7 +7,7 @@ package com.tangmaowen.mis.common;
  * 
  */
 public class AuthorityConstants {
-
+/**
 	// C: COMMON M: MENU A: ACTION D: DATA
 	// 首页权限
 	public static final String C_INDEX = "/mis/index";
@@ -74,7 +74,7 @@ public class AuthorityConstants {
 	public static final String A_STU_DATA_GET_STUBASEINFO_LIST = "/mis/xhzy/sms/getStuBaseInfoListBySearch";
 	public static final String A_STU_DATA_STUBASEINFO_IMPORT = "/mis/xhzy/sms/stuBaseInfoImport";
 	public static final String A_STU_DATA_STUBASEINFO_EXPORT = "/mis/xhzy/sms/stuBaseInfoExport";
-	
+*/	
 	// 数据约束
 	public static final String D_ONESELF = "oneselfData";
 	public static final String D_ALL = "allData";

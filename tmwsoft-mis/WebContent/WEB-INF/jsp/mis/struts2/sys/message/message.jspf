@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript">
+//<![CDATA[
+    
+	var messageForm = new Ext.FormPanel( {
+		frame: true,
+		title: '消息管理',
+		hideLabels: true,
+        listeners: {activate: getMessageInfo},
+		reader : new Ext.data.JsonReader({root: 'data'},['active', 'info']),
+		items: [ {
+			xtype: 'radiogroup',
+			width: 200,
+			id: 'active',
+            items: [
+                {boxLabel: '启用消息', name: 'active', inputValue: 1},
+                {boxLabel: '停用消息', name: 'active', inputValue: 0, checked: true}
+            ]
+		}, {
+			xtype:'htmleditor',
+            id:'info',
+            height:440,
+            anchor:'100%'
+		} ],       
+        tbar:[{
+            xtype:'buttongroup',
+            items: [{
+            	text: '保存',
+            	icon: '${webroot}/resources/shared/images/accept.png',
+            	handler: updateMessageInfo
+            }]
+        }, {
+            xtype:'buttongroup',
+            items: [{
+            	text: '刷新',
+            	icon: '${webroot}/resources/shared/images/refresh.gif',
+            	handler: getMessageInfo
+            }]
+        }]
+	});
+
+	function getMessageInfo(){
+		messageForm.form.load( {
+			url : '${webroot}/upload/message.txt',
+			params : '',
+			waitTitle : '请等待',
+			waitMsg : '读取中...'
+		});
+	}
+
+	function updateMessageInfo() {
+		if (messageForm.form.isValid()) {
+			messageForm.form.doAction('submit', {
+				url : 'updateMessageInfo.${extension}',
+				waitTitle : '请等待',
+				waitMsg : '正在提交...',
+				method : 'post',
+				params : ''
+			});
+		}
+	}
+//]]>
+</script>
