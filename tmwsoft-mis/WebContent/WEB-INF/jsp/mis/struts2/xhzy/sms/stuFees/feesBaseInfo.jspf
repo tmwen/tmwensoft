@@ -94,7 +94,8 @@
 		autoScroll : true,
 		reader : infoJsonReader,
 		items : getFeesBaseInfoFormColumn(),
-        listeners: {activate: loadStuBaseInfoByFee},
+        listeners: {activate: loadStuBaseInfoByFee}
+        /**
         tbar: [{
         	text: '保存',
         	icon: '${webroot}/resources/shared/images/accept.png',
@@ -110,6 +111,7 @@
         	icon: '${webroot}/resources/shared/images/return.png',
             handler: onBack
         }]
+        */
 	});
 
 	function loadStuBaseInfoByFee(){

@@ -19,13 +19,14 @@
 			<result name="success">/WEB-INF/jsp/mis/struts2/xhzy/sms/stuFees/studentIndex.jsp</result>
 		</action>
 		<action name="getStudentsFeesList" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.GetStuListAction"></action>
-		<!--
 		<action name="getStudentFeesList" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.GetStuFeeListAction"></action>
+		<!--
 		<action name="insertStudentFees" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.InsertInfoAction"></action>
 		<action name="updateStudentFees" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.UpdateInfoAction"></action>
 		<action name="deleteStudentFees" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.DeleteInfoAction"></action>
 		-->
-		<action name="updateStuInfoByFee" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.UpdateStuInfoByFee"></action>
+		<action name="switchUserID" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.SwitchUserIDAction"></action>
+		<action name="updateStuInfoByFee" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stufees.UpdateStuInfoByFeeAction"></action>
 		
 		<!-- search -->
 		<action name="stuSearchIndex" class="com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.IndexAction">

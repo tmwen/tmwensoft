@@ -14,7 +14,7 @@ import com.tangmaowen.utils.Tools;
  * @since 2009-12-29 下午08:34:16
  *
  */
-public class UpdateStuInfoByFee extends MisXhzySmsBaseAction implements ModelDriven<StudentBaseInfoByFeeVO> {
+public class UpdateStuInfoByFeeAction extends MisXhzySmsBaseAction implements ModelDriven<StudentBaseInfoByFeeVO> {
 
 	@Override
 	protected String misExecute() {

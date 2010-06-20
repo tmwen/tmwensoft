@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.Constants" %>
 <script type="text/javascript">
 //<![CDATA[
 	var recordData;
 	var conditionWin;
-	var feesWin;
-	var viewWin;
 	//---------------------------------------------------
 	function showConditionWin(record) {
 		if (!conditionWin) {
@@ -69,29 +68,29 @@
 	}
 
 	//---------------------fees--------------------------
-	/**
 	var feesTabPanel;
-	function showFeesWin(record) {
+	var feesWinOld;
+	function showFeesWinOld(record) {
 		if (!isRecordClick()) return;
-		if (!feesWin) {
+		if (!feesWinOld) {
 			feesTabPanel = new Ext.TabPanel({
                 autoTabs:true,
                 activeTab:0,
                 deferredRender:false,
                 border:false,
-				items : [feesBaseInfoForm, feesGrid]
+				items : [feesGrid, feesBaseInfoForm]
             });
-			feesWin = new Ext.Window( {
-				title : '学生缴费信息',
+			feesWinOld = new Ext.Window( {
+				title : '旧版学生缴费信息',
 				layout : 'fit',
 				plain : true,
 				bodyStyle : 'padding:5px;',
 				buttonAlign : 'center',
 				modal : true,
 				closeAction : 'hide',
-		        height: 380,
-		        width: 600,
-		        closable: false,
+		        height: 320,
+		        width: 500,
+		        closable: true,
 		        items: feesTabPanel
 			});
 		}
@@ -99,10 +98,10 @@
 			params:{stuid: recordData.stuid}
 		});
 		feesTabPanel.setActiveTab(0);
-		feesWin.show();
+		feesWinOld.show();
 	}
-	*/
 
+	var feesWin;
 	function showFeesWin(record) {
 		if (!isRecordClick()) return;
 		if (!feesWin) {
@@ -114,10 +113,11 @@
 				buttonAlign : 'center',
 				modal : true,
 				closeAction : 'hide',
-		        height: 380,
+		        height: 450,
 		        width: 600,
 		        closable: true,
 		        items: stuFeesInfoForm,
+		        html: '<a href="javascript:showFeesWinOld();" target="_blank">数据有误？点这里试试！</a>',
 				buttons : [ {
 					text : '保存',
 					handler : function() {
@@ -159,6 +159,7 @@
 		}
 	}
 	//-------------------view----------------------------
+	var viewWin;
 	var viewForm = new Ext.FormPanel( {
 		labelAlign : 'right',
 		frame : true,

@@ -107,6 +107,7 @@ var feesColumns = new Ext.grid.ColumnModel({
         sm			: new Ext.grid.RowSelectionModel({
             singleSelect	: true
         }),
+        /**
         tbar: [{
             text: '添加',
         	icon: '${webroot}/resources/shared/images/add.png',
@@ -124,6 +125,7 @@ var feesColumns = new Ext.grid.ColumnModel({
         	icon: '${webroot}/resources/shared/images/return.png',
             handler: onBack
         }, '-'],
+        */
         viewConfig: {
             forceFit: true
         }
@@ -157,7 +159,7 @@ var feesColumns = new Ext.grid.ColumnModel({
     }
     function onBack() {
         indexStore.reload();
-    	feesWin.hide();
+    	feesWinOld.hide();
     }
 //]]>
 </script>

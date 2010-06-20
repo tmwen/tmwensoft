@@ -108,11 +108,13 @@ INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhz
 /mis/xhzy/sms/updateStudentFeesInfo', '学生缴费详情修改', '学生缴费信息'
 学生基本信息页面 ‘备注’改为‘招生备注’
 
+2010-05-14 半天
+调整缴费页面
+编写预缴费人代码转换辅助类
 
-
-
-
-
+2010-05-15 半天
+测试
+版本升到1.3
 
 
 

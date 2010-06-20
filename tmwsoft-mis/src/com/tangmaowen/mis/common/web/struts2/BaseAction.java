@@ -77,14 +77,12 @@ public abstract class BaseAction extends ActionSupport {
 	//-----------------private fun-----------------------	
 	private String verifyRequest() {
 		if(verifyRequest.equals("no")) return "";
-		if(!verifyRequest.equals("no")) {
-			if(userSession == null) {
-				if(ajax) {
-					setResultInfo("{success: false, message: '会话失效，请重新登录', verifyresult: 'login'}");
-					return Constants.FORWARDJSONINFO;
-				} else {
-					return Constants.LOGIN;
-				}
+		if(userSession == null) {
+			if(ajax) {
+				setResultInfo("{success: false, message: '会话失效，请重新登录', verifyresult: 'login'}");
+				return Constants.FORWARDJSONINFO;
+			} else {
+				return Constants.LOGIN;
 			}
 		}
 		if(verifyRequest.equals("login_auth")) {
