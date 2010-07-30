@@ -136,7 +136,7 @@
 		                }
 		            }
 		        }, {
-		            text: '关闭',
+		            text: '返回',
 		            handler: function(){
 	        			indexStore.reload();
 	        			uploadExcelWin.hide();

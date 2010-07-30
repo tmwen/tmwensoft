@@ -49,6 +49,7 @@ public class UpdateStuInfoByFeeAction extends MisXhzySmsBaseAction implements Mo
 		double je = 0.00;
 		if(stuFeeInfo.getYjfje() != null) je += stuFeeInfo.getYjfje();
 		if(stuFeeInfo.getJfje() != null) je += stuFeeInfo.getJfje();
+		if(stuFeeInfo.getJfje2() != null) je += stuFeeInfo.getJfje2();
 		if(je == 0.00) {
 			stuFeeInfo.setJfze(null);
 		} else {

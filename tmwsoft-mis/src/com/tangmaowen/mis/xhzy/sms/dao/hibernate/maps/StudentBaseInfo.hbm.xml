@@ -91,6 +91,16 @@
         <property name="lq" type="java.lang.String">
             <column name="lq" length="1" />
         </property>
+        <property name="bdk" type="java.lang.String">
+            <column name="bdk" length="1" />
+        </property>
+        <property name="xy" type="java.lang.String">
+            <column name="xy" length="1" />
+        </property>
+        <property name="bz" type="java.lang.String">
+            <column name="bz" length="2000" />
+        </property>
+        
         <property name="yjfrq" type="java.lang.String">
             <column name="yjfrq" length="19" />
         </property>
@@ -109,21 +119,25 @@
         <property name="jfskr" type="java.lang.String">
             <column name="jfskr" length="100" />
         </property>
+        <property name="jfrq2" type="java.lang.String">
+            <column name="jfrq2" length="19" />
+        </property>
+        <property name="jfje2" type="java.lang.Double">
+            <column name="jfje2" length="8" />
+        </property>
+        <property name="jfskr2" type="java.lang.String">
+            <column name="jfskr2" length="100" />
+        </property>
         <property name="jfze" type="java.lang.Double">
             <column name="jfze" length="8" />
         </property>
         <property name="yjje" type="java.lang.Double">
             <column name="yjje" length="8" />
         </property>
-        <property name="bz" type="java.lang.String">
-            <column name="bz" length="2000" />
-        </property>
         <property name="cwbz" type="java.lang.String">
             <column name="cwbz" length="2000" />
         </property>
-        <property name="bdk" type="java.lang.String">
-            <column name="bdk" length="1" />
-        </property>
+        
         <property name="creater" type="java.lang.Integer">
             <column name="creater" not-null="true" />
         </property>

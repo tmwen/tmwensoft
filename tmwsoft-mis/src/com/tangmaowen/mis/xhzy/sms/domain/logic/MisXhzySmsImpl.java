@@ -48,8 +48,11 @@ public class MisXhzySmsImpl implements MisXhzySmsFacade {
 	@Override
 	public String deleteStudentBaseInfo(Integer id) {
 		if(studentFeesDao.checkStuNotFees(id)) {
-			studentBaseInfoDao.deleteStudentBaseInfo(id);
-			return "";
+			StudentBaseInfoBO bo = studentBaseInfoDao.getStudentBaseInfo(id);
+			if(bo.getJfze() == null || bo.getJfze() <= 0) {
+				studentBaseInfoDao.deleteStudentBaseInfo(id);
+				return "";
+			}
 		}
 		return "用户有缴费记录，不能删除";
 	}

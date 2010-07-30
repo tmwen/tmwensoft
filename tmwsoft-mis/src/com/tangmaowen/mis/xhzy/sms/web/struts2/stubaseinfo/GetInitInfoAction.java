@@ -21,7 +21,11 @@ public class GetInitInfoAction extends MisXhzySmsBaseAction {
 	@Override
 	protected String misExecute() {
 		String curDate = Tools.getCurrDefaultDateTime().substring(0, 10);
-		setResultInfo("{success: true, data:[{jie:2010,jj:2,msrq:'" + curDate + "'}]}");
+		String season = "1";
+		if(curDate.substring(5, 7).compareTo("07") >= 0) {
+			season = "2";
+		}
+		setResultInfo("{success: true, data:[{jie:" + curDate.substring(0, 4) + ",jj:" + season + ",msrq:'" + curDate + "'}]}");
 		return Constants.FORWARDJSONINFO;
 	}
 

@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.tangmaowen.mis.common.DictConstants" %>
+<script type="text/javascript">
+//<![CDATA[
+	var roleAuthPanel = new Ext.tree.TreePanel({
+		region: 'center',
+		margins: '5 5 5 0',
+        useArrows:true,
+        autoScroll:true,
+        animate:true,
+        enableDD:false,
+        containerScroll: true,
+        rootVisible: true,
+        root: {
+            nodeType: 'async'
+        },
+        
+        // auto create TreeLoader
+        dataUrl: 'getRoleAuthList.${extension}',
+        
+		tbar : [ {
+			text : '保存',
+			icon : '${webroot}/resources/shared/images/accept.png',
+			handler : function() {
+				updateRoleAuth();
+			}
+		}, '-', {
+			text : '刷新',
+			icon : '${webroot}/resources/shared/images/refresh.gif',
+			handler : function() {
+				loadAuth();
+			}
+		}, '-' ]
+    });
+
+    roleAuthPanel.getRootNode().expand(true);
+
+	function loadAuth(){
+		authStore.reload({
+			params:{roleid: this.roleid}
+		});
+	}
+
+	function updateRoleAuth(){
+		var checkAuth = '', selNodes = roleAuthPanel.getChecked();
+        Ext.each(selNodes, function(node){
+            checkAuth += node.id + ',';
+        });
+		
+        var requestConfig = {
+			url: 'updateRoleAuth.${extension}',
+			params: {roleid: this.roleid, authids: checkAuth}
+        };
+        var result = Ext.Ajax.request(requestConfig);
+	}
+//]]>
+</script>

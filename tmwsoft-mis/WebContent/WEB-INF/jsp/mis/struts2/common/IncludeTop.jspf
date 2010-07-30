@@ -7,7 +7,7 @@
 <c:set var="servererrorinfo" value="<%=Constants.SERVERERRORINFO%>"/>
 <html>
 <head>
-<title>四川西南航空专修学院｜成都航空旅游职业学校 入学管理系统 v1.3</title>
+<title>四川西南航空专修学院｜成都航空旅游职业学校 入学管理系统 v1.4</title>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
 <link rel="stylesheet" type="text/css" href="${webroot}/resources/ext/resources/css/ext-all.css" />
 <link rel="stylesheet" type="text/css" href="${webroot}/resources/ext/examples/ux/css/Portal.css" />

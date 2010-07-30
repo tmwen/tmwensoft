@@ -10,7 +10,7 @@ public class Constants {
 	/**
 	 * 服务器根目录
 	 */
-	public static final String WEBROOT = "/tangsoft";
+	public static final String WEBROOT = "/tmwsoft";
 	
 	/**
 	 * URL请求路径后缀
@@ -61,6 +61,11 @@ public class Constants {
 	 * 学生信息excel模板，学生信息导入导出都使用该模板
 	 */
 	public static final String STUINFOEXCELTEMP = "/upload/studataExcelTemp.xls";
+	
+	/**
+	 * 消息文件路径，默认路径在服务器同一个目录下
+	 */
+	public static final String MESSAGEFILE = "../../../upload/message.txt";
 	
 	//-------------------------action result name----------------------------------
 	/**

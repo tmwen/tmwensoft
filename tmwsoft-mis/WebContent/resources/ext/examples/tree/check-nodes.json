@@ -32,6 +32,8 @@
     },{
         text: 'Energy foods',
         cls: 'folder',
+        leaf: false,
+        checked: false,
         children: [{
             text: 'Coffee',
             leaf: true,

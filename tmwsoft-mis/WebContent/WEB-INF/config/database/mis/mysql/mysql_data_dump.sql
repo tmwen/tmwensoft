@@ -20,6 +20,7 @@ INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VA
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('active', '记录状态', 'root', 0, 17);
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('authType', '权限类型', 'root', 0, 18);
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('bdk', '报到卡', 'root', 0, 19);
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('xy', '协议', 'root', 0, 20);
 
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('1', '男', 'xb', 1, 1);
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '女', 'xb', 1, 2);
@@ -90,6 +91,9 @@ INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VA
 
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('1', '已领', 'bdk', 1, 1);
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '未领', 'bdk', 1, 2);
+
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('1', '是', 'xy', 1, 1);
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '否', 'xy', 1, 2);
 
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/studentsBaseInfoIndex', '学生基本信息', '学生管理', '1');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/studentsFeesIndex', '学生缴费信息', '学生管理', '1');

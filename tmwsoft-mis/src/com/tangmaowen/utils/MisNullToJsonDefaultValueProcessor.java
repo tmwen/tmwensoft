@@ -13,7 +13,7 @@ import net.sf.json.util.JSONUtils;
  */
 public class MisNullToJsonDefaultValueProcessor implements DefaultValueProcessor {
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Object getDefaultValue(Class type) {
 		if (JSONUtils.isArray(type)) {
 			return new JSONArray();

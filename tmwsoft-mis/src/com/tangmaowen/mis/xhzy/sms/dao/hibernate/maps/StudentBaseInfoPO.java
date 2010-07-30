@@ -37,21 +37,26 @@ public class StudentBaseInfoPO implements Serializable {
 	private String zs;
 	private String tj;
 	private String lq;
+	private String bdk;
+	private String xy;
+	private String bz;
+	
 	private String yjfrq;
 	private Double yjfje;
 	private String yjfskr;
 	private String jfrq;
 	private Double jfje;
 	private String jfskr;
+	private String jfrq2;
+	private Double jfje2;
+	private String jfskr2;
 	private Double jfze;
 	private Double yjje;
-	private String bz;
 	private String cwbz;
 	private Integer creater;
 	private String createtime;
 	private Integer lastupdater;
 	private String lastupdatertime;
-	private String bdk;
 	
 	public Integer getStuid() {
 		return stuid;
@@ -316,6 +321,30 @@ public class StudentBaseInfoPO implements Serializable {
 	}
 	public String getBdk() {
 		return bdk;
+	}
+	public String getXy() {
+		return xy;
+	}
+	public void setXy(String xy) {
+		this.xy = xy;
+	}
+	public String getJfrq2() {
+		return jfrq2;
+	}
+	public void setJfrq2(String jfrq2) {
+		this.jfrq2 = jfrq2;
+	}
+	public Double getJfje2() {
+		return jfje2;
+	}
+	public void setJfje2(Double jfje2) {
+		this.jfje2 = jfje2;
+	}
+	public String getJfskr2() {
+		return jfskr2;
+	}
+	public void setJfskr2(String jfskr2) {
+		this.jfskr2 = jfskr2;
 	}
 	
 }

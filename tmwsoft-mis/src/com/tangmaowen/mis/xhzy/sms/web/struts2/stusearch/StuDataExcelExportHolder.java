@@ -26,6 +26,7 @@ public class StuDataExcelExportHolder {
 	private HSSFRow row;
 	private String bkxl;
 	private String[][] userIDNameArray;
+	private int cellnum;
 	
 	public ByteArrayOutputStream exportStuBaseInfo(List<StudentBaseInfoBO> boList, String[][] userIDNameArray, String excelTempPath) throws Exception {
 		this.userIDNameArray = userIDNameArray;
@@ -42,48 +43,56 @@ public class StuDataExcelExportHolder {
 		for(int i = 0; i < boList.size(); i++){
         	StudentBaseInfoBO bo = boList.get(i);
         	row = sheet.createRow(i + 3);// 起始行3
-        	setCellValue(0, bo.getMsbbh());
-        	setCellValue(1, formatDateToyyMMdd(bo.getMsrq()));
-        	setCellValue(2, bo.getJie());
-        	setCellValue(3, getDictValue(DictConstants.JJ, bo.getJj()));
-        	setCellValue(4, bo.getXm());
-        	setCellValue(5, getDictValue(DictConstants.XB, bo.getXb()));
-        	setCellValue(6, getDictValue(DictConstants.MZ, bo.getMz()));
-        	setCellValue(7, getStringByDouble(bo.getSg()));
-        	setCellValue(8, getDictValue(DictConstants.BKXL, bkxl = bo.getBkxl()));
-        	setCellValue(9, getBdzy(bo.getBdzy()));
-        	setCellValue(10, getDictValue(DictConstants.ZZMM, bo.getZzmm()));
-        	setCellValue(11, formatDateToyyMMdd(bo.getCsrq()));
-        	setCellValue(12, bo.getSfzhm());
-        	setCellValue(13, getDictValue(DictConstants.HJ, bo.getHj()));
-        	setCellValue(14, getDictValue(DictConstants.KSLB, bo.getKslb()));
-        	setCellValue(15, getDictValue(DictConstants.YKLX, bo.getYklx()));
-        	setCellValue(16, getDictValue(DictConstants.BYZ, bo.getByz()));
-        	setCellValue(17, bo.getJtxsdz());
-        	setCellValue(18, bo.getXslxdh());
-        	setCellValue(19, bo.getJzlxdh());
-        	setCellValue(20, bo.getByxx());
-        	setCellValue(21, bo.getSyd());
-        	setCellValue(22, bo.getZsls());
-        	setCellValue(23, getUserName(bo.getZfzr()));
-        	setCellValue(24, getDictValue(DictConstants.ZS, bo.getZs()));
-        	setCellValue(25, getDictValue(DictConstants.TJ, bo.getTj()));
-        	setCellValue(26, getDictValue(DictConstants.LQ, bo.getLq()));
-        	setCellValue(27, formatDateToyyMMdd(bo.getYjfrq()));
-        	setCellValue(28, getStringByDouble(bo.getYjfje()));
-        	setCellValue(29, bo.getYjfskr());
-        	setCellValue(30, formatDateToyyMMdd(bo.getJfrq()));
-        	setCellValue(31, getStringByDouble(bo.getJfje()));
-        	setCellValue(32, getSkrName(bo.getJfskr()));
-        	setCellValue(33, bo.getBz());
-        	setCellValue(34, bo.getCwbz());
-        	setCellValue(35, getDictValue(DictConstants.BDK, bo.getBdk()));
+    		cellnum = -1;
+        	setCellValue(bo.getMsbbh());
+        	setCellValue(formatDateToyyMMdd(bo.getMsrq()));
+        	setCellValue(bo.getJie());
+        	setCellValue(getDictValue(DictConstants.JJ, bo.getJj()));
+        	setCellValue(bo.getXm());
+        	setCellValue(getDictValue(DictConstants.XB, bo.getXb()));
+        	setCellValue(getDictValue(DictConstants.MZ, bo.getMz()));
+        	setCellValue(getStringByDouble(bo.getSg()));
+        	setCellValue(getDictValue(DictConstants.BKXL, bkxl = bo.getBkxl()));
+        	setCellValue(getBdzy(bo.getBdzy()));
+        	setCellValue(getDictValue(DictConstants.ZZMM, bo.getZzmm()));
+        	setCellValue(formatDateToyyMMdd(bo.getCsrq()));
+        	setCellValue(bo.getSfzhm());
+        	setCellValue(getDictValue(DictConstants.HJ, bo.getHj()));
+        	setCellValue(getDictValue(DictConstants.KSLB, bo.getKslb()));
+        	setCellValue(getDictValue(DictConstants.YKLX, bo.getYklx()));
+        	setCellValue(getDictValue(DictConstants.BYZ, bo.getByz()));
+        	setCellValue(bo.getJtxsdz());
+        	setCellValue(bo.getXslxdh());
+        	setCellValue(bo.getJzlxdh());
+        	setCellValue(bo.getByxx());
+        	setCellValue(bo.getSyd());
+        	setCellValue(bo.getZsls());
+        	setCellValue(getUserName(bo.getZfzr()));
+        	setCellValue(getDictValue(DictConstants.ZS, bo.getZs()));
+        	setCellValue(getDictValue(DictConstants.TJ, bo.getTj()));
+        	setCellValue(getDictValue(DictConstants.LQ, bo.getLq()));
+        	setCellValue(getDictValue(DictConstants.BDK, bo.getBdk()));
+        	setCellValue(getDictValue(DictConstants.XY, bo.getXy()));
+        	setCellValue(bo.getBz());
+    		// 费用
+        	setCellValue(formatDateToyyMMdd(bo.getYjfrq()));
+        	setCellValue(getStringByDouble(bo.getYjfje()));
+        	setCellValue(bo.getYjfskr());
+        	setCellValue(formatDateToyyMMdd(bo.getJfrq()));
+        	setCellValue(getStringByDouble(bo.getJfje()));
+        	setCellValue(getSkrName(bo.getJfskr()));
+        	setCellValue(formatDateToyyMMdd(bo.getJfrq2()));
+        	setCellValue(getStringByDouble(bo.getJfje2()));
+        	setCellValue(getSkrName(bo.getJfskr2()));
+        	setCellValue(getStringByDouble(bo.getJfze()));
+        	setCellValue(getStringByDouble(bo.getYjje()));
+        	setCellValue(bo.getCwbz());
         }
 	}
 	
-	private void setCellValue(int cellCount, String value) {
+	private void setCellValue(String value) {
 		if(Tools.isEmpty(value)) value = "";
-    	HSSFCell cell = row.createCell(cellCount);
+    	HSSFCell cell = row.createCell(++cellnum);
 		cell.setCellType(HSSFCell.CELL_TYPE_STRING);
 		cell.setCellValue(new HSSFRichTextString(value));
 		

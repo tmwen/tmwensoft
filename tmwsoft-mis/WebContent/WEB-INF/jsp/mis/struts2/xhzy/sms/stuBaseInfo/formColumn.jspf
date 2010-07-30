@@ -9,9 +9,10 @@
     	},
     	['stuid', 'active', 'msbbh', {name: 'msrq', type: 'date', dateFormat: 'Y-m-d'}, 'bkxl', 'jie', 'jj', 'xm', 'xb',
      	 'mz', 'sg', 'bdzy', 'zzmm', {name: 'csrq', type: 'date', dateFormat: 'Y-m-d'}, 'sfzhm', 'hj', 'kslb', 'yklx', 'byz',
-     	  'jtxsdz', 'xslxdh', 'jzlxdh', 'byxx', 'syd', 'zsls', 'zfzr', 'zs', 'tj', 'lq', {name: 'yjfrq', type: 'date', dateFormat: 'Y-m-d'},
-     	   'yjfje', 'yjfskr', {name: 'jfrq', type: 'date', dateFormat: 'Y-m-d'}, 'jfje', 'jfskr', 'jfze', 'yjje', 'bz', 'cwbz', 'creater',
-     	   'createtime', 'lastupdater', 'lastupdatertime', 'bdk']
+     	  'jtxsdz', 'xslxdh', 'jzlxdh', 'byxx', 'syd', 'zsls', 'zfzr', 'zs', 'tj', 'lq', 'bdk', 'xy',
+     	   {name: 'yjfrq', type: 'date', dateFormat: 'Y-m-d'}, 'yjfje', 'yjfskr', {name: 'jfrq', type: 'date', dateFormat: 'Y-m-d'},
+     	    'jfje', 'jfskr', {name: 'jfrq2', type: 'date', dateFormat: 'Y-m-d'}, 'jfje2', 'jfskr2', 'jfze', 'yjje',
+     	     'bz', 'cwbz', 'creater', 'createtime', 'lastupdater', 'lastupdatertime']
     );
 
 	var columns = [
@@ -43,16 +44,20 @@
 	        	{header: '体检',			dataIndex: 'tj',		width: 40, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.TJ%>', value);}},
 	        	{header: '录取',			dataIndex: 'lq',		width: 40, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.LQ%>', value);}},
 	    		{header: '报到卡',		dataIndex: 'bdk',		width: 45, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.BDK%>', value);}},
-	        	{header: '预交费日期',		dataIndex: 'yjfrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
+	    		{header: '协议',			dataIndex: 'xy',		width: 40, 	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.XY%>', value);}},
+	    		{header: '招生备注',		dataIndex: 'bz',		width: 200, hidden: false},
+	    		{header: '预交费日期',		dataIndex: 'yjfrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
 	        	{header: '预交费金额(元)',	dataIndex: 'yjfje',		width: 85,	hidden: false},
 	        	{header: '预交费收款人',	dataIndex: 'yjfskr',	width: 80,	hidden: false},
-	        	{header: '缴费日期',		dataIndex: 'jfrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
-	        	{header: '缴费金额(元)',	dataIndex: 'jfje',		width: 75,	hidden: false},
-	        	{header: '缴费收款人',		dataIndex: 'jfskr',		width: 70,	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+	        	{header: '缴费日期1',		dataIndex: 'jfrq',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
+	        	{header: '缴费金额1(元)',	dataIndex: 'jfje',		width: 80,	hidden: false},
+	        	{header: '缴费收款人1',	dataIndex: 'jfskr',		width: 75,	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+	        	{header: '缴费日期2',		dataIndex: 'jfrq2',		width: 70,	hidden: false, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
+	        	{header: '缴费金额2(元)',	dataIndex: 'jfje2',		width: 80,	hidden: false},
+	        	{header: '缴费收款人2',	dataIndex: 'jfskr2',	width: 74,	hidden: false,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
 	        	{header: '已缴费用(元)',	dataIndex: 'jfze',		width: 75,	hidden: false},
 	        	{header: '应缴费用(元)',	dataIndex: 'yjje',		width: 75,	hidden: false},
-	    		{header: '招生备注',		dataIndex: 'bz',		width: 200, hidden: false},
-	    		{header: '财务备注',		dataIndex: 'cwbz',		width: 200}
+	        	{header: '财务备注',		dataIndex: 'cwbz',		width: 200}
 	];
 
     function bdzyDicInfo(value, record){
@@ -180,6 +185,19 @@
 	            	maxValue: 200,
 	            	minValue: 100,
 	            	allowBlank:true
+	            }, {
+		            xtype: 'combo',
+	                fieldLabel: '协议',
+	                hiddenName:'xy',
+	                store: getEntryArray('<%=DictConstants.XY%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true,
+	    	        allowBlank:true
 	            }]
 	        }, {
 	            columnWidth:.5,

@@ -2,7 +2,7 @@
 <script type="text/javascript">
 //<![CDATA[
 	Ext.Ajax.request({
-		url: '${webroot}/upload/message.txt',
+		url: 'sys/getMessageInfo.${extension}',
 		success: function(response, opts) {
 			var obj = Ext.decode(response.responseText).data[0];
 			if(obj.active == 1) {

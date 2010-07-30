@@ -11,9 +11,12 @@
 		        	{header: '预交费日期',			dataIndex: 'yjfrq',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
 		        	{header: '预交费金额(元)',		dataIndex: 'yjfje',		width: 90},
 		        	{header: '预交费收款人',		dataIndex: 'yjfskr',	width: 80},
-		        	{header: '缴费日期',			dataIndex: 'jfrq',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
-		        	{header: '缴费金额(元)',		dataIndex: 'jfje',		width: 80},
-		        	{header: '缴费收款人',			dataIndex: 'jfskr',		width: 70,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+		        	{header: '缴费日期1',			dataIndex: 'jfrq',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
+		        	{header: '缴费金额1(元)',		dataIndex: 'jfje',		width: 80},
+		        	{header: '缴费收款人1',		dataIndex: 'jfskr',		width: 75,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
+		        	{header: '缴费日期2',			dataIndex: 'jfrq2',		width: 70, 	renderer: Ext.util.Format.dateRenderer('Y-m-d')},
+		        	{header: '缴费金额2(元)',		dataIndex: 'jfje2',		width: 80},
+		        	{header: '缴费收款人2',		dataIndex: 'jfskr2',	width: 75,	renderer: function(value){return getDicInfo('<%=DictConstants.USERARRAY%>', value);}},
 		        	{header: '已缴费用(元)',		dataIndex: 'jfze',		width: 75},
 		        	{header: '应缴费用(元)',		dataIndex: 'yjje',		width: 75},
 		    		{header: '财务备注',			dataIndex: 'cwbz',		width: 200}
@@ -47,6 +50,47 @@
 		new Ext.form.ComboBox({
                 fieldLabel: '收款人',
                 hiddenName: 'jfskr',
+                store: getEntryArray('<%=DictConstants.ALIVEUSERARRAY%>'),
+                valueField: 'key',
+                displayField: 'value',
+                typeAhead: true,
+                mode: 'local',
+                forceSelection: true,//true只能填写下拉列表值;false可以填写任意值
+                triggerAction: 'all',
+                selectOnFocus: true,
+            	width: 80
+        })
+		]
+	}];
+
+	var jfForm2 = [{
+		columnWidth:.33,
+		layout: 'form',
+		items: [
+		new Ext.form.DateField({
+                fieldLabel: '缴费日期',
+                name: 'jfrq2',
+            	width: 90
+		})
+		]
+	},{
+		columnWidth:.33,
+		layout: 'form',
+		items: [{
+	            xtype: 'numberfield',
+                fieldLabel: '金额(元)',
+                name: 'jfje2',
+            	decimalPrecision: 2,
+            	maxValue: 999999.99,
+            	width: 80
+		}]
+	},{
+        columnWidth:.33,
+        layout: 'form',
+        items: [
+		new Ext.form.ComboBox({
+                fieldLabel: '收款人',
+                hiddenName: 'jfskr2',
                 store: getEntryArray('<%=DictConstants.ALIVEUSERARRAY%>'),
                 valueField: 'key',
                 displayField: 'value',
@@ -110,7 +154,7 @@
             }]
         },{
             xtype:'fieldset',
-            title: '缴费',
+            title: '第一次缴费',
             collapsible: false,
             autoHeight:true,
             items :[{
@@ -119,12 +163,21 @@
             }]
         },{
             xtype:'fieldset',
+            title: '第二次缴费',
+            collapsible: false,
+            autoHeight:true,
+            items :[{
+                layout:'column',
+                items:[jfForm2]
+            }]
+        },{
+            xtype:'fieldset',
             title: '扩展信息',
             collapsible: false,
             autoHeight:true,
             items :[{
 	            xtype: 'numberfield',
-                fieldLabel: '应缴金额(元)',
+                fieldLabel: '应缴费用(元)',
                 name: 'yjje',
             	decimalPrecision: 2,
             	maxValue: 999999.99

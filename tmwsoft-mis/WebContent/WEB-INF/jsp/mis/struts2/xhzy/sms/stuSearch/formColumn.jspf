@@ -185,6 +185,18 @@
 	                maxLength: 200
 	            }, {
 		            xtype: 'combo',
+	                fieldLabel: '体检',
+	                hiddenName:'tj',
+	                store: getEntryArray('<%=DictConstants.TJ%>'),
+	                valueField:'key',
+	                displayField:'value',
+	                typeAhead: true,
+	                mode: 'local',
+	                forceSelection: true,
+	                triggerAction: 'all',
+	                selectOnFocus:true
+	            }, {
+		            xtype: 'combo',
 	                fieldLabel: '录取',
 	                hiddenName:'lq',
 	                store: getEntryArray('<%=DictConstants.LQ%>'),

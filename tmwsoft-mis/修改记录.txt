@@ -77,7 +77,7 @@ ALTER TABLE `xhzysms`.`student_fees` MODIFY COLUMN `skr` VARCHAR(100) NOT NULL D
 在学生基本信息中增加‘报到卡’项，包括‘已领’，‘未领’
 重构excel导入导出功能
 2010－04－22 22:00
-ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `bdk` VARCHAR(1) COMMENT '报到卡' AFTER `lastupdatertime`;
+ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `bdk` VARCHAR(1) COMMENT '报到卡' AFTER `lq`;
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('bdk', '报到卡', 'root', 0, 19);
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('1', '已领', 'bdk', 1, 1);
 INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '未领', 'bdk', 1, 2);
@@ -116,7 +116,39 @@ INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhz
 测试
 版本升到1.3
 
-2010
+2010-7-13 晚上
+综合查询增加体检查询条件
+在学生基本信息中增加字段
+ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `xy` VARCHAR(1) DEFAULT NULL COMMENT '协议' AFTER `bdk`;
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('xy', '协议', 'root', 0, 20);
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('1', '是', 'xy', 1, 1);
+INSERT INTO dictionary ( dictcode, codecontent, parentcode, level, levelseq ) VALUES ('2', '否', 'xy', 1, 2);
+将以上修改记录进 mysql_data_dump.sql mysql_db_struct.sql
+在formColumn.jspf中增加xy项3处
+在hbm、PO、BO、VO中增加xy项
+在导入导出功能中增加xy项
+修改学生基本信息新增初始化方法
+
+2010-07-29
+在学生基本信息中增加字段
+ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `jfrq2` VARCHAR(19) DEFAULT NULL COMMENT '缴费日期2' AFTER `jfskr`,
+ ADD COLUMN `jfje2` DOUBLE(8,2) DEFAULT NULL COMMENT '缴费金额2' AFTER `jfrq2`,
+ ADD COLUMN `jfskr2` VARCHAR(100) DEFAULT NULL COMMENT '缴费收款人2' AFTER `jfje2`;
+修改mysql_db_struct.sql
+修改StudentBaseInfo.hbm.xml
+修改StudentBaseInfoPO.java、StudentBaseInfoBO.java、StudentBaseInfoByFeeVO.java
+修改stuFees/formColumn.jspf、stuBaseInfo/formColumn.jspf
+修改UpdateStuInfoByFeeAction.java
+修改StuDataExcelImportHolder.java、StuDataExcelExportHolder.java
+修改studataExcelTemp.xls
+
+2010-07-30
+修改导入导出功能
+修改消息模块，将保存文件夹移到服务器外部
+测试
+版本升到1.4
+
+
 
 
 

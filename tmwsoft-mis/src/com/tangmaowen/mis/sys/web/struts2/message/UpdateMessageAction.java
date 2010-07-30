@@ -16,10 +16,8 @@ public class UpdateMessageAction extends MisSysBaseAction implements ModelDriven
 	
 	@Override
 	protected String misExecute() {
-		String out = "{success: true, data:" + Tools.getJsonStringFromObject(message) + "}";
-		System.out.println(out);
 		try {
-			saveInfo(out);
+			saveInfo(Tools.getJsonStringFromObject(message));
 			setResultInfo("{success: true, message: '保存成功'}");
 		} catch (IOException e) {
 			setResultInfo("{success: false, message: '保存失败'}");
@@ -34,7 +32,7 @@ public class UpdateMessageAction extends MisSysBaseAction implements ModelDriven
 	
 	private void saveInfo(String info) throws IOException {
 		ServletContext servletContext = (ServletContext)context.get("com.opensymphony.xwork2.dispatcher.ServletContext");
-		String path = servletContext.getRealPath("/upload/message.txt");
+		String path = servletContext.getRealPath(Constants.MESSAGEFILE);
 //		PrintWriter out = null;
 //		try {
 //			out = new PrintWriter(new BufferedWriter(new FileWriter(path)));

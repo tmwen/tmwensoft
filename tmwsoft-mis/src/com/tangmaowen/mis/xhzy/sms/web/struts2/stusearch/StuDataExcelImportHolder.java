@@ -33,6 +33,7 @@ public class StuDataExcelImportHolder {
 	private int notAllowRowsCount = 0;
 	private String notAllowRows = "";
 	private String returnInfo = "";
+	private int cellnum = -1;
 	
 	public List<StudentBaseInfoBO> analyzeStuBaseData(StudentBaseInfoImportVO importInfo) throws Exception {
 		this.importInfo = importInfo;
@@ -80,45 +81,52 @@ public class StuDataExcelImportHolder {
 		bkxl = "";
 		sourceRow = sheet.getRow(rowCount);
 		int count = sourceRow.getPhysicalNumberOfCells();
-		if(count != 36) throw new MisException("数据列数不匹配,实际为"+ count +"列,应该为36列");
+		if(count != 42) throw new MisException("数据列数不匹配,实际为"+ count +"列,应该为42列");
+		cellnum = -1;
 		StudentBaseInfoBO bo = new StudentBaseInfoBO();
-		bo.setMsbbh(getCellValue(0));
-		bo.setMsrq(formatDateToyyyyMMdd(1));
-		bo.setJie(Tools.isEmpty(importInfo.getJie()) ? getCellValue(2) : importInfo.getJie());
-		bo.setJj(Tools.isEmpty(importInfo.getJj()) ? getDictKey(DictConstants.JJ, 3) : importInfo.getJj());
-		bo.setXm(getCellValue(4));
-		bo.setXb(getDictKey(DictConstants.XB, 5));
-		bo.setMz(getDictKey(DictConstants.MZ, 6));
-		bo.setSg(getDouble(7));
-		bo.setBkxl(bkxl = getDictKey(DictConstants.BKXL, 8));
-		bo.setBdzy(getBdzy(9));
-		bo.setZzmm(getDictKey(DictConstants.ZZMM, 10));
-		bo.setCsrq(formatDateToyyyyMMdd(11));
-		bo.setSfzhm(getCellValue(12));
-		bo.setHj(getDictKey(DictConstants.HJ, 13));
-		bo.setKslb(getDictKey(DictConstants.KSLB, 14));
-		bo.setYklx(getDictKey(DictConstants.YKLX, 15));
-		bo.setByz(getDictKey(DictConstants.BYZ, 16));
-		bo.setJtxsdz(getCellValue(17));
-		bo.setXslxdh(getCellValue(18));
-		bo.setJzlxdh(getCellValue(19));
-		bo.setByxx(getCellValue(20));
-		bo.setSyd(getCellValue(21));
-		bo.setZsls(getCellValue(22));
-		bo.setZfzr(getUserID(23));
-		bo.setZs(getDictKey(DictConstants.ZS, 24));
-		bo.setTj(getDictKey(DictConstants.TJ, 25));
-		bo.setLq(getDictKey(DictConstants.LQ, 26));
+		bo.setMsbbh(getCellValue());
+		bo.setMsrq(formatDateToyyyyMMdd());
+		bo.setJie(Tools.isEmpty(importInfo.getJie()) ? getCellValue() : importInfo.getJie());
+		bo.setJj(Tools.isEmpty(importInfo.getJj()) ? getDictKey(DictConstants.JJ) : importInfo.getJj());
+		bo.setXm(getCellValue());
+		bo.setXb(getDictKey(DictConstants.XB));
+		bo.setMz(getDictKey(DictConstants.MZ));
+		bo.setSg(getDouble());
+		bo.setBkxl(bkxl = getDictKey(DictConstants.BKXL));
+		bo.setBdzy(getBdzy());
+		bo.setZzmm(getDictKey(DictConstants.ZZMM));
+		bo.setCsrq(formatDateToyyyyMMdd());
+		bo.setSfzhm(getCellValue());
+		bo.setHj(getDictKey(DictConstants.HJ));
+		bo.setKslb(getDictKey(DictConstants.KSLB));
+		bo.setYklx(getDictKey(DictConstants.YKLX));
+		bo.setByz(getDictKey(DictConstants.BYZ));
+		bo.setJtxsdz(getCellValue());
+		bo.setXslxdh(getCellValue());
+		bo.setJzlxdh(getCellValue());
+		bo.setByxx(getCellValue());
+		bo.setSyd(getCellValue());
+		bo.setZsls(getCellValue());
+		bo.setZfzr(getUserID());
+		bo.setZs(getDictKey(DictConstants.ZS));
+		bo.setTj(getDictKey(DictConstants.TJ));
+		bo.setLq(getDictKey(DictConstants.LQ));
+		bo.setBdk(getDictKey(DictConstants.BDK));
+		bo.setXy(getDictKey(DictConstants.XY));
+		bo.setBz(getCellValue());
 		// 费用
-		bo.setYjfrq(formatDateToyyyyMMdd(27));
-		bo.setYjfje(getDouble(28));
-		bo.setYjfskr(getCellValue(29));
-		bo.setJfrq(formatDateToyyyyMMdd(30));
-		bo.setJfje(getDouble(31));
-		bo.setJfskr(getSkrID(32));
-		bo.setBz(getCellValue(33));
-		bo.setCwbz(getCellValue(34));
-		bo.setBdk(getDictKey(DictConstants.BDK, 35));
+		bo.setYjfrq(formatDateToyyyyMMdd());
+		bo.setYjfje(getDouble());
+		bo.setYjfskr(getCellValue());
+		bo.setJfrq(formatDateToyyyyMMdd());
+		bo.setJfje(getDouble());
+		bo.setJfskr(getSkrID());
+		bo.setJfrq2(formatDateToyyyyMMdd());
+		bo.setJfje2(getDouble());
+		bo.setJfskr2(getSkrID());
+		bo.setJfze(getDouble());
+		bo.setYjje(getDouble());
+		bo.setCwbz(getCellValue());
 		
 		String time = Tools.getCurrDefaultDateTime();
 		bo.setActive("2");
@@ -129,10 +137,10 @@ public class StuDataExcelImportHolder {
 		return bo;
 	}
 	
-	private String getCellValue(int cellCount) {
+	private String getCellValue() {
 		String value = null;
 		try {
-			HSSFCell cell = sourceRow.getCell(cellCount);
+			HSSFCell cell = sourceRow.getCell(++cellnum);
 			if(cell==null||cell.getCellType()==HSSFCell.CELL_TYPE_BLANK)  return null;
 			if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
 				if (HSSFDateUtil.isCellDateFormatted(cell)) {
@@ -148,38 +156,38 @@ public class StuDataExcelImportHolder {
 			if(Tools.isNull(value)) return null;
 			allowInsert = true;
 		} catch (Exception e) {
-			throw new MisException("第" + (cellCount + 1) + "列:数据有误");
+			throw new MisException("第" + (cellnum + 1) + "列:数据有误");
 		}
 		return value.trim();
 	}
 	
-	private String getDictKey(String code, int cellCount) {
-		String value = getCellValue(cellCount);
+	private String getDictKey(String code) {
+		String value = getCellValue();
 		if(Tools.isNull(value)) return null;
 		String key = Dictionary.getInstance().dicKeyByValue(code, value);
-		if(Tools.isNull(key)) throw new MisException("第" + (cellCount + 1) + "列:值\"" + value + "\"在字典" + code + "中没有对应项");
+		if(Tools.isNull(key)) throw new MisException("第" + (cellnum + 1) + "列:值\"" + value + "\"在字典" + code + "中没有对应项");
 		return key;
 	}
 	
-	private String formatDateToyyyyMMdd(int cellCount) {
-		String date = getCellValue(cellCount);
+	private String formatDateToyyyyMMdd() {
+		String date = getCellValue();
 		if(Tools.isNull(date)) return null;
-		if(date.length() != 6) throw new MisException("第" + (cellCount + 1) + "列:日期\"" + date + "\"格式不对,应为yyMMdd格式");
+		if(date.length() != 6) throw new MisException("第" + (cellnum + 1) + "列:日期\"" + date + "\"格式不对,应为yyMMdd格式");
 		return Tools.formatDateTime(date, "yyMMdd", "yyyy-MM-dd");
 	}
 	
-	private Integer getUserID(int cellCount) {
-		String userName = getCellValue(cellCount);
+	private Integer getUserID() {
+		String userName = getCellValue();
 		if(Tools.isNull(userName)) return null;
 		Integer id = getUserIDHolder(userName);
 		if(id != null) {
 			return id;
 		}
-		throw new MisException("第" + (cellCount + 1) + "列:人员\"" + userName + "\"在系统中没有对应账号");
+		throw new MisException("第" + (cellnum + 1) + "列:人员\"" + userName + "\"在系统中没有对应账号");
 	}
 	
-	private String getSkrID(int cellCount) {
-		String userName = getCellValue(cellCount);
+	private String getSkrID() {
+		String userName = getCellValue();
 		if(Tools.isNull(userName)) return null;
 		Integer id = getUserIDHolder(userName);
 		if(id != null) {
@@ -198,24 +206,24 @@ public class StuDataExcelImportHolder {
 		return null;
 	}
 	
-	private String getBdzy(int cellCount) {
+	private String getBdzy() {
 		String value = "";
 		if("1".equals(bkxl)) {
-			value = getDictKey(DictConstants.BDZYDZ, cellCount);
+			value = getDictKey(DictConstants.BDZYDZ);
 		} else if("2".equals(bkxl)) {
-			value = getDictKey(DictConstants.BDZYZZ, cellCount);
+			value = getDictKey(DictConstants.BDZYZZ);
 		}
 		return value;
 	}
 	
-	private Double getDouble(int cellCount) {
-		String value = getCellValue(cellCount);
+	private Double getDouble() {
+		String value = getCellValue();
 		if(Tools.isEmpty(value)) return null;
 		Double num = null;
 		try {
 			num = Double.valueOf(value);
 		} catch (Exception e) {
-			throw new MisException("第" + (cellCount + 1) + "列:\"" + value + "\"不是浮点数");
+			throw new MisException("第" + (cellnum + 1) + "列:\"" + value + "\"不是浮点数");
 		}
 		return num;
 	}

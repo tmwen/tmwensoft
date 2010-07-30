@@ -10,6 +10,11 @@ import com.tangmaowen.mis.common.Constants;
 import com.tangmaowen.mis.common.SQLHandle;
 import com.tangmaowen.mis.xhzy.sms.web.struts2.MisXhzySmsBaseAction;
 
+/**
+ * 临时工具类。用来将用户编码转换为用户中文名
+ * @author tangmaowen
+ *
+ */
 public class SwitchUserIDAction extends MisXhzySmsBaseAction {
 
 	@Override
@@ -28,13 +33,13 @@ public class SwitchUserIDAction extends MisXhzySmsBaseAction {
 			boolean ac = conn.getAutoCommit();
 			conn.setAutoCommit(false);
 			CachedRowSet u = SQLHandle.getCachedRowSet(conn,"SELECT u.userid,u.username FROM users u", null);
-			Map mu = new HashMap(u.size());
+			Map<String, String> mu = new HashMap<String, String>(u.size());
 			while(u.next()) {
 				mu.put(u.getString(1), u.getString(2));
 			}
 			CachedRowSet s = SQLHandle.getCachedRowSet(conn,"SELECT s.stuid,s.yjfskr FROM student_baseinfo s where s.yjfskr REGEXP '^[0-9]'", null);
 			while(s.next()) {
-				s.updateString(2, (String)mu.get(s.getString(2)));
+				s.updateString(2, mu.get(s.getString(2)));
 				s.updateRow();
 			}
 			//s.setTableName("student_baseinfo");

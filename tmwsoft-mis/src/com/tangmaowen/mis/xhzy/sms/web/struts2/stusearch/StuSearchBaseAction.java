@@ -50,6 +50,7 @@ public abstract class StuSearchBaseAction extends MisXhzySmsBaseAction implement
 		bo.setConditionExceptNull("and", "", "", "zsls", "like", studentBaseInfo.getZsls());
 		bo.setConditionExceptNull("and", "", "", "byxx", "like", studentBaseInfo.getByxx());
 		bo.setConditionExceptNull("and", "", "", "syd", "like", studentBaseInfo.getSyd());
+		bo.setConditionExceptNull("and", "", "", "tj", "=", studentBaseInfo.getTj());
 		bo.setConditionExceptNull("and", "", "", "lq", "=", studentBaseInfo.getLq());
 		bo.setConditionExceptNull("and", "", "", "bdk", "=", studentBaseInfo.getBdk());
 		

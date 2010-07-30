@@ -60,6 +60,7 @@
 		<action name="messageIndex" class="com.tangmaowen.mis.sys.web.struts2.setup.IndexAction">
 			<result name="success">/WEB-INF/jsp/mis/struts2/sys/message/index.jsp</result>
 		</action>
+		<action name="getMessageInfo" class="com.tangmaowen.mis.sys.web.struts2.message.GetMessageInfoAction"></action>
 		<action name="updateMessageInfo" class="com.tangmaowen.mis.sys.web.struts2.message.UpdateMessageAction"></action>
 	</package>
 

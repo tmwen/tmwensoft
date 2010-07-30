@@ -31,6 +31,7 @@ public class StudentSearchInfoVO implements Serializable {
 	private String zsls;
 	private String byxx;
 	private String syd;
+	private String tj;
 	private String lq;
 	private String bdk;
 	
@@ -159,6 +160,12 @@ public class StudentSearchInfoVO implements Serializable {
 	}
 	public void setSyd(String syd) {
 		this.syd = syd;
+	}
+	public void setTj(String tj) {
+		this.tj = tj;
+	}
+	public String getTj() {
+		return tj;
 	}
 	public String getLq() {
 		return lq;

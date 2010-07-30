@@ -36,10 +36,11 @@ public class StudentBaseInfoVO implements Serializable {
 	private String zs;
 	private String tj;
 	private String lq;
+	private String bdk;
+	private String xy;
 	private Double yjje;
 	private String bz;
 	private String cwbz;
-	private String bdk;
 	
 	public Integer getStuid() {
 		return stuid;
@@ -232,6 +233,12 @@ public class StudentBaseInfoVO implements Serializable {
 	}
 	public String getBdk() {
 		return bdk;
+	}
+	public String getXy() {
+		return xy;
+	}
+	public void setXy(String xy) {
+		this.xy = xy;
 	}
 	
 }

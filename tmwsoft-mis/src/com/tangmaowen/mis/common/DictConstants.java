@@ -32,6 +32,7 @@ public class DictConstants {
 	public static final String USERACTIVE = "userActive";
 	public static final String ACTIVE = "active";
 	public static final String AUTHTYPE = "authType";
+	public static final String XY = "xy";
 
 	/**
 	 * 启用的用户

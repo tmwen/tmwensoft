@@ -41,7 +41,7 @@
 
 	function getMessageInfo(){
 		messageForm.form.load( {
-			url : '${webroot}/upload/message.txt',
+			url : 'getMessageInfo.${extension}',
 			params : '',
 			waitTitle : '请等待',
 			waitMsg : '读取中...'
