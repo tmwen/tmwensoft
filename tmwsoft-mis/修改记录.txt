@@ -148,6 +148,14 @@ ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `jfrq2` VARCHAR(19) DEFAULT 
 测试
 版本升到1.4
 
+2010-10-25 晚上一小时
+修改com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetInitInfoAction
+修改界与季的算法
+
+
+
+
+
 
 
 

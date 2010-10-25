@@ -1,5 +1,7 @@
 package com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo;
 
+import java.util.Calendar;
+
 import com.tangmaowen.mis.common.Constants;
 import com.tangmaowen.mis.xhzy.sms.web.struts2.MisXhzySmsBaseAction;
 import com.tangmaowen.utils.Tools;
@@ -21,11 +23,18 @@ public class GetInitInfoAction extends MisXhzySmsBaseAction {
 	@Override
 	protected String misExecute() {
 		String curDate = Tools.getCurrDefaultDateTime().substring(0, 10);
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH) + 1;
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		if((month == 10 && day >= 15) || month > 10) {
+			year++;
+		}
 		String season = "1";
-		if(curDate.substring(5, 7).compareTo("07") >= 0) {
+		if((month == 3 && day >= 15) || (month == 10 && day <= 15) || (month > 3 && month < 10)) {
 			season = "2";
 		}
-		setResultInfo("{success: true, data:[{jie:" + curDate.substring(0, 4) + ",jj:" + season + ",msrq:'" + curDate + "'}]}");
+		setResultInfo("{success: true, data:[{jie:" + year + ",jj:" + season + ",msrq:'" + curDate + "'}]}");
 		return Constants.FORWARDJSONINFO;
 	}
 
