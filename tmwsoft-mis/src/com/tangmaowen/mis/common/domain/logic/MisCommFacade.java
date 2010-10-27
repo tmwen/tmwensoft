@@ -16,7 +16,7 @@ public interface MisCommFacade extends MisFacade {
 	
 	
 	//---------------login---------------------------
-	public UserBO login(String loginid, String password);
+	public UserBO login(Integer id, String password);
 	
 	public List<AuthorityBO> getUserAuthority(Integer id);
 	
@@ -27,6 +27,8 @@ public interface MisCommFacade extends MisFacade {
 	public void insertLog(LogBO bo);
 	
 	public List<AuthorityBO> getAuth(String authtype);
+	
+	public boolean isAdmin(Integer id);
 	
 	//---------------dics---------------------------
 	public List<DictionaryBO> getDictionaryList();

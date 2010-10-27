@@ -1,6 +1,7 @@
 package com.tangmaowen.mis.sys.dao.hibernate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,9 @@ import com.tangmaowen.mis.common.dao.hibernate.HibernatePageingSupport;
 import com.tangmaowen.mis.sys.dao.UsersDao;
 import com.tangmaowen.mis.sys.dao.hibernate.maps.AuthorityPO;
 import com.tangmaowen.mis.sys.dao.hibernate.maps.RoleAuthorityPO;
+import com.tangmaowen.mis.sys.dao.hibernate.maps.RolePO;
 import com.tangmaowen.mis.sys.dao.hibernate.maps.UserPO;
+import com.tangmaowen.mis.sys.dao.hibernate.maps.UserRoleId;
 import com.tangmaowen.mis.sys.dao.hibernate.maps.UserRolePO;
 import com.tangmaowen.mis.sys.domain.AuthorityBO;
 import com.tangmaowen.mis.sys.domain.PageingBO;
@@ -82,8 +85,8 @@ public class UsersDaoImpl extends HibernateDaoSupport implements UsersDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserBO login(String loginid, String password) {
-		Object[] params = new Object[] {Integer.valueOf(loginid), password};
+	public UserBO login(Integer id, String password) {
+		Object[] params = new Object[] {id, password};
 		List<UserPO> users = getHibernateTemplate().find("from UserPO a where a.userid=? and a.password=?", params);
 		if(users == null || users.size() != 1) {
 			return null;
@@ -130,5 +133,54 @@ public class UsersDaoImpl extends HibernateDaoSupport implements UsersDao {
 		po.setPassword(newpass);
 		getHibernateTemplate().save(po);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getUserRole(Integer id) {
+		List<UserRolePO> poList = getHibernateTemplate().find("from UserRolePO a where a.id.users.userid=?", id);
+		if(Tools.isEmpty(poList)) return null;
+		StringBuilder userRoleStr = new StringBuilder();
+		userRoleStr.append(",");
+		for (int i = 0; i < poList.size(); i++) {
+			userRoleStr.append(poList.get(i).getId().getRole().getRoleid() + ",");
+		}
+		return userRoleStr.toString();
+	}
 
+	@Override
+	public void updateUserRole(Integer userid, String roleids) {
+		if(Tools.isEmpty(userid)) return;
+		UserPO user = (UserPO)getHibernateTemplate().get(UserPO.class, userid);
+		Set<UserRolePO> oldUserRoleSet = user.getUserRoles();
+		Set<UserRolePO> newUserRoleSet = null;
+		String[] roleidArray = roleids.split(",");
+		if(!Tools.isEmpty(roleidArray)) {
+			newUserRoleSet = new HashSet<UserRolePO>();
+			for(int i = 0; i < roleidArray.length; i++) {
+				if(Tools.isEmpty(roleidArray[i])) continue;
+				boolean exist = false;
+				Iterator<UserRolePO> oldUserRoleIter = oldUserRoleSet.iterator();
+				while(!Tools.isEmpty(oldUserRoleSet) && oldUserRoleIter.hasNext()) {
+					UserRolePO po = oldUserRoleIter.next();
+					if(roleidArray[i].equals(po.getId().getRole().getRoleid().toString())) {
+						oldUserRoleSet.remove(po);
+						exist = true;
+						break;
+					}
+				}
+				if(!exist) {
+					UserRoleId id = new UserRoleId();
+					Integer roleid = Integer.valueOf(roleidArray[i]);
+					RolePO role = (RolePO)getHibernateTemplate().get(RolePO.class, roleid);
+					id.setUsers(user);
+					id.setRole(role);
+					UserRolePO userRole = new UserRolePO();
+					userRole.setId(id);
+					newUserRoleSet.add(userRole);
+				}
+			}
+		}
+		if(!Tools.isEmpty(oldUserRoleSet)) getHibernateTemplate().deleteAll(oldUserRoleSet);
+		if(!Tools.isEmpty(newUserRoleSet)) getHibernateTemplate().saveOrUpdateAll(newUserRoleSet);
+	}
 }

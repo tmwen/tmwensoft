@@ -15,7 +15,7 @@ public class UserSessionInfo implements Serializable {
 	private String status;
 	private String logintime;
 	private String authoritys;
-	private String active;
+	private boolean isAdmin;
 	
 	public Integer getUserid() {
 		return userid;
@@ -53,10 +53,10 @@ public class UserSessionInfo implements Serializable {
 	public void setAuthoritys(String authoritys) {
 		this.authoritys = authoritys;
 	}
-	public String getActive() {
-		return active;
+	public boolean isAdmin() {
+		return isAdmin;
 	}
-	public void setActive(String active) {
-		this.active = active;
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

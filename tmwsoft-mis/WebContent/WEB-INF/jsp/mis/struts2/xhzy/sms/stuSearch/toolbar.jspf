@@ -24,7 +24,7 @@
 				buttonAlign : 'center',
 				modal : true,
 				closeAction : 'hide',
-		        height: 410,
+		        height: 470,
 		        width: 700,
 				items : condForm,
 				buttons : [ {

@@ -149,8 +149,57 @@ ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `jfrq2` VARCHAR(19) DEFAULT 
 版本升到1.4
 
 2010-10-25 晚上一小时
-修改com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetInitInfoAction
-修改界与季的算法
+修改com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetInitInfoAction.java
+修改界与季的算法。定义10月15日当天以后为下一年度；3月15日当天至10月14当天日为秋季，其它日期为春季
+
+2010-10-27 晚上
+在/stuSearch/formColumn.jspf中增加招生备注字段查询条件
+在stusearch.StuSearchBaseAction.java中增加 bo.setConditionExceptNull("and", "", "", "bz", "like", studentBaseInfo.getBz());
+在mis.xhzy.sms.web.StudentSearchInfoVO.java中增加招生备注bz字段
+
+com.tangmaowen.mis.common.domain.logic.MisCommFacade.java 增加 public boolean isAdmin(Integer id);
+com.tangmaowen.mis.common.domain.UserSessionInfo.java 增加 private boolean isAdmin;
+com.tangmaowen.mis.common.web.struts2.LoginAction.java 增加 
+		boolean isAdmin = getMisComm().isAdmin(userSession.getUserid());
+		userSession.setAdmin(isAdmin);
+com.tangmaowen.mis.common.AuthorityConstants.java 增加 public static final String ADMIN_ROLE_ID ="1";
+com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetListAction.java 增加 
+			if(!userSession.isAdmin()) {
+				Calendar c = Calendar.getInstance();
+				int year = c.get(Calendar.YEAR);
+				int month = c.get(Calendar.MONTH) + 1;
+				int day = c.get(Calendar.DAY_OF_MONTH);
+				if((month == 10 && day >= 15) || month > 10) {
+					year++;
+				}
+				bo.setConditionExceptNull("and", "", "", "jie", "=", year + "");
+			}
+
+com.tangmaowen.mis.xhzy.sms.web.struts2.stusearch.StuSearchBaseAction.java 增加
+			if(!userSession.isAdmin()) {
+				Calendar c = Calendar.getInstance();
+				int year = c.get(Calendar.YEAR);
+				int month = c.get(Calendar.MONTH) + 1;
+				int day = c.get(Calendar.DAY_OF_MONTH);
+				if((month == 10 && day >= 15) || month > 10) {
+					year++;
+				}
+				bo.setConditionExceptNull("and", "", "", "jie", "=", year + "");
+			}
+			
+将com.tangmaowen.mis.sys.dao.UserRoleDao.java 中申明的方法全部移动到 com.tangmaowen.mis.sys.dao.UsersDao.java接口中
+同时将以上接口的实现类也进行了相应的移动，并暂时保留了原方法的申明与实现（考虑是否还需要中间表的dao）
+
+
+
+
+
+
+
+
+
+
+
 
 
 

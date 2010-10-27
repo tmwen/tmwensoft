@@ -1,5 +1,7 @@
 package com.tangmaowen.mis.xhzy.sms.web.struts2.stusearch;
 
+import java.util.Calendar;
+
 import com.opensymphony.xwork2.ModelDriven;
 import com.tangmaowen.mis.common.AuthorityConstants;
 import com.tangmaowen.mis.sys.domain.PageingBO;
@@ -53,6 +55,18 @@ public abstract class StuSearchBaseAction extends MisXhzySmsBaseAction implement
 		bo.setConditionExceptNull("and", "", "", "tj", "=", studentBaseInfo.getTj());
 		bo.setConditionExceptNull("and", "", "", "lq", "=", studentBaseInfo.getLq());
 		bo.setConditionExceptNull("and", "", "", "bdk", "=", studentBaseInfo.getBdk());
+		bo.setConditionExceptNull("and", "", "", "bz", "like", studentBaseInfo.getBz());
+		
+		if(!userSession.isAdmin()) {
+			Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH) + 1;
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			if((month == 10 && day >= 15) || month > 10) {
+				year++;
+			}
+			bo.setConditionExceptNull("and", "", "", "jie", "=", year + "");
+		}
 		
 		if(userSession.getAuthoritys().indexOf(AuthorityConstants.D_ALL) == -1 && userSession.getAuthoritys().indexOf(AuthorityConstants.D_ONESELF) != -1) {
 			bo.setConditionExceptNull("and", "(", "", "zfzr", "=", userSession.getUserid());

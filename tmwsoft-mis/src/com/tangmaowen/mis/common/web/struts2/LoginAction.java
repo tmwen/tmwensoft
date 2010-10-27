@@ -24,7 +24,7 @@ public class LoginAction extends BaseAction implements ModelDriven<LoginVO> {
 	@Override
 	protected String misExecute() {
 		UserBO user = verifyLogin();
-		logIn(user);
+		login(user);
 		return Constants.FORWARDJSONINFO;
 	}
 	
@@ -34,7 +34,7 @@ public class LoginAction extends BaseAction implements ModelDriven<LoginVO> {
 			return null;
 		}
 		//验证用户名密码
-		UserBO user = getMisComm().login(login.getId(), MD5.crypt(login.getPassword()));
+		UserBO user = getMisComm().login(Integer.valueOf(login.getId()), MD5.crypt(login.getPassword()));
 		if (user == null) {
 			setResultInfo("{success: false, message: '无效的账号或密码'}");
 		} else if(user.getActive().equals(Constants.USERSTOPACTION)) {
@@ -45,7 +45,7 @@ public class LoginAction extends BaseAction implements ModelDriven<LoginVO> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void logIn(UserBO user) {
+	private void login(UserBO user) {
 		if(user == null) return;
 		//验证成功
 		//装载用户信息
@@ -57,6 +57,8 @@ public class LoginAction extends BaseAction implements ModelDriven<LoginVO> {
 		userSession.setStatus(user.getStatus());
 		userSession.setLogintime(loginTime);
 		userSession.setAuthoritys(authoritys);
+		boolean isAdmin = getMisComm().isAdmin(userSession.getUserid());
+		userSession.setAdmin(isAdmin);//true:管理员,false普通用户
 		//将用户信息记录到session中
 		context.getSession().clear();
 		context.getSession().put(Constants.USERSESSION, userSession);

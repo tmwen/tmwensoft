@@ -1,7 +1,3 @@
-/**
- * @author 唐懋文
- * @since 2009-11-23下午08:37:45
- */
 package com.tangmaowen.mis.sys.dao.hibernate;
 
 import java.util.HashSet;

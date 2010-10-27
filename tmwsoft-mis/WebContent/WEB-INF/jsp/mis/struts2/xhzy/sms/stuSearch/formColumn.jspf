@@ -223,6 +223,13 @@
 	            }]
 	        }]
 	    }, {
+	        xtype:'textarea',
+	        fieldLabel:'招生备注',
+	        name:'bz',
+	        height:60,
+	        anchor:'94%',
+            maxLength: 2000
+	    }, {
 	        xtype:'hidden',
 	        name:'stuid'
 	    }];

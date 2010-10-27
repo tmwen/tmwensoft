@@ -29,11 +29,20 @@ public interface UsersDao {
 	 */
 	public List<UserBO> getUserIDNameList(Integer id);
 
-	public UserBO login(String loginid, String password);
+	public UserBO login(Integer id, String password);
 	
 	public List<AuthorityBO> getUserAuthority(Integer id);
 	
 	public boolean verifyPassword(Integer id, String password);
 	
 	public void passwordAlter(Integer id, String newpass);
+	
+	/**
+	 * 角色ID字符串
+	 * @param id
+	 * @return ",1,3,8,12,"
+	 */
+	public String getUserRole(Integer id);
+
+	public void updateUserRole(Integer userid, String roleids);
 }

@@ -51,7 +51,7 @@ public class PageingBO {
 	/**
 	 * @param conditions 查询条件
 	 *		 自定义查询 {"condition", "border", "table", "column", "logic", "value"}
-	 *					condition为and、or；border为(、)；logic为=、>=、like、not等；
+	 *					condition为and、or；border为(或)；logic为=、>=、like、not等；
 	 *		 普通查询 {"column", "value"} 字符用like匹配，其它用=匹配
 	 * select * from table a where a.a='1' and a.b='2' or (a.c='3' and a.d='4' or a.e='5')
 	 * 

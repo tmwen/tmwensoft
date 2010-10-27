@@ -31,7 +31,7 @@ public class GetInitInfoAction extends MisXhzySmsBaseAction {
 			year++;
 		}
 		String season = "1";
-		if((month == 3 && day >= 15) || (month == 10 && day <= 15) || (month > 3 && month < 10)) {
+		if( (month > 3 && month < 10) || (month == 3 && day >= 15) || (month == 10 && day <= 14)) {
 			season = "2";
 		}
 		setResultInfo("{success: true, data:[{jie:" + year + ",jj:" + season + ",msrq:'" + curDate + "'}]}");

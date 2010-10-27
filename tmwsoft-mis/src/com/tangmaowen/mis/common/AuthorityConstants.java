@@ -76,7 +76,10 @@ public class AuthorityConstants {
 	public static final String A_STU_DATA_STUBASEINFO_EXPORT = "/mis/xhzy/sms/stuBaseInfoExport";
 */	
 	// 数据约束
-	public static final String D_ONESELF = "oneselfData";
+	public static final String D_ONESELF = "oneselfData";// 创建者或修改者
 	public static final String D_ALL = "allData";
+	
+	// 管理员id
+	public static final String ADMIN_ROLE_ID ="1";
 
 }

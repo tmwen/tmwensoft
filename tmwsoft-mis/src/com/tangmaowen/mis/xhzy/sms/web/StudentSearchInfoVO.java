@@ -34,6 +34,7 @@ public class StudentSearchInfoVO implements Serializable {
 	private String tj;
 	private String lq;
 	private String bdk;
+	private String bz;
 	
 	public String getMsbbh() {
 		return msbbh;
@@ -178,6 +179,12 @@ public class StudentSearchInfoVO implements Serializable {
 	}
 	public void setBdk(String bdk) {
 		this.bdk = bdk;
+	}
+	public String getBz() {
+		return bz;
+	}
+	public void setBz(String bz) {
+		this.bz = bz;
 	}
 	
 }

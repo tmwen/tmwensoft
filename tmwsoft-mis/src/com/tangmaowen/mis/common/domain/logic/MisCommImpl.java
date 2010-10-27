@@ -2,6 +2,7 @@ package com.tangmaowen.mis.common.domain.logic;
 
 import java.util.List;
 
+import com.tangmaowen.mis.common.AuthorityConstants;
 import com.tangmaowen.mis.common.Constants;
 import com.tangmaowen.mis.sys.dao.AuthorityDao;
 import com.tangmaowen.mis.sys.dao.DictionaryDao;
@@ -44,7 +45,7 @@ public class MisCommImpl implements MisCommFacade {
 	//-------------------login------------------------
 
 	@Override
-	public UserBO login(String id, String password) {
+	public UserBO login(Integer id, String password) {
 		return usersDao.login(id, password);
 	}
 
@@ -86,6 +87,13 @@ public class MisCommImpl implements MisCommFacade {
 	@Override
 	public List<AuthorityBO> getAuth(String authtype) {
 		return authorityDao.getAuth(authtype);
+	}
+
+	@Override
+	public boolean isAdmin(Integer id) {
+		String userRoleStr = usersDao.getUserRole(id);
+		if(userRoleStr.indexOf("," + AuthorityConstants.ADMIN_ROLE_ID + ",") != -1) return true;
+		return false;
 	}
 	//---------------users---------------------------
 	@Override
