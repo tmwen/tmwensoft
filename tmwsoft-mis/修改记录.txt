@@ -152,7 +152,7 @@ ALTER TABLE `xhzysms`.`student_baseinfo` ADD COLUMN `jfrq2` VARCHAR(19) DEFAULT 
 修改com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetInitInfoAction.java
 修改界与季的算法。定义10月15日当天以后为下一年度；3月15日当天至10月14当天日为秋季，其它日期为春季
 
-2010-10-27 晚上
+2010-10-27 晚上四个小时
 在/stuSearch/formColumn.jspf中增加招生备注字段查询条件
 在stusearch.StuSearchBaseAction.java中增加 bo.setConditionExceptNull("and", "", "", "bz", "like", studentBaseInfo.getBz());
 在mis.xhzy.sms.web.StudentSearchInfoVO.java中增加招生备注bz字段
