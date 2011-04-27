@@ -305,7 +305,8 @@
 	                forceSelection: true,
 	                triggerAction: 'all',
 	                selectOnFocus:true,
-	                allowBlank: true
+	                allowBlank: true,
+	                readOnly: ${isUpdateExtDate ? "false" : "true"}
 	            }, {
 		            xtype: 'combo',
 	                fieldLabel: '体检',
@@ -318,7 +319,8 @@
 	                forceSelection: true,
 	                triggerAction: 'all',
 	                selectOnFocus:true,
-	    	        allowBlank:true
+	    	        allowBlank:true,
+	                readOnly: ${isUpdateExtDate ? "false" : "true"}
 	            }, {
 		            xtype: 'combo',
 	                fieldLabel: '录取',
@@ -368,7 +370,8 @@
 	        name:'bz',
 	        height:60,
 	        anchor:'94%',
-            maxLength: 2000
+            maxLength: 2000,
+            readOnly: ${isUpdateExtDate ? "false" : "true"}
 	    }, {
 	        xtype:'hidden',
 	        name:'stuid'

@@ -11,6 +11,12 @@ import com.tangmaowen.utils.Tools;
  *
  */
 public class GetInfoAction extends MisXhzySmsBaseAction {
+
+	@Override
+	public String execute() {
+		setLog(false);
+		return super.execute();
+	}
 	
 	@Override
 	protected String misExecute() {

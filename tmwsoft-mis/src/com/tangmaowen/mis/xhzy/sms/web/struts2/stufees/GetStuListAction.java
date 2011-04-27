@@ -1,5 +1,6 @@
 package com.tangmaowen.mis.xhzy.sms.web.struts2.stufees;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,16 @@ public class GetStuListAction extends MisXhzySmsBaseAction implements ModelDrive
 		
 		bo.setConditionExceptNull("xm", studentBaseInfo.getXm());
 		bo.setConditionExceptNull("sfzhm", studentBaseInfo.getSfzhm());
+		if(!userSession.isAdmin()) {
+			Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH) + 1;
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			if((month == 10 && day >= 15) || month > 10) {
+				year++;
+			}
+			bo.setConditionExceptNull("and", "", "", "jie", "=", year + "");
+		}
 		bo.setOrder("stuid", "desc");
 
 		Map<String, ?> map = getMisXhzySms().getStudentBaseInfoList(bo);

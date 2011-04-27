@@ -36,19 +36,20 @@ public class GetListAction extends MisXhzySmsBaseAction implements ModelDriven<S
 		
 		bo.setConditionExceptNull("xm", studentBaseInfo.getXm());
 		bo.setConditionExceptNull("sfzhm", studentBaseInfo.getSfzhm());
+		
+		if(!userSession.isAdmin()) {
+			Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH) + 1;
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			if((month == 10 && day >= 15) || month > 10) {
+				year++;
+			}
+			bo.setConditionExceptNull("and", "", "", "jie", "=", year + "");
+		}
 		if(userSession.getAuthoritys().indexOf(AuthorityConstants.D_ALL) != -1) {
 			
 		} else if(userSession.getAuthoritys().indexOf(AuthorityConstants.D_ONESELF) != -1) {
-			if(!userSession.isAdmin()) {
-				Calendar c = Calendar.getInstance();
-				int year = c.get(Calendar.YEAR);
-				int month = c.get(Calendar.MONTH) + 1;
-				int day = c.get(Calendar.DAY_OF_MONTH);
-				if((month == 10 && day >= 15) || month > 10) {
-					year++;
-				}
-				bo.setConditionExceptNull("and", "", "", "jie", "=", year + "");
-			}
 			bo.setConditionExceptNull("and", "(", "", "zfzr", "=", userSession.getUserid());
 			bo.setConditionExceptNull("or", "", "", "creater", "=", userSession.getUserid());
 			bo.setConditionExceptNull("or", ")", "", "lastupdater", "=", userSession.getUserid());

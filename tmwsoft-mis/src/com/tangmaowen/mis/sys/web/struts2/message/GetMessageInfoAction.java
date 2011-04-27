@@ -1,8 +1,9 @@
 package com.tangmaowen.mis.sys.web.struts2.message;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.servlet.ServletContext;
 
@@ -43,7 +44,7 @@ public class GetMessageInfoAction extends MisSysBaseAction {
 		String path = servletContext.getRealPath(Constants.MESSAGEFILE);
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader(path));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
 			String str;
 			StringBuilder sb = new StringBuilder();
 			while((str = in.readLine()) != null) sb.append(str + "\n");

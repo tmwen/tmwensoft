@@ -20,6 +20,7 @@ public class IndexAction extends MisXhzySmsBaseAction {
 	protected String misExecute() {
 		userList = getUserIDNameJsArray();
 		aliveUserList = getAliveUserIDNameJsArray();
+		isUpdateExtDate = checkUpdateExtDateAuthority();
 		return SUCCESS;
 	}
 
@@ -28,9 +29,17 @@ public class IndexAction extends MisXhzySmsBaseAction {
 		return "跳转到学生基本信息主页面";
 	}
 	
-	private String aliveUserList;
+	private boolean checkUpdateExtDateAuthority() {
+		String allAuthority = userSession.getAuthoritys();
+		if(allAuthority.indexOf("`/mis/xhzy/sms/updateStudentExtInfo`") != -1) {
+			return true;
+		}
+		return false;
+	}
 	
+	private String aliveUserList;
 	private String userList;
+	private boolean isUpdateExtDate;
 
 	public String getAliveUserList() {
 		return aliveUserList;
@@ -46,6 +55,14 @@ public class IndexAction extends MisXhzySmsBaseAction {
 
 	public void setUserList(String userList) {
 		this.userList = userList;
+	}
+
+	public boolean getIsUpdateExtDate() {
+		return isUpdateExtDate;
+	}
+
+	public void setIsUpdateExtDate(boolean isUpdateExtDate) {
+		this.isUpdateExtDate = isUpdateExtDate;
 	}
 	
 }

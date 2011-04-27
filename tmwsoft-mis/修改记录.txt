@@ -1,3 +1,5 @@
+2009-12-24 交付使用
+
 2009-12-15 下班到晚上8点半
 帮助加图标，头上加刷新系统图标
 费用列表加刷新功能
@@ -190,13 +192,18 @@ com.tangmaowen.mis.xhzy.sms.web.struts2.stusearch.StuSearchBaseAction.java 增�
 将com.tangmaowen.mis.sys.dao.UserRoleDao.java 中申明的方法全部移动到 com.tangmaowen.mis.sys.dao.UsersDao.java接口中
 同时将以上接口的实现类也进行了相应的移动，并暂时保留了原方法的申明与实现（考虑是否还需要中间表的dao）
 
+2010-11-10 晚上
+修改com.tangmaowen.mis.xhzy.sms.web.struts2.stubaseinfo.GetListAction.java，调整年度过滤逻辑 
 
+2011-03-10
+修改财务信息列表，只显示当前年度信息
 
+2011-03-20 半天
+新增权限
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentExtInfo', '学生扩展信息修改', '学生基本信息', '2');
 
-
-
-
-
+2011-04-09 半天
+完成 学生扩展信息修改 
 
 
 

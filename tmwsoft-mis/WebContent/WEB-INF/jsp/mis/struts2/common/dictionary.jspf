@@ -29,6 +29,10 @@ function toDicMap(dicArray){
 //--------------------公共接口---------------------------
 // 得到字典某编码的项数组形如：[['1', '大专'], ['2', '中专']]
 function getEntryArray(dicCode){
+	var dicValue = dicsArray.get(dicCode);
+	if(dicValue == null){
+		return [];
+	}
 	return dicsArray.get(dicCode);
 }
 // 得到字典项值

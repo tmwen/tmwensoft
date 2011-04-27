@@ -132,6 +132,7 @@ INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/sys
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentsBaseInfoList', '学生基本信息列表', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/insertStudentBaseInfo', '学生基本信息新增', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentBaseInfo', '学生基本信息修改', '学生基本信息', '2');
+INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/updateStudentExtInfo', '学生扩展信息修改', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/deleteStudentBaseInfo', '学生基本信息删除', '学生基本信息', '2');
 INSERT INTO authority ( authid, authname, authdesc, authtype ) VALUES ('/mis/xhzy/sms/getStudentBaseInfo', '学生基本信息查看', '学生基本信息', '2');
 
